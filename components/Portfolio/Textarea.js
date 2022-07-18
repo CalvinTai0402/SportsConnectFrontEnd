@@ -1,0 +1,23 @@
+import React, { Fragment } from "react";
+
+export default function Textarea({ label, name, type = "text", ...rest }) {
+  return (
+    <Fragment>
+      <div className="relative z-0 w-full h-full mb-8">
+        <textarea
+          {...rest}
+          id={name}
+          type={type}
+          placeholder=" "
+          className="block w-full p-1 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200 h-full"
+        />
+        <label
+          htmlFor={name}
+          className="absolute duration-300 top-0 -z-1 origin-0 text-gray-500"
+        >
+          {label}
+        </label>
+      </div>
+    </Fragment>
+  );
+}
