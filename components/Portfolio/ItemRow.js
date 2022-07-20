@@ -2,10 +2,11 @@ import React, { Fragment, useEffect, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import yyyymmdd from "../../utilities/yyyymmdd";
 import { TrashIcon } from "@heroicons/react/solid";
-import axios from "axios";
-import debounce from "../../utilities/debounce";
+import { DebounceInput } from "react-debounce-input";
 
 import "react-datepicker/dist/react-datepicker.css";
+import useMyAxios from "../../hooks/useMyAxios";
+import useCsrfToken from "../../hooks/useCsrfToken";
 
 Date.prototype.yyyymmdd = yyyymmdd;
 
@@ -21,7 +22,6 @@ export default function ItemRow({
 }) {
   let [currentActive, setCurrentActive] = useState(active);
   let [currentDescription, setCurrentDescription] = useState(description);
-  let [timer, setTimer] = useState(setTimeout(() => {}, 1000));
   let [currentStartDate, setCurrentStartDate] = useState(
     new Date(startDate + "T15:00:00Z")
   );
@@ -33,23 +33,20 @@ export default function ItemRow({
     var [currentEndDate, setCurrentEndDate] = useState(currentStartDate);
   }
   const firstRun = useRef(true);
+  let getCsrf = useCsrfToken();
 
   let handleDelete = async (_id) => {
     try {
-      let res = await axios.delete(
-        process.env.NEXT_PUBLIC_API_URL + `${endpoint}/${_id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      let csrfToken = await getCsrf();
+      let myAxios = useMyAxios(csrfToken);
+      let res = await myAxios.delete(`${endpoint}/${_id}`);
     } catch (error) {
       console.log(error);
     }
   };
 
   let handleUpdate = async () => {
+    console.log("update");
     let updateObject = {
       description: currentDescription,
       active: currentActive,
@@ -59,24 +56,19 @@ export default function ItemRow({
     if (currentEndDate !== undefined) {
       updateObject.end_date = currentEndDate.yyyymmdd();
     }
-    let res = await axios.put(
-      process.env.NEXT_PUBLIC_API_URL + `${endpoint}/${id}`,
-      updateObject,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    let csrfToken = await getCsrf();
+    let myAxios = useMyAxios(csrfToken);
+    let res = await myAxios.put(`${endpoint}/${id}`, updateObject);
   };
 
   useEffect(() => {
     if (firstRun.current) {
+      console.log(firstRun.current);
       // we do not want to update on mount
       firstRun.current = false;
     } else {
       // only auto send put requests
-      debounce(handleUpdate, timer, setTimer)();
+      handleUpdate();
     }
   }, [currentDescription, currentActive, currentStartDate, currentEndDate]);
 
@@ -84,7 +76,8 @@ export default function ItemRow({
     <Fragment>
       <li>
         <div className="flex justify-between text-blue-600">
-          <input
+          <DebounceInput
+            debounceTimeout={1000}
             label="description"
             type="text"
             placeholder="Add a description"
@@ -128,12 +121,21 @@ export default function ItemRow({
               />
             )}
           </div>
-          <div
-            className="mr-10 hover:cursor-pointer"
-            onClick={() => setCurrentActive(!currentActive)}
-          >
-            {currentActive ? "active" : "inactive"}
-          </div>
+          {currentActive ? (
+            <div
+              className="mr-10 hover:cursor-pointer"
+              onClick={() => setCurrentActive(!currentActive)}
+            >
+              active
+            </div>
+          ) : (
+            <div
+              className="mr-8 hover:cursor-pointer"
+              onClick={() => setCurrentActive(!currentActive)}
+            >
+              inactive
+            </div>
+          )}
         </div>
       </li>
     </Fragment>

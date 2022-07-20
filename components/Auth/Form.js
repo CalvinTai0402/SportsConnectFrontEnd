@@ -122,7 +122,14 @@ export default function Form({
                   </Link>
                 </p>
               ) : (
-                ""
+                <p className="mt-6 text-sm text-center text-gray-400">
+                  Already have an account?{" "}
+                  <Link href="/auth/login">
+                    <a className="text-blue-500 focus:outline-none focus:underline hover:underline">
+                      Log in
+                    </a>
+                  </Link>
+                </p>
               )}
             </div>
           </div>

@@ -1,10 +1,13 @@
 import React, { Fragment } from "react";
+import { DebounceInput } from "react-debounce-input";
 
 export default function Textarea({ label, name, type = "text", ...rest }) {
   return (
     <Fragment>
       <div className="relative z-0 w-full h-full mb-8">
-        <textarea
+        <DebounceInput
+          debounceTimeout={1000}
+          element="textarea"
           {...rest}
           id={name}
           type={type}

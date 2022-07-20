@@ -1,27 +1,23 @@
-import axios from "axios";
 import { useRouter } from "next/router";
 import React, { Fragment, useState } from "react";
+import useCsrfToken from "../hooks/useCsrfToken";
+import useMyAxios from "../hooks/useMyAxios";
 
 export default function contactus() {
   let [name, setName] = useState("");
   let [email, setEmail] = useState("");
   let [message, setMessage] = useState("");
   let router = useRouter();
+  let getCsrf = useCsrfToken();
   let sendEmail = async (e) => {
     e.preventDefault();
-    let res = await axios.post(
-      process.env.NEXT_PUBLIC_API_URL + `/emails/send_email`,
-      {
-        name: name,
-        email: email,
-        message: message,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    let csrfToken = await getCsrf();
+    let myAxios = useMyAxios(csrfToken);
+    let res = await myAxios.post(`/emails/send_email`, {
+      name: name,
+      email: email,
+      message: message,
+    });
     router.push("/home");
   };
   return (

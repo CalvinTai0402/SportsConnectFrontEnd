@@ -1,4 +1,3 @@
-import axios from "axios";
 import Image from "next/image";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import Input from "./Input";
@@ -7,8 +6,9 @@ import Experiences from "./Experiences";
 import Educations from "./Educations";
 import DatePicker from "react-datepicker";
 import yyyymmdd from "../../utilities/yyyymmdd";
-import debounce from "../../utilities/debounce";
 import { AiOutlineClose } from "react-icons/ai";
+import useMyAxios from "../../hooks/useMyAxios";
+import useCsrfToken from "../../hooks/useCsrfToken";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -29,16 +29,13 @@ export default function Portfolio() {
   const [showUploadButton, setShowUploadButton] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  let [timer, setTimer] = useState(setTimeout(() => {}, 1000));
   const firstRun = useRef(true);
+  let getCsrf = useCsrfToken();
 
   useEffect(() => {
     let fetchCurrentUser = async () => {
-      let res = await axios.get(process.env.NEXT_PUBLIC_API_URL + "/users/me", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      let myAxios = useMyAxios();
+      let res = await myAxios.get("/users/me");
       let currentUser = res.data;
       setFirstName(currentUser.first_name);
       setLastName(currentUser.last_name);
@@ -58,40 +55,28 @@ export default function Portfolio() {
   }, []);
 
   let handleUpdate = async () => {
-    let res = await axios.put(
-      process.env.NEXT_PUBLIC_API_URL + "/users",
-      {
-        first_name: firstName,
-        last_name: lastName,
-        preferred_name: preferredName,
-        bio: bio,
-        gender: gender,
-        contact_number: contact,
-        current_address: currentAddress,
-        permanent_address: permanentAddress,
-        birthday: birthday.yyyymmdd(),
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    let csrfToken = await getCsrf();
+    let myAxios = useMyAxios(csrfToken);
+    let res = await myAxios.put("/users", {
+      first_name: firstName,
+      last_name: lastName,
+      preferred_name: preferredName,
+      bio: bio,
+      gender: gender,
+      contact_number: contact,
+      current_address: currentAddress,
+      permanent_address: permanentAddress,
+      birthday: birthday.yyyymmdd(),
+    });
   };
 
   let updateProfilePhoto = async (e) => {
     const formData = new FormData();
     formData.append("file", e.target.files[0], e.target.files[0].name);
     setUploading(true);
-    let res = await axios.post(
-      process.env.NEXT_PUBLIC_API_URL + "/users/profile-photo",
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    let csrfToken = await getCsrf();
+    let myAxios = useMyAxios(csrfToken);
+    let res = await myAxios.post("/users/profile-photo", formData);
     setUploading(false);
     setPhotoUrl(res.data);
   };
@@ -101,7 +86,7 @@ export default function Portfolio() {
       // we do not want to update on mount
       firstRun.current = false;
     } else {
-      debounce(handleUpdate, timer, setTimer)();
+      handleUpdate();
     }
   }, [
     firstName,
@@ -201,7 +186,6 @@ export default function Portfolio() {
                   type="text"
                   value={preferredName}
                   onChange={(e) => setPreferredName(e.target.value)}
-                  onBlur={handleUpdate}
                 />
               </h1>
               <div className="leading-6 w-full h-[20vh] max-h-[10rem] md:h-full md:max-h-[12rem]">
@@ -211,7 +195,6 @@ export default function Portfolio() {
                   type="text"
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
-                  onBlur={handleUpdate}
                 />
               </div>
             </div>
@@ -247,7 +230,6 @@ export default function Portfolio() {
                       type="text"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      onBlur={handleUpdate}
                     />
                   </div>
                   <div className="md:px-4 py-2">
@@ -257,7 +239,6 @@ export default function Portfolio() {
                       type="text"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      onBlur={handleUpdate}
                     />
                   </div>
 
@@ -268,7 +249,6 @@ export default function Portfolio() {
                       type="text"
                       value={gender}
                       onChange={(e) => setGender(e.target.value)}
-                      onBlur={handleUpdate}
                     />
                   </div>
                   <div className="md:px-4 py-2">
@@ -278,7 +258,6 @@ export default function Portfolio() {
                       type="text"
                       value={contact}
                       onChange={(e) => setContact(e.target.value)}
-                      onBlur={handleUpdate}
                     />
                   </div>
                   <div className="md:px-4 py-2">
@@ -288,7 +267,6 @@ export default function Portfolio() {
                       type="text"
                       value={currentAddress}
                       onChange={(e) => setCurrentAddress(e.target.value)}
-                      onBlur={handleUpdate}
                     />
                   </div>
                   <div className="md:px-4 py-2 pb-0">
@@ -298,7 +276,6 @@ export default function Portfolio() {
                       type="text"
                       value={permanentAddress}
                       onChange={(e) => setPermanentAddress(e.target.value)}
-                      onBlur={handleUpdate}
                     />
                   </div>
                   <div className="md:px-4 py-2">

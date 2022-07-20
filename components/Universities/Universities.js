@@ -1,15 +1,16 @@
-import axios from "axios";
 import React, { Fragment, useEffect, useMemo, useState } from "react";
+import useCsrfToken from "../../hooks/useCsrfToken";
+import useMyAxios from "../../hooks/useMyAxios";
 import Accordion from "../Accordion/Accordion";
 import Table from "../Table/Table";
 
 export default function Universities({ unis }) {
   const [allUnis, setAllUnis] = useState(unis);
+  let getCsrf = useCsrfToken();
   useEffect(() => {
     let fetchAllUnis = async (limit) => {
-      let res = await axios.get(
-        process.env.NEXT_PUBLIC_API_URL + `/universities?limit=${limit}`
-      );
+      let myAxios = useMyAxios();
+      let res = await myAxios.get(`/universities?limit=${limit}`);
       setAllUnis(res.data);
     };
     fetchAllUnis(-1);

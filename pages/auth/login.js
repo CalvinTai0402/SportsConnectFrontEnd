@@ -1,8 +1,9 @@
 import { Fragment, useState } from "react";
 import { useRouter } from "next/router";
-import axios from "axios";
 import Form from "../../components/Auth/Form";
 import { useUserContext } from "../../components/Context/UserContext";
+import useCsrfToken from "../../hooks/useCsrfToken";
+import useMyAxios from "../../hooks/useMyAxios";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -10,6 +11,7 @@ export default function Login() {
   const [error, setError] = useState("");
   const router = useRouter();
   const { setIsLoggedIn } = useUserContext();
+  let getCsrf = useCsrfToken();
   let handleUsernameChange = (e) => setUsername(e.target.value);
   let handlePasswordChange = (e) => setPassword(e.target.value);
   let handleSubmit = async (e) => {
@@ -19,8 +21,10 @@ export default function Login() {
       setError("Enter both your email and password");
       return;
     }
-    let res = await axios
-      .post(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
+    let csrfToken = await getCsrf();
+    let myAxios = useMyAxios(csrfToken);
+    let res = await myAxios
+      .post(`/login`, {
         email: username,
         password: password,
       })
@@ -29,7 +33,7 @@ export default function Login() {
       });
     switch (res.status) {
       case 200:
-        localStorage.setItem("token", res.data.access_token);
+        localStorage.setItem("token", "isLoggedIn");
         setIsLoggedIn(true);
         router.push("/universities");
         break;

@@ -1,9 +1,11 @@
 import React from "react";
+import { DebounceInput } from "react-debounce-input";
 
 export default function Input({ label, name, type = "text", ...rest }) {
   return (
     <div className="relative z-0 w-full mb-8">
-      <input
+      <DebounceInput
+        debounceTimeout={1000}
         {...rest}
         id={name}
         type={type}

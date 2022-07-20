@@ -1,18 +1,17 @@
-import axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
 import { AiOutlinePlusSquare } from "react-icons/ai";
 import ItemRow from "./ItemRow";
 import swal from "sweetalert";
+import useCsrfToken from "../../hooks/useCsrfToken";
+import useMyAxios from "../../hooks/useMyAxios";
 
 export default function Template({ endpoint }) {
   const [data, setData] = useState([]);
+  let getCsrf = useCsrfToken();
   useEffect(() => {
     let fetchData = async () => {
-      let res = await axios.get(process.env.NEXT_PUBLIC_API_URL + endpoint, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      let myAxios = useMyAxios();
+      let res = await myAxios.get(endpoint);
       setData(res.data);
     };
     fetchData();
@@ -37,20 +36,14 @@ export default function Template({ endpoint }) {
       );
       return;
     }
-    let res = await axios.post(
-      process.env.NEXT_PUBLIC_API_URL + endpoint,
-      {
-        description: "",
-        active: false,
-        start_date: "2022-07-16",
-        end_date: "2022-07-16",
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    let csrfToken = await getCsrf();
+    let myAxios = useMyAxios(csrfToken);
+    let res = await myAxios.post(endpoint, {
+      description: "",
+      active: false,
+      start_date: "2022-07-16",
+      end_date: "2022-07-16",
+    });
     setData([...data, res.data]);
   };
 

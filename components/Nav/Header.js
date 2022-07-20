@@ -1,12 +1,16 @@
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
+import useCsrfToken from "../../hooks/useCsrfToken";
+import useMyAxios from "../../hooks/useMyAxios";
 import { useUserContext } from "../Context/UserContext";
 import MyHead from "../Meta/MyHead";
 
 export default function Header() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const { isLoggedIn, setIsLoggedIn } = useUserContext();
+  let getCsrf = useCsrfToken();
   // === if user uses more than one tab ===
   let updateLoggedInStatus = () => {
     if (localStorage.getItem("token")) {
@@ -21,8 +25,13 @@ export default function Header() {
   // === if user uses more than one tab ===
   const router = useRouter();
   const urlPath = router.asPath;
-  let handleLogout = () => {
+  let handleLogout = async () => {
     localStorage.removeItem("token");
+    let csrfToken = await getCsrf();
+    let myAxios = useMyAxios(csrfToken);
+    let res = await myAxios.delete(`/logout`).catch((e) => {
+      return e.response;
+    });
     updateLoggedInStatus();
     router.push("/");
   };
