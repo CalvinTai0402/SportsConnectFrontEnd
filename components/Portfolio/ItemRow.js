@@ -7,6 +7,7 @@ import { DebounceInput } from "react-debounce-input";
 import "react-datepicker/dist/react-datepicker.css";
 import useMyAxios from "../../hooks/useMyAxios";
 import useCsrfToken from "../../hooks/useCsrfToken";
+import { useRouter } from "next/router";
 
 Date.prototype.yyyymmdd = yyyymmdd;
 
@@ -33,20 +34,17 @@ export default function ItemRow({
     var [currentEndDate, setCurrentEndDate] = useState(currentStartDate);
   }
   const firstRun = useRef(true);
+  const router = useRouter();
   let getCsrf = useCsrfToken();
-
   let handleDelete = async (_id) => {
-    try {
-      let csrfToken = await getCsrf();
-      let myAxios = useMyAxios(csrfToken);
-      let res = await myAxios.delete(`${endpoint}/${_id}`);
-    } catch (error) {
-      console.log(error);
-    }
+    let csrfToken = await getCsrf();
+    let myAxios = useMyAxios(router, csrfToken);
+    let res = await myAxios.delete(`${endpoint}/${_id}`).catch((e) => {
+      return e.response;
+    });
   };
 
   let handleUpdate = async () => {
-    console.log("update");
     let updateObject = {
       description: currentDescription,
       active: currentActive,
@@ -57,13 +55,16 @@ export default function ItemRow({
       updateObject.end_date = currentEndDate.yyyymmdd();
     }
     let csrfToken = await getCsrf();
-    let myAxios = useMyAxios(csrfToken);
-    let res = await myAxios.put(`${endpoint}/${id}`, updateObject);
+    let myAxios = useMyAxios(router, csrfToken);
+    let res = await myAxios
+      .put(`${endpoint}/${id}`, updateObject)
+      .catch((e) => {
+        return e.response;
+      });
   };
 
   useEffect(() => {
     if (firstRun.current) {
-      console.log(firstRun.current);
       // we do not want to update on mount
       firstRun.current = false;
     } else {

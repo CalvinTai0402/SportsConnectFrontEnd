@@ -1,4 +1,3 @@
-import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
@@ -28,7 +27,7 @@ export default function Header() {
   let handleLogout = async () => {
     localStorage.removeItem("token");
     let csrfToken = await getCsrf();
-    let myAxios = useMyAxios(csrfToken);
+    let myAxios = useMyAxios(router, csrfToken);
     let res = await myAxios.delete(`/logout`).catch((e) => {
       return e.response;
     });

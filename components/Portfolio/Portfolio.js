@@ -11,6 +11,7 @@ import useMyAxios from "../../hooks/useMyAxios";
 import useCsrfToken from "../../hooks/useCsrfToken";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { useRouter } from "next/router";
 
 Date.prototype.yyyymmdd = yyyymmdd;
 
@@ -31,11 +32,14 @@ export default function Portfolio() {
 
   const firstRun = useRef(true);
   let getCsrf = useCsrfToken();
+  const router = useRouter();
 
   useEffect(() => {
     let fetchCurrentUser = async () => {
-      let myAxios = useMyAxios();
-      let res = await myAxios.get("/users/me");
+      let myAxios = useMyAxios(router);
+      let res = await myAxios.get("/users/me").catch((e) => {
+        return e.response;
+      });
       let currentUser = res.data;
       setFirstName(currentUser.first_name);
       setLastName(currentUser.last_name);
@@ -56,18 +60,22 @@ export default function Portfolio() {
 
   let handleUpdate = async () => {
     let csrfToken = await getCsrf();
-    let myAxios = useMyAxios(csrfToken);
-    let res = await myAxios.put("/users", {
-      first_name: firstName,
-      last_name: lastName,
-      preferred_name: preferredName,
-      bio: bio,
-      gender: gender,
-      contact_number: contact,
-      current_address: currentAddress,
-      permanent_address: permanentAddress,
-      birthday: birthday.yyyymmdd(),
-    });
+    let myAxios = useMyAxios(router, csrfToken);
+    let res = await myAxios
+      .put("/users", {
+        first_name: firstName,
+        last_name: lastName,
+        preferred_name: preferredName,
+        bio: bio,
+        gender: gender,
+        contact_number: contact,
+        current_address: currentAddress,
+        permanent_address: permanentAddress,
+        birthday: birthday.yyyymmdd(),
+      })
+      .catch((e) => {
+        return e.response;
+      });
   };
 
   let updateProfilePhoto = async (e) => {
@@ -75,8 +83,12 @@ export default function Portfolio() {
     formData.append("file", e.target.files[0], e.target.files[0].name);
     setUploading(true);
     let csrfToken = await getCsrf();
-    let myAxios = useMyAxios(csrfToken);
-    let res = await myAxios.post("/users/profile-photo", formData);
+    let myAxios = useMyAxios(router, csrfToken);
+    let res = await myAxios
+      .post("/users/profile-photo", formData)
+      .catch((e) => {
+        return e.response;
+      });
     setUploading(false);
     setPhotoUrl(res.data);
   };

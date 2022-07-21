@@ -17,7 +17,9 @@ export async function getStaticProps() {
   let getCsrf = useCsrfToken();
   let fetchUnis = async (limit) => {
     let myAxios = useMyAxios();
-    let res = await myAxios.get(`/universities?limit=${limit}`);
+    let res = await myAxios.get(`/universities?limit=${limit}`).catch((e) => {
+      return e.response;
+    });
     return res.data;
   };
   let unis = await fetchUnis(500);

@@ -4,14 +4,18 @@ import ItemRow from "./ItemRow";
 import swal from "sweetalert";
 import useCsrfToken from "../../hooks/useCsrfToken";
 import useMyAxios from "../../hooks/useMyAxios";
+import { useRouter } from "next/router";
 
 export default function Template({ endpoint }) {
   const [data, setData] = useState([]);
   let getCsrf = useCsrfToken();
+  const router = useRouter();
   useEffect(() => {
     let fetchData = async () => {
-      let myAxios = useMyAxios();
-      let res = await myAxios.get(endpoint);
+      let myAxios = useMyAxios(router);
+      let res = await myAxios.get(endpoint).catch((e) => {
+        return e.response;
+      });
       setData(res.data);
     };
     fetchData();
@@ -37,13 +41,17 @@ export default function Template({ endpoint }) {
       return;
     }
     let csrfToken = await getCsrf();
-    let myAxios = useMyAxios(csrfToken);
-    let res = await myAxios.post(endpoint, {
-      description: "",
-      active: false,
-      start_date: "2022-07-16",
-      end_date: "2022-07-16",
-    });
+    let myAxios = useMyAxios(router, csrfToken);
+    let res = await myAxios
+      .post(endpoint, {
+        description: "",
+        active: false,
+        start_date: "2022-07-16",
+        end_date: "2022-07-16",
+      })
+      .catch((e) => {
+        return e.response;
+      });
     setData([...data, res.data]);
   };
 

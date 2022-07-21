@@ -22,7 +22,7 @@ export default function Login() {
       return;
     }
     let csrfToken = await getCsrf();
-    let myAxios = useMyAxios(csrfToken);
+    let myAxios = useMyAxios(router, csrfToken);
     let res = await myAxios
       .post(`/login`, {
         email: username,

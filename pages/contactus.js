@@ -12,12 +12,16 @@ export default function contactus() {
   let sendEmail = async (e) => {
     e.preventDefault();
     let csrfToken = await getCsrf();
-    let myAxios = useMyAxios(csrfToken);
-    let res = await myAxios.post(`/emails/send_email`, {
-      name: name,
-      email: email,
-      message: message,
-    });
+    let myAxios = useMyAxios(router, csrfToken);
+    let res = await myAxios
+      .post(`/emails/send_email`, {
+        name: name,
+        email: email,
+        message: message,
+      })
+      .catch((e) => {
+        return e.response;
+      });
     router.push("/home");
   };
   return (

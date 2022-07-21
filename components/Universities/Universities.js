@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useMemo, useState } from "react";
 import useCsrfToken from "../../hooks/useCsrfToken";
 import useMyAxios from "../../hooks/useMyAxios";
@@ -6,11 +7,13 @@ import Table from "../Table/Table";
 
 export default function Universities({ unis }) {
   const [allUnis, setAllUnis] = useState(unis);
-  let getCsrf = useCsrfToken();
+  const router = useRouter();
   useEffect(() => {
     let fetchAllUnis = async (limit) => {
-      let myAxios = useMyAxios();
-      let res = await myAxios.get(`/universities?limit=${limit}`);
+      let myAxios = useMyAxios(router);
+      let res = await myAxios.get(`/universities?limit=${limit}`).catch((e) => {
+        return e.response;
+      });
       setAllUnis(res.data);
     };
     fetchAllUnis(-1);

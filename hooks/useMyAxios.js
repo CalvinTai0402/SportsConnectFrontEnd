@@ -1,9 +1,8 @@
 import axios from "axios";
-import { useEffect } from "react";
-import { useUserContext } from "../components/Context/UserContext";
+import useCsrfToken from "./useCsrfToken";
 
-const useMyAxios = (csrfToken = null) => {
-  // const { auth, csrfToken } = useUserContext();
+export default function useMyAxios(router = null, csrfToken = null) {
+  let getCsrf = useCsrfToken();
   let headersObj = { "x-csrf-token": "" };
   if (csrfToken !== null) {
     headersObj = { "x-csrf-token": csrfToken };
@@ -14,53 +13,51 @@ const useMyAxios = (csrfToken = null) => {
     withCredentials: true,
   });
 
-  // const refresh = async () => {
-  //   let res = await axios.post("/refresh", {
-  //     withCredentials: true,
-  //     headers: {
-  //       Authorization: `Bearer ${auth.refresh_token}`,
-  //     },
-  //   });
-  //   setAuth((prev) => {
-  //     console.log(JSON.stringify(prev));
-  //     console.log(res.data.access_token);
-  //     return { ...prev, access_token: res.data.access_token };
-  //   });
-  //   return res.data.access_token;
-  // };
+  let handleLogout = async () => {
+    localStorage.removeItem("token");
+    let csrfToken = await getCsrf();
+    let myAxios = useMyAxios(router, csrfToken);
+    let res = await myAxios.delete(`/logout`).catch((e) => {
+      return e.response;
+    });
+    router.push("/");
+  };
 
-  // useEffect(() => {
-  //   const requestIntercept = myAxios.interceptors.request.use(
-  //     (config) => {
-  //       if (!config.headers["Authorization"]) {
-  //         config.headers["Authorization"] = `Bearer ${auth?.access_token}`;
-  //       }
-  //       return config;
-  //     },
-  //     (error) => Promise.reject(error)
-  //   );
+  const onRequest = (config) => {
+    return config;
+  };
 
-  //   const responseIntercept = myAxios.interceptors.response.use(
-  //     (response) => response,
-  //     async (error) => {
-  //       const prevRequest = error?.config;
-  //       if (error?.response?.status === 422 && !prevRequest?.sent) {
-  //         prevRequest.sent = true;
-  //         const newAccessToken = await refresh();
-  //         prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-  //         return myAxios(prevRequest);
-  //       }
-  //       return Promise.reject(error);
-  //     }
-  //   );
+  const onRequestError = (error) => {
+    return Promise.reject(error);
+  };
 
-  //   return () => {
-  //     myAxios.interceptors.request.eject(requestIntercept);
-  //     myAxios.interceptors.response.eject(responseIntercept);
-  //   };
-  // }, [auth, refresh]);
+  const onResponse = (response) => {
+    return response;
+  };
+
+  const onResponseError = async (error) => {
+    if (
+      error?.response?.status === 422 &&
+      error?.response?.data.detail === "Signature has expired" &&
+      error?.response?.config.url !== "/refresh" // for when the access_token expires
+    ) {
+      await myAxios.post("/refresh").catch((e) => {
+        return e.response;
+      });
+      return;
+    } else if (
+      error?.response?.status === 422 &&
+      error?.response?.data.detail === "Signature has expired" &&
+      error?.response?.config.url === "/refresh" // for when the refresh_token expires
+    ) {
+      await handleLogout();
+      return Promise.reject(error);
+    }
+    return Promise.reject(error);
+  };
+
+  myAxios.interceptors.request.use(onRequest, onRequestError);
+  myAxios.interceptors.response.use(onResponse, onResponseError);
 
   return myAxios;
-};
-
-export default useMyAxios;
+}
