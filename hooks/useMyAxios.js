@@ -17,7 +17,7 @@ export default function useMyAxios(router = null, csrfToken = null) {
     localStorage.removeItem("token");
     let csrfToken = await getCsrf();
     let myAxios = useMyAxios(router, csrfToken);
-    let res = await myAxios.delete(`/logout`).catch((e) => {
+    let res = await myAxios.post(`/logout`).catch((e) => {
       return e.response;
     });
     router.push("/");
@@ -41,10 +41,12 @@ export default function useMyAxios(router = null, csrfToken = null) {
       error?.response?.data.detail === "Signature has expired" &&
       error?.response?.config.url !== "/refresh" // for when the access_token expires
     ) {
+      // let csrfToken = await getCsrf();
+      // let myAxios = useMyAxios(router, csrfToken);
       await myAxios.post("/refresh").catch((e) => {
         return e.response;
       });
-      return;
+      return myAxios.request(error.config); // to retry previous request
     } else if (
       error?.response?.status === 422 &&
       error?.response?.data.detail === "Signature has expired" &&

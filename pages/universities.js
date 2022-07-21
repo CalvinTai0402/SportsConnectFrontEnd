@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import Universities from "../components/Universities/Universities";
-import useCsrfToken from "../hooks/useCsrfToken";
 import useMyAxios from "../hooks/useMyAxios";
 
 export default function universities({ unis }) {
@@ -14,12 +13,13 @@ export default function universities({ unis }) {
 }
 
 export async function getStaticProps() {
-  let getCsrf = useCsrfToken();
   let fetchUnis = async (limit) => {
     let myAxios = useMyAxios();
-    let res = await myAxios.get(`/universities?limit=${limit}`).catch((e) => {
-      return e.response;
-    });
+    let res = await myAxios
+      .get(`/universities/public?limit=${limit}`)
+      .catch((e) => {
+        return e.response;
+      });
     return res.data;
   };
   let unis = await fetchUnis(500);

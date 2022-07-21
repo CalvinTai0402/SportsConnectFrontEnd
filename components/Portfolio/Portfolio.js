@@ -159,7 +159,7 @@ export default function Portfolio() {
                     <span className="flex justify-between">
                       <label
                         className="text-sm font-medium text-gray-900 dark:text-gray-300 text-blue-600"
-                        for="file_input"
+                        htmlFor="file_input"
                       >
                         Upload file
                       </label>

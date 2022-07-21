@@ -129,7 +129,7 @@ export default function Table({ columns, data }) {
                 <span className="font-medium">
                   {Math.min(pageIndex * pageSize + pageSize, data.length)}
                 </span>{" "}
-                of <span className="font-medium">{data.length}</span> entries
+                of <span className="font-medium">{rows.length}</span> entries
               </span>
             </span>
           </div>

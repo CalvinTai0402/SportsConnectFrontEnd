@@ -28,7 +28,7 @@ export default function Header() {
     localStorage.removeItem("token");
     let csrfToken = await getCsrf();
     let myAxios = useMyAxios(router, csrfToken);
-    let res = await myAxios.delete(`/logout`).catch((e) => {
+    let res = await myAxios.post(`/logout`).catch((e) => {
       return e.response;
     });
     updateLoggedInStatus();

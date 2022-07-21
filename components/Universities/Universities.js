@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useMemo, useState } from "react";
-import useCsrfToken from "../../hooks/useCsrfToken";
 import useMyAxios from "../../hooks/useMyAxios";
 import Accordion from "../Accordion/Accordion";
 import Table from "../Table/Table";
@@ -8,13 +7,20 @@ import Table from "../Table/Table";
 export default function Universities({ unis }) {
   const [allUnis, setAllUnis] = useState(unis);
   const router = useRouter();
+
   useEffect(() => {
     let fetchAllUnis = async (limit) => {
       let myAxios = useMyAxios(router);
       let res = await myAxios.get(`/universities?limit=${limit}`).catch((e) => {
         return e.response;
       });
-      setAllUnis(res.data);
+      const allUnisWithInterest = res.data.map((uni) => {
+        if (uni.interested) {
+          return { ...uni, interested: "true" };
+        }
+        return { ...uni, interested: "false" };
+      });
+      setAllUnis(allUnisWithInterest);
     };
     fetchAllUnis(-1);
   }, []);
@@ -47,6 +53,10 @@ export default function Universities({ unis }) {
       {
         Header: "Category",
         accessor: "category",
+      },
+      {
+        Header: "Interested",
+        accessor: "interested",
       },
     ],
     []
