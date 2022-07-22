@@ -3,7 +3,12 @@ import React, { useState, memo } from "react";
 import useCsrfToken from "../../hooks/useCsrfToken";
 import useMyAxios from "../../hooks/useMyAxios";
 
-export default memo(function CheckBox({ checked, uniId, index, updateMemo }) {
+export default memo(function CheckBox({
+  checked,
+  uniId,
+  index,
+  updateTickedUni,
+}) {
   const [isChecked, setIsChecked] = useState(checked);
   const router = useRouter();
   let getCsrf = useCsrfToken();
@@ -11,14 +16,12 @@ export default memo(function CheckBox({ checked, uniId, index, updateMemo }) {
     let csrfToken = await getCsrf();
     let myAxios = useMyAxios(router, csrfToken);
     if (isChecked) {
-      console.log("remove");
       let res = await myAxios
         .delete(`/users/remove_interest_in/${uniId}`)
         .catch((e) => {
           return e.response;
         });
     } else {
-      console.log("adding");
       let res = await myAxios
         .post(`/users/interested_in/${uniId}`)
         .catch((e) => {
@@ -33,7 +36,7 @@ export default memo(function CheckBox({ checked, uniId, index, updateMemo }) {
       type="checkbox"
       checked={isChecked}
       onChange={() => {
-        updateMemo(isChecked, uniId, index, updateMemo);
+        updateTickedUni(isChecked, uniId, index, updateTickedUni);
         handleOnChange(uniId);
       }}
     />

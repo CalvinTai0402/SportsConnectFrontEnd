@@ -141,7 +141,7 @@ export default function Table({ columns, data, skipPageResetRef }) {
                 <span className="font-medium">{pageIndex * pageSize + 1}</span>{" "}
                 to{" "}
                 <span className="font-medium">
-                  {Math.min(pageIndex * pageSize + pageSize, data.length)}
+                  {Math.min(pageIndex * pageSize + pageSize, rows.length)}
                 </span>{" "}
                 of <span className="font-medium">{rows.length}</span> entries
               </span>
