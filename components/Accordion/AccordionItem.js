@@ -9,6 +9,7 @@ export default function AccordionItem({
   division,
   region,
   category,
+  interested,
 }) {
   const [show, setShow] = useState(false);
   return (
@@ -69,6 +70,11 @@ export default function AccordionItem({
             </p>
             <p className="mb-2 ml-2 text-gray-500 dark:text-gray-400">
               <span className="font-bold">Division</span>: {division}
+            </p>
+          </div>
+          <div className="flex justify-start">
+            <p className="mb-2 text-gray-500 dark:text-gray-400">
+              <span className="font-bold">Interest</span>: {interested}
             </p>
           </div>
         </div>

@@ -56,7 +56,12 @@ export default function Accordion({ unis }) {
     } else {
       newFilteredUnis = unis;
     }
-    setFilteredUnis(newFilteredUnis.slice(_pageIndex, _pageIndex + _pageSize));
+    setFilteredUnis(
+      newFilteredUnis.slice(
+        _pageIndex * _pageSize,
+        _pageIndex * _pageSize + _pageSize
+      )
+    );
     return newFilteredUnis.length;
   };
 
@@ -102,7 +107,8 @@ export default function Accordion({ unis }) {
         {filteredUnis.map((uni, index) => {
           return (
             <AccordionItem
-              key={index}
+              key={uni.id}
+              index={index}
               name={uni.name}
               city={uni.city}
               state={uni.state}
@@ -110,6 +116,7 @@ export default function Accordion({ unis }) {
               division={uni.division}
               region={uni.region}
               category={uni.category}
+              interested={uni.interested}
             />
           );
         })}

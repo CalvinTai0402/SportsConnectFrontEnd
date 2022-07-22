@@ -50,7 +50,9 @@ export default function Portfolio() {
       setCurrentAddress(currentUser.current_address);
       setPermanentAddress(currentUser.permanent_address);
       setEmail(currentUser.email);
-      setBirthday(new Date(currentUser.birthday + "T15:00:00Z"));
+      if (currentUser.birthday) {
+        setBirthday(new Date(currentUser.birthday + "T15:00:00Z"));
+      }
       if (res.data.profile_photo.length > 0) {
         setPhotoUrl(res.data.profile_photo[0].photo_url);
       }

@@ -8,11 +8,12 @@ import {
 } from "@heroicons/react/solid";
 import PageButton from "./PageButton";
 
-export default function Table({ columns, data }) {
+export default function Table({ columns, data, skipPageResetRef }) {
   const props = useTable(
     {
       columns,
       data,
+      autoResetPage: !skipPageResetRef.current,
     },
     useGlobalFilter,
     usePagination
@@ -37,7 +38,20 @@ export default function Table({ columns, data }) {
     state: { pageIndex, pageSize, globalFilter },
   } = props;
 
+  useEffect(() => {
+    skipPageResetRef.current = false;
+  }, []);
+
   useEffect(() => {}, [globalFilter]);
+
+  // useEffect(() => {
+  //   setCurrentTablePageIndex(pageIndex);
+  // }, [pageIndex]);
+
+  // useEffect(() => {
+  //   console.log(currentTablePageIndex);
+  //   gotoPage(currentTablePageIndex);
+  // }, [data]);
 
   return (
     <Fragment>
