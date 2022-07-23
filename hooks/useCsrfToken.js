@@ -9,7 +9,7 @@ export default function useCsrfToken() {
       .catch((e) => {
         return e.response;
       });
-    return res.data.csrf_token;
+    return res.data?.csrf_token;
   };
   return getCsrfToken;
 }
