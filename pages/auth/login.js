@@ -60,6 +60,7 @@ export default function Login() {
         setError(res.data.detail[0].msg);
         break;
       default:
+        console.log(res);
         if (getMobileOperatingSystem() === "iOS") {
           setError(
             "Please go to settings > Safari and disable 'prevent Cross-Site Tracking'"

@@ -319,8 +319,10 @@ export default function Portfolio() {
             <div className="my-4"></div>
 
             <div className="bg-white shadow-sm rounded-sm">
-              <div className="grid grid-cols-2 gap-x-3 px-4">
-                <Experiences />
+              <div className="sm:grid sm:grid-cols-2 gap-x-3 px-4">
+                <div className="mb-10 sm:mb-0">
+                  <Experiences />
+                </div>
                 <Educations />
               </div>
             </div>

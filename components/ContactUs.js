@@ -30,7 +30,7 @@ export default function ContactUs() {
         <div className="mx-auto w-full max-w-lg">
           <h1 className="text-4xl font-medium">Contact us</h1>
           <p className="mt-3">
-            Email us at sportsconnecthr@gmail.com or message us here:
+            Email us at sportsconnecthq@gmail.com or message us here:
           </p>
 
           <form className="mt-10">
