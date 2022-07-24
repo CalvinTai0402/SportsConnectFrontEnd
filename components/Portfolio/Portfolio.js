@@ -7,7 +7,7 @@ import Educations from "./Educations";
 import DatePicker from "react-datepicker";
 import yyyymmdd from "../../utilities/yyyymmdd";
 import { AiOutlineClose } from "react-icons/ai";
-import useMyAxios from "../../hooks/useMyAxios";
+import myAxiosPrivate from "../../axios/myAxiosPrivate";
 import useCsrfToken from "../../hooks/useCsrfToken";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -36,7 +36,7 @@ export default function Portfolio() {
 
   useEffect(() => {
     let fetchCurrentUser = async () => {
-      let myAxios = useMyAxios(router);
+      let myAxios = myAxiosPrivate(router);
       let res = await myAxios.get("/users/me").catch((e) => {
         return e.response;
       });
@@ -62,7 +62,7 @@ export default function Portfolio() {
 
   let handleUpdate = async () => {
     let csrfToken = await getCsrf();
-    let myAxios = useMyAxios(router, csrfToken);
+    let myAxios = myAxiosPrivate(router, csrfToken);
     let res = await myAxios
       .put("/users", {
         first_name: firstName,
@@ -85,7 +85,7 @@ export default function Portfolio() {
     formData.append("file", e.target.files[0], e.target.files[0].name);
     setUploading(true);
     let csrfToken = await getCsrf();
-    let myAxios = useMyAxios(router, csrfToken);
+    let myAxios = myAxiosPrivate(router, csrfToken);
     let res = await myAxios
       .post("/users/profile-photo", formData)
       .catch((e) => {

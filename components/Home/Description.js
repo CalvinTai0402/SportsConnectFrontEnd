@@ -10,8 +10,8 @@ export default function Description() {
             How we can help
           </h2>
           <p className="mb-4">
-            Don't know how to get started with your application? Frustrated with
-            the slowness of getting accepted? Worry no more! 😇
+            Don&apos;t know how to get started with your application? Frustrated
+            with the slowness of getting accepted? Worry no more! 😇
           </p>
           <p>
             With SportsConnect not only will you be able to express your
@@ -23,9 +23,7 @@ export default function Description() {
           <div className="w-full h-full">
             <Image
               className="rounded-lg"
-              src={
-                "https://images.unsplash.com/photo-1595435742656-5272d0b3fa82?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8dGVubmlzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-              }
+              src={"/tennis0.png"}
               alt="Tennis photo"
               width={550}
               height={700}
@@ -34,9 +32,7 @@ export default function Description() {
           <div className="w-full lg:mt-10 xl:mt-10 2xl:mt-10">
             <Image
               className="rounded-lg"
-              src={
-                "https://images.unsplash.com/photo-1622163642998-1ea32b0bbc67?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHRlbm5pc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-              }
+              src={"/tennis1.png"}
               alt="Tennis photo"
               width={550}
               height={700}

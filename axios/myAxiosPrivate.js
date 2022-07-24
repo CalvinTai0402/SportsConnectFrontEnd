@@ -1,7 +1,7 @@
 import axios from "axios";
-import useCsrfToken from "./useCsrfToken";
+import useCsrfToken from "../hooks/useCsrfToken";
 
-export default function useMyAxios(router = null, csrfToken = null) {
+export default function myAxiosPrivate(router = null, csrfToken = null) {
   let getCsrf = useCsrfToken();
   let headersObj = { "x-csrf-token": "" };
   if (csrfToken !== null) {

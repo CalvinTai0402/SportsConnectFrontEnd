@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -8,12 +9,14 @@ export default function Footer() {
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
             <div className="flex items-center">
-              <img
-                src="https://flowbite.com/docs/images/logo.svg"
+              <Image
+                width={40}
+                height={40}
+                src="/logo.png"
                 className="mr-3 h-8"
                 alt="FlowBite Logo"
               />
-              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white ml-4">
                 SportsConnect
               </span>
             </div>

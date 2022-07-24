@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 import { useRouter } from "next/router";
 import Form from "../../components/Auth/Form";
 import { useUserContext } from "../../components/Context/UserContext";
-import useMyAxios from "../../hooks/useMyAxios";
+import myAxiosPrivate from "../../axios/myAxiosPrivate";
 import useCsrfToken from "../../hooks/useCsrfToken";
 
 export default function Login() {
@@ -23,7 +23,7 @@ export default function Login() {
       return;
     }
     let csrfToken = await getCsrf();
-    let myAxios = useMyAxios(router, csrfToken);
+    let myAxios = myAxiosPrivate(router, csrfToken);
     let res = await myAxios
       .post(`/signup`, {
         email: username,

@@ -5,7 +5,7 @@ import { TrashIcon } from "@heroicons/react/solid";
 import { DebounceInput } from "react-debounce-input";
 
 import "react-datepicker/dist/react-datepicker.css";
-import useMyAxios from "../../hooks/useMyAxios";
+import myAxiosPrivate from "../../axios/myAxiosPrivate";
 import useCsrfToken from "../../hooks/useCsrfToken";
 import { useRouter } from "next/router";
 
@@ -26,19 +26,13 @@ export default function ItemRow({
   let [currentStartDate, setCurrentStartDate] = useState(
     new Date(startDate + "T15:00:00Z")
   );
-  if (!currentActive) {
-    var [currentEndDate, setCurrentEndDate] = useState(
-      new Date(endDate + "T15:00:00Z")
-    );
-  } else {
-    var [currentEndDate, setCurrentEndDate] = useState(currentStartDate);
-  }
+  let [currentEndDate, setCurrentEndDate] = useState(currentStartDate);
   const firstRun = useRef(true);
   const router = useRouter();
   let getCsrf = useCsrfToken();
   let handleDelete = async (_id) => {
     let csrfToken = await getCsrf();
-    let myAxios = useMyAxios(router, csrfToken);
+    let myAxios = myAxiosPrivate(router, csrfToken);
     let res = await myAxios.delete(`${endpoint}/${_id}`).catch((e) => {
       return e.response;
     });
@@ -55,13 +49,19 @@ export default function ItemRow({
       updateObject.end_date = currentEndDate.yyyymmdd();
     }
     let csrfToken = await getCsrf();
-    let myAxios = useMyAxios(router, csrfToken);
+    let myAxios = myAxiosPrivate(router, csrfToken);
     let res = await myAxios
       .put(`${endpoint}/${id}`, updateObject)
       .catch((e) => {
         return e.response;
       });
   };
+
+  useEffect(() => {
+    if (!currentActive) {
+      setCurrentEndDate(new Date(endDate + "T15:00:00Z"));
+    }
+  }, []);
 
   useEffect(() => {
     if (firstRun.current) {

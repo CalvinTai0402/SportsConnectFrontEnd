@@ -2,9 +2,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
 import useCsrfToken from "../../hooks/useCsrfToken";
-import useMyAxios from "../../hooks/useMyAxios";
+import myAxiosPrivate from "../../axios/myAxiosPrivate";
 import { useUserContext } from "../Context/UserContext";
 import MyHead from "../Meta/MyHead";
+import Image from "next/image";
 
 export default function Header() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -27,7 +28,7 @@ export default function Header() {
   let handleLogout = async () => {
     localStorage.removeItem("token");
     let csrfToken = await getCsrf();
-    let myAxios = useMyAxios(router, csrfToken);
+    let myAxios = myAxiosPrivate(router, csrfToken);
     let res = await myAxios.post(`/logout`).catch((e) => {
       return e.response;
     });
@@ -42,12 +43,14 @@ export default function Header() {
           <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <Link href="/home">
               <div className="flex items-center">
-                <img
-                  src="https://flowbite.com/docs/images/logo.svg"
+                <Image
+                  width={40}
+                  height={40}
+                  src="/logo.png"
                   className="mr-3 h-6 sm:h-9"
                   alt="Flowbite Logo"
                 />
-                <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+                <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white ml-4">
                   SportsConnect
                 </span>
               </div>

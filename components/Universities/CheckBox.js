@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useState, memo } from "react";
 import useCsrfToken from "../../hooks/useCsrfToken";
-import useMyAxios from "../../hooks/useMyAxios";
+import myAxiosPrivate from "../../axios/myAxiosPrivate";
 
 export default memo(function CheckBox({
   checked,
@@ -14,7 +14,7 @@ export default memo(function CheckBox({
   let getCsrf = useCsrfToken();
   let handleOnChange = async (uniId) => {
     let csrfToken = await getCsrf();
-    let myAxios = useMyAxios(router, csrfToken);
+    let myAxios = myAxiosPrivate(router, csrfToken);
     if (isChecked) {
       let res = await myAxios
         .delete(`/users/remove_interest_in/${uniId}`)

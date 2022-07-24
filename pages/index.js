@@ -1,10 +1,6 @@
-import { useRouter } from "next/router";
-import React, { Fragment, useEffect } from "react";
+import React from "react";
+import Index from "../components/Index";
 
 export default function index() {
-  const router = useRouter();
-  useEffect(() => {
-    router.push("/home");
-  });
-  return <Fragment />;
+  return <Index />;
 }

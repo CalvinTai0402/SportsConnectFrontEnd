@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import Universities from "../components/Universities/Universities";
-import useMyAxios from "../hooks/useMyAxios";
+import myAxiosPrivate from "../axios/myAxiosPrivate";
 
 export default function universities({ unis }) {
   return (
@@ -14,7 +14,7 @@ export default function universities({ unis }) {
 
 export async function getStaticProps() {
   let fetchUnis = async (limit) => {
-    let myAxios = useMyAxios();
+    let myAxios = myAxiosPrivate();
     let res = await myAxios
       .get(`/universities/public?limit=${limit}`)
       .catch((e) => {

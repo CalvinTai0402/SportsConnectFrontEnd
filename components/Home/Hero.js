@@ -28,10 +28,8 @@ export default function Hero() {
         <div className="mt-10 lg:mt-0 lg:col-span-5 lg:flex">
           <Image
             className="rounded"
-            src={
-              "https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1656066806716x945998427644534400%2Fzsports.JPG?w=768&h=486&auto=compress&dpr=1&fit=max"
-            }
-            alt="Phone logo"
+            src={"/athlete.png"}
+            alt="Athlete face"
             width={800}
             height={500}
           />

@@ -59,7 +59,11 @@ export default function Steps() {
             </time>
             <div className="text-base font-normal text-gray-500 dark:text-gray-400">
               Take the{" "}
-              <a href="https://www.ets.org/toefl" target="_blank">
+              <a
+                href="https://www.ets.org/toefl"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <u>TOEFL</u>
               </a>{" "}
               exam and submit your results.{" "}
@@ -94,7 +98,11 @@ export default function Steps() {
             </time>
             <div className="text-base font-normal text-gray-500 dark:text-gray-400">
               Take the{" "}
-              <a href="https://satsuite.collegeboard.org/sat" target="_blank">
+              <a
+                href="https://satsuite.collegeboard.org/sat"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <u>SAT</u>
               </a>{" "}
               test and submit your results.
@@ -190,14 +198,17 @@ export default function Steps() {
             <Modal
               display="How to get a visa?"
               title="Visa instructions"
-              links={[
-                <a
-                  href="https://www.topuniversities.com/student-info/studying-abroad/how-get-us-student-visa"
-                  target="_blank"
-                >
-                  Here is how you can get a student visa
-                </a>,
-              ]}
+              link={
+                <>
+                  <a
+                    href="https://www.topuniversities.com/student-info/studying-abroad/how-get-us-student-visa"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Here is how you can get a student visa
+                  </a>
+                </>
+              }
             />
           </li>
         </ol>

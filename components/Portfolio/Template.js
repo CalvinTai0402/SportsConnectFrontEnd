@@ -3,7 +3,7 @@ import { AiOutlinePlusSquare } from "react-icons/ai";
 import ItemRow from "./ItemRow";
 import swal from "sweetalert";
 import useCsrfToken from "../../hooks/useCsrfToken";
-import useMyAxios from "../../hooks/useMyAxios";
+import myAxiosPrivate from "../../axios/myAxiosPrivate";
 import { useRouter } from "next/router";
 
 export default function Template({ endpoint }) {
@@ -12,7 +12,7 @@ export default function Template({ endpoint }) {
   const router = useRouter();
   useEffect(() => {
     let fetchData = async () => {
-      let myAxios = useMyAxios(router);
+      let myAxios = myAxiosPrivate(router);
       let res = await myAxios.get(endpoint).catch((e) => {
         return e.response;
       });
@@ -41,7 +41,7 @@ export default function Template({ endpoint }) {
       return;
     }
     let csrfToken = await getCsrf();
-    let myAxios = useMyAxios(router, csrfToken);
+    let myAxios = myAxiosPrivate(router, csrfToken);
     let res = await myAxios
       .post(endpoint, {
         description: "",

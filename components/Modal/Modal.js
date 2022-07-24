@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 
-export default function Modal({ display, title, description, links }) {
+export default function Modal({ display, title, description, link }) {
   const [showModal, setShowModal] = useState(false);
   return (
     <Fragment>
@@ -42,7 +42,7 @@ export default function Modal({ display, title, description, links }) {
                       {description}
                     </p>
                     <p className="my-4 text-blue-500 text-lg leading-relaxed underline">
-                      {links ? links[0] : null}
+                      {link ? link : null}
                     </p>
                   </div>
                   <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">

@@ -92,10 +92,11 @@ export default function Table({ columns, data, skipPageResetRef }) {
                 className="min-w-full divide-y divide-gray-200"
               >
                 <thead className="bg-gray-50">
-                  {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                      {headerGroup.headers.map((column) => (
+                  {headerGroups.map((headerGroup, index) => (
+                    <tr key={index} {...headerGroup.getHeaderGroupProps()}>
+                      {headerGroup.headers.map((column, index) => (
                         <th
+                          key={index}
                           {...column.getHeaderProps()}
                           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
@@ -112,10 +113,11 @@ export default function Table({ columns, data, skipPageResetRef }) {
                   {page.map((row, i) => {
                     prepareRow(row);
                     return (
-                      <tr {...row.getRowProps()}>
-                        {row.cells.map((cell) => {
+                      <tr key={i} {...row.getRowProps()}>
+                        {row.cells.map((cell, index) => {
                           return (
                             <td
+                              key={index}
                               {...cell.getCellProps()}
                               className="px-6 py-4 truncate max-w-[16rem] hover:break-words hover:overflow-visible hover:text-clip hover:whitespace-normal"
                             >

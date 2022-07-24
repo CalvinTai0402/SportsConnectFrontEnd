@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useMemo, useRef, useState } from "react";
-import useMyAxios from "../../hooks/useMyAxios";
+import myAxiosPrivate from "../../axios/myAxiosPrivate";
 import Accordion from "../Accordion/Accordion";
 import Table from "../Table/Table";
 import CheckBox from "./CheckBox";
@@ -14,7 +14,7 @@ export default function Universities({ unis }) {
 
   useEffect(() => {
     let fetchAllUnis = async (limit) => {
-      let myAxios = useMyAxios(router);
+      let myAxios = myAxiosPrivate(router);
       let res = await myAxios.get(`/universities?limit=${limit}`).catch((e) => {
         return e.response;
       });
@@ -60,7 +60,7 @@ export default function Universities({ unis }) {
   };
 
   let handleAllOrIntersted = async () => {
-    let myAxios = useMyAxios(router);
+    let myAxios = myAxiosPrivate(router);
     let res;
     if (allOrIntersted === "all") {
       setAllOrInterested("interested");
