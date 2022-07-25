@@ -14,22 +14,6 @@ export default function Login() {
   let getCsrf = useCsrfToken();
   let handleUsernameChange = (e) => setUsername(e.target.value);
   let handlePasswordChange = (e) => setPassword(e.target.value);
-  let getMobileOperatingSystem = () => {
-    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    // Windows Phone must come first because its UA also contains "Android"
-    if (/windows phone/i.test(userAgent)) {
-      return "Windows Phone";
-    }
-    if (/android/i.test(userAgent)) {
-      return "Android";
-    }
-    // iOS detection from: http://stackoverflow.com/a/9039885/177710
-    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-      return "iOS";
-    }
-    return "unknown";
-  };
-
   let handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -60,14 +44,7 @@ export default function Login() {
         setError(res.data.detail[0].msg);
         break;
       default:
-        if (getMobileOperatingSystem() === "iOS") {
-          setError(
-            "Please go to settings > Safari and disable 'prevent Cross-Site Tracking'"
-          );
-        } else {
-          setError("An error occured, please try again");
-        }
-      // setError("An error occured, please try again");
+        setError("An error occured, please try again");
     }
   };
 
