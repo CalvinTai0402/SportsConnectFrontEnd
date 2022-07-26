@@ -53,7 +53,7 @@ export default function Portfolio() {
       if (currentUser.birthday) {
         setBirthday(new Date(currentUser.birthday + "T15:00:00Z"));
       }
-      if (res.data.profile_photo.length > 0) {
+      if (res.data.profile_photo?.length > 0) {
         setPhotoUrl(res.data.profile_photo[0].photo_url);
       }
     };

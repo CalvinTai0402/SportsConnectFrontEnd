@@ -16,7 +16,7 @@ export default function myAxiosPrivate(router = null, csrfToken = null) {
   let handleLogout = async () => {
     localStorage.removeItem("token");
     let csrfToken = await getCsrf();
-    let myAxios = useMyAxios(router, csrfToken);
+    let myAxios = myAxiosPrivate(router, csrfToken);
     let res = await myAxios.post(`/logout`).catch((e) => {
       return e.response;
     });
