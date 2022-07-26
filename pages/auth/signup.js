@@ -46,7 +46,7 @@ export default function Login() {
         }
         break;
       default:
-        setError("An error occured, please try again");
+        setError("An error occured, please refresh and try again");
     }
   };
 

@@ -44,7 +44,7 @@ export default function Login() {
         setError(res.data.detail[0].msg);
         break;
       default:
-        setError("An error occured, please try again");
+        setError("An error occured, please refresh and try again");
     }
   };
 
