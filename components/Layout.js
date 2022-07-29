@@ -7,6 +7,8 @@ export default function Layout({ children }) {
       <Header />
       {children}
       <Footer />
+      {/* <div className="w-full bottom-0">
+      </div> */}
     </>
   );
 }

@@ -39,7 +39,7 @@ export default function Header() {
     <Fragment>
       <MyHead />
       <header className="sticky top-0 z-50">
-        <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800 bg-blue-50">
+        <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 bg-blue-50">
           <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <Link href="/home">
               <div className="flex items-center">
@@ -50,7 +50,7 @@ export default function Header() {
                   className="mr-3 h-6 sm:h-9"
                   alt="Flowbite Logo"
                 />
-                <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white ml-4">
+                <span className="self-center text-xl font-semibold whitespace-nowrap ml-4">
                   SportsConnect
                 </span>
               </div>
@@ -193,7 +193,7 @@ export default function Header() {
                       <a
                         onClick={updateLoggedInStatus}
                         className={
-                          "block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 dark:text-white hover:border-b hover:border-gray-800 hover:text-blue-700 " +
+                          "block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 hover:border-b hover:border-gray-800 hover:text-blue-700 " +
                           (urlPath.includes("/home")
                             ? "border-b border-gray-800 text-blue-700"
                             : "")
@@ -209,7 +209,7 @@ export default function Header() {
                       <a
                         onClick={updateLoggedInStatus}
                         className={
-                          "block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 dark:text-white hover:border-b hover:border-gray-800 hover:text-blue-700 " +
+                          "block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 hover:border-b hover:border-gray-800 hover:text-blue-700 " +
                           (urlPath.includes("/universities")
                             ? "border-b border-gray-800 text-blue-700"
                             : "")
@@ -225,7 +225,7 @@ export default function Header() {
                       <a
                         onClick={updateLoggedInStatus}
                         className={
-                          "block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 dark:text-white hover:border-b hover:border-gray-800 hover:text-blue-700 " +
+                          "block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 hover:border-b hover:border-gray-800 hover:text-blue-700 " +
                           (urlPath.includes("/steps")
                             ? "border-b border-gray-800 text-blue-700"
                             : "")
@@ -241,7 +241,7 @@ export default function Header() {
                       <a
                         onClick={updateLoggedInStatus}
                         className={
-                          "block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 dark:text-white hover:border-b hover:border-gray-800 hover:text-blue-700 " +
+                          "block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 hover:border-b hover:border-gray-800 hover:text-blue-700 " +
                           (urlPath.includes("/portfolio")
                             ? "border-b border-gray-800 text-blue-700"
                             : "")
@@ -260,7 +260,7 @@ export default function Header() {
                           <a
                             onClick={updateLoggedInStatus}
                             className={
-                              "block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 dark:text-white hover:border-b hover:border-gray-800 hover:text-blue-700 " +
+                              "block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 hover:border-b hover:border-gray-800 hover:text-blue-700 " +
                               (urlPath.includes("/auth/login")
                                 ? "border-b border-gray-800 text-blue-700"
                                 : "")
@@ -277,7 +277,7 @@ export default function Header() {
                           <a
                             onClick={updateLoggedInStatus}
                             className={
-                              "block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 dark:text-white hover:border-b hover:border-gray-800 hover:text-blue-700 " +
+                              "block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 hover:border-b hover:border-gray-800 hover:text-blue-700 " +
                               (urlPath.includes("/auth/signup")
                                 ? "border-b border-gray-800 text-blue-700"
                                 : "")
@@ -294,7 +294,7 @@ export default function Header() {
                     <li>
                       <span
                         onClick={handleLogout}
-                        className="block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 dark:text-white hover:border-b hover:border-gray-800 hover:text-blue-700"
+                        className="block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 hover:border-b hover:border-gray-800 hover:text-blue-700"
                       >
                         Log out
                       </span>

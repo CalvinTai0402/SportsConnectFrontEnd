@@ -29,6 +29,7 @@ export default function Portfolio() {
   const [photoUrl, setPhotoUrl] = useState("None");
   const [showUploadButton, setShowUploadButton] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState(null);
 
   const firstRun = useRef(true);
   let getCsrf = useCsrfToken();
@@ -81,6 +82,10 @@ export default function Portfolio() {
   };
 
   let updateProfilePhoto = async (e) => {
+    if (!e.target.files[0].name.match(/\.(jpg|jpeg|png|gif)$/)) {
+      setError("Select a valid image file");
+      return false;
+    }
     const formData = new FormData();
     formData.append("file", e.target.files[0], e.target.files[0].name);
     setUploading(true);
@@ -117,7 +122,7 @@ export default function Portfolio() {
 
   return (
     <Fragment>
-      <div className="container mx-auto my-5 p-5">
+      <div className="container mx-auto my-5 p-5 min-h-[80vh]">
         <div className="md:flex no-wrap mx-2 ">
           <div className="w-full md:w-3/12 mx-2">
             <div className="bg-white border-t-4 border-blue-400 h-full">
@@ -127,22 +132,22 @@ export default function Portfolio() {
                     className="h-auto w-full mx-auto"
                     src={photoUrl}
                     alt=""
-                    width={550}
+                    width={600}
                     height={600}
                   />
                 ) : (
                   <Image
                     className="h-auto w-full mx-auto"
-                    src="https://sportsconnect-profilephotos.s3.amazonaws.com/default-photo-15f476212b3a96481fbe8119c9852426ae7685db0f0a57b48fbc3738ce68add8.jpg"
+                    src="https://sportsconnect-profilepics.s3.amazonaws.com/default-photo.jpg"
                     alt=""
-                    width={550}
+                    width={600}
                     height={600}
                   />
                 )}
                 {uploading ? (
                   <svg
                     aria-hidden="true"
-                    className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 h-auto w-full mx-auto"
+                    className="w-8 h-8 text-gray-200 animate-spin fill-blue-600 h-auto w-full mx-auto"
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -160,10 +165,10 @@ export default function Portfolio() {
                   <span>
                     <span className="flex justify-between">
                       <label
-                        className="text-sm font-medium text-gray-900 dark:text-gray-300 text-blue-600"
+                        className="text-sm font-medium text-gray-900 text-blue-600"
                         htmlFor="file_input"
                       >
-                        Upload file
+                        Upload photo
                       </label>
                       <label
                         className="mt-[2px]"
@@ -173,7 +178,7 @@ export default function Portfolio() {
                       </label>
                     </span>
                     <input
-                      className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                      className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
                       id="file_input"
                       type="file"
                       onChange={(e) => {
@@ -184,8 +189,11 @@ export default function Portfolio() {
                   </span>
                 ) : (
                   <div
-                    onClick={() => setShowUploadButton(!showUploadButton)}
-                    className="text-sm grid place-items-center bg-slate-200 border-gray-500 text-blue-600"
+                    onClick={() => {
+                      setShowUploadButton(!showUploadButton);
+                      setError("");
+                    }}
+                    className="text-md grid place-items-center bg-slate-200  text-blue-600"
                   >
                     {photoUrl === "None"
                       ? "Click to upload a new profile photo"
@@ -193,6 +201,15 @@ export default function Portfolio() {
                   </div>
                 )}
               </div>
+              {error ? (
+                <span className="text-red-700 flex justify-between text-md ">
+                  {error}
+                  <AiOutlineClose
+                    onClick={() => setError("")}
+                    className="hover:cursor-pointer mt-1"
+                  />
+                </span>
+              ) : null}
               <h1 className="text-gray-900 leading-8 my-2">
                 <Input
                   label="Preferred name"

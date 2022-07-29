@@ -17,7 +17,7 @@ export default function AccordionItem({
       <h2 id="accordion-collapse-heading-1">
         <button
           type="button"
-          className="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+          className="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 hover:bg-gray-100"
           data-accordion-target="#accordion-collapse-body-1"
           aria-expanded="true"
           aria-controls="accordion-collapse-body-1"
@@ -47,33 +47,33 @@ export default function AccordionItem({
         className={show === false ? "hidden" : ""}
         aria-labelledby="accordion-collapse-heading-1"
       >
-        <div className="p-5 font-light border border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+        <div className="p-5 font-light border border-gray-200">
           <div className="flex justify-start">
-            <p className="mb-2 text-gray-500 dark:text-gray-400">
+            <p className="mb-2 text-gray-500">
               <span className="font-bold">City</span>: {city}
             </p>
-            <p className="mb-2 ml-2 text-gray-500 dark:text-gray-400">
+            <p className="mb-2 ml-2 text-gray-500">
               <span className="font-bold">State</span>: {state}
             </p>
           </div>
           <div className="flex justify-start">
-            <p className="mb-2 text-gray-500 dark:text-gray-400">
+            <p className="mb-2 text-gray-500">
               <span className="font-bold">Region</span>: {region}
             </p>
-            <p className="mb-2 ml-2 text-gray-500 dark:text-gray-400">
+            <p className="mb-2 ml-2 text-gray-500">
               <span className="font-bold">Category</span>: {category}
             </p>
           </div>
           <div className="flex justify-start">
-            <p className="mb-2 text-gray-500 dark:text-gray-400">
+            <p className="mb-2 text-gray-500">
               <span className="font-bold">Conference</span>: {conference}
             </p>
-            <p className="mb-2 ml-2 text-gray-500 dark:text-gray-400">
+            <p className="mb-2 ml-2 text-gray-500">
               <span className="font-bold">Division</span>: {division}
             </p>
           </div>
           <div className="flex justify-start">
-            <p className="mb-2 text-gray-500 dark:text-gray-400">
+            <p className="mb-2 text-gray-500">
               <span className="font-bold">Interest</span>: {interested}
             </p>
           </div>

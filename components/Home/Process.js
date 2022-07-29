@@ -3,13 +3,13 @@ import React from "react";
 
 export default function Process() {
   return (
-    <section className="bg-gray-50 dark:bg-gray-800">
+    <section className="bg-gray-50">
       <div className="py-8 px-4 mx-auto max-w-screen-2xl sm:py-16 lg:px-6">
         <div className="max-w-screen-md mb-8 lg:mb-16">
-          <h2 className="mb-4 text-4xl font-bold md:font-extrabold text-gray-900 dark:text-white">
+          <h2 className="mb-4 text-4xl font-bold md:font-extrabold text-gray-900">
             A simplified process
           </h2>
-          <p className="text-gray-500 sm:text-xl dark:text-gray-400">
+          <p className="text-gray-500 sm:text-xl">
             Here you can browse and express your interest to a wide range of
             universities that are actively looking to recruit athletes to be
             part of their team.
@@ -17,9 +17,9 @@ export default function Process() {
         </div>
         <div className="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
           <div>
-            <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-blue-100 lg:h-12 lg:w-12 dark:bg-blue-900">
+            <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-blue-100 lg:h-12 lg:w-12">
               <svg
-                className="w-5 h-5 text-blue-600 lg:w-6 lg:h-6 dark:text-blue-300"
+                className="w-5 h-5 text-blue-600 lg:w-6 lg:h-6"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -32,19 +32,17 @@ export default function Process() {
                 ></path>
               </svg>
             </div>
-            <h3 className="mb-2 text-xl font-bold dark:text-white">
-              A 5-minute call
-            </h3>
-            <p className="text-gray-500 dark:text-gray-400">
+            <h3 className="mb-2 text-xl font-bold">A 5-minute call</h3>
+            <p className="text-gray-500">
               Once you sign up for an account and express your interest to a
               university, you can schedule a quick call with us to ask any
               questions that you might have.
             </p>
           </div>
           <div>
-            <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-blue-100 lg:h-12 lg:w-12 dark:bg-blue-900">
+            <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-blue-100 lg:h-12 lg:w-12">
               <svg
-                className="w-5 h-5 text-blue-600 lg:w-6 lg:h-6 dark:text-blue-300"
+                className="w-5 h-5 text-blue-600 lg:w-6 lg:h-6"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -52,10 +50,8 @@ export default function Process() {
                 <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
               </svg>
             </div>
-            <h3 className="mb-2 text-xl font-bold dark:text-white">
-              Your presence
-            </h3>
-            <p className="text-gray-500 dark:text-gray-400">
+            <h3 className="mb-2 text-xl font-bold">Your presence</h3>
+            <p className="text-gray-500">
               Make sure to{" "}
               <Link href="/portfolio">
                 <a>
@@ -73,9 +69,9 @@ export default function Process() {
             </p>
           </div>
           <div>
-            <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-blue-100 lg:h-12 lg:w-12 dark:bg-blue-900">
+            <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-blue-100 lg:h-12 lg:w-12">
               <svg
-                className="w-5 h-5 text-blue-600 lg:w-6 lg:h-6 dark:text-blue-300"
+                className="w-5 h-5 text-blue-600 lg:w-6 lg:h-6"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -87,10 +83,8 @@ export default function Process() {
                 ></path>
               </svg>
             </div>
-            <h3 className="mb-2 text-xl font-bold dark:text-white">
-              Sit back and relax
-            </h3>
-            <p className="text-gray-500 dark:text-gray-400">
+            <h3 className="mb-2 text-xl font-bold">Sit back and relax</h3>
+            <p className="text-gray-500">
               We will carry out your application for you while you take care of
               the{" "}
               <Link href="/steps">
