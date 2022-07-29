@@ -124,7 +124,7 @@ export default function Portfolio() {
     <Fragment>
       <div className="container mx-auto my-5 p-5 min-h-[80vh]">
         <div className="md:flex no-wrap mx-2 ">
-          <div className="w-full md:w-3/12 mx-2">
+          <div className="w-full md:w-3/12 sm:mx-2">
             <div className="bg-white border-t-4 border-blue-400 h-full">
               <div className="image overflow-hidden">
                 {photoUrl !== "None" ? (
@@ -231,7 +231,7 @@ export default function Portfolio() {
             </div>
             <div className="my-4"></div>
           </div>
-          <div className="w-full md:w-9/12 mx-2 ">
+          <div className="w-full md:w-9/12 sm:mx-2 ">
             <div className="bg-white pb-3 shadow-sm rounded-sm">
               <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
                 <span clas="text-blue-500">
