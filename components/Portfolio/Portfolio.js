@@ -65,7 +65,7 @@ export default function Portfolio() {
     let csrfToken = await getCsrf();
     let myAxios = myAxiosPrivate(router, csrfToken);
     let res = await myAxios
-      .put("/users", {
+      .put("/users/", {
         first_name: firstName,
         last_name: lastName,
         preferred_name: preferredName,

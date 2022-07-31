@@ -15,9 +15,11 @@ export default function Universities({ unis }) {
   useEffect(() => {
     let fetchAllUnis = async (limit) => {
       let myAxios = myAxiosPrivate(router);
-      let res = await myAxios.get(`/universities?limit=${limit}`).catch((e) => {
-        return e.response;
-      });
+      let res = await myAxios
+        .get(`/universities/?limit=${limit}`)
+        .catch((e) => {
+          return e.response;
+        });
       setAllUnis(res.data);
     };
     fetchAllUnis(-1);
@@ -71,7 +73,7 @@ export default function Universities({ unis }) {
         });
     } else {
       setAllOrInterested("all");
-      res = await myAxios.get(`/universities?limit=${-1}`).catch((e) => {
+      res = await myAxios.get(`/universities/?limit=${-1}`).catch((e) => {
         return e.response;
       });
     }

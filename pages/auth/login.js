@@ -38,10 +38,10 @@ export default function Login() {
         router.push("/universities");
         break;
       case 403:
-        setError(res.data.detail);
+        setError(res.data.detail); // Invalid credentials
         break;
       case 422:
-        setError(res.data.detail[0].msg);
+        setError(res.data.detail[0].msg); // value is not a valid email address
         break;
       default:
         setError("An error occured, please refresh and try again");

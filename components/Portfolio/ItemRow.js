@@ -33,7 +33,7 @@ export default function ItemRow({
   let handleDelete = async (_id) => {
     let csrfToken = await getCsrf();
     let myAxios = myAxiosPrivate(router, csrfToken);
-    let res = await myAxios.delete(`${endpoint}/${_id}`).catch((e) => {
+    let res = await myAxios.delete(`${endpoint}${_id}`).catch((e) => {
       return e.response;
     });
   };
@@ -50,11 +50,9 @@ export default function ItemRow({
     }
     let csrfToken = await getCsrf();
     let myAxios = myAxiosPrivate(router, csrfToken);
-    let res = await myAxios
-      .put(`${endpoint}/${id}`, updateObject)
-      .catch((e) => {
-        return e.response;
-      });
+    let res = await myAxios.put(`${endpoint}${id}`, updateObject).catch((e) => {
+      return e.response;
+    });
   };
 
   useEffect(() => {

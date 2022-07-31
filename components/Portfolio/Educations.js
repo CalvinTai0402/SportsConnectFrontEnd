@@ -5,7 +5,7 @@ export default function Educations() {
   return (
     <Fragment>
       <Fragment>
-        <Template endpoint={"/educations"} />
+        <Template endpoint={"/educations/"} />
       </Fragment>
     </Fragment>
   );

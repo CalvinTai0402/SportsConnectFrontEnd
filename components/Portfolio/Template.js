@@ -29,7 +29,7 @@ export default function Template({ endpoint }) {
   };
 
   let capitalizeEndpoint = (string) => {
-    return string.charAt(1).toUpperCase() + string.slice(2);
+    return string.charAt(1).toUpperCase() + string.slice(2, -1);
   };
 
   let handleCreate = async () => {

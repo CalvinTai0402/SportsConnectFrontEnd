@@ -4,7 +4,7 @@ import Template from "./Template";
 export default function Experiences() {
   return (
     <Fragment>
-      <Template endpoint="/experiences" />
+      <Template endpoint="/experiences/" />
     </Fragment>
   );
 }

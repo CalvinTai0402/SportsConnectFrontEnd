@@ -40,9 +40,9 @@ export default function Login() {
         break;
       case 422:
         if (res.data.detail.constructor === Array) {
-          setError(res.data.detail[0].msg);
+          setError(res.data.detail[0].msg); // value is not a valid email address
         } else {
-          setError(res.data.detail);
+          setError(res.data.detail); // Email is used by another user
         }
         break;
       default:
