@@ -1,11 +1,38 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import myAxiosPrivate from "../axios/myAxiosPrivate";
+import useCsrfToken from "../hooks/useCsrfToken";
 
 export { RouteGuard };
 
 function RouteGuard({ children }) {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
+  // const [location, _] = useState(router.asPath);
+  let getCsrf = useCsrfToken();
+  useEffect(() => {
+    // first time mount, we redirect to universities if access token in cookies is still valid
+    let setSessionStorage = async () => {
+      try {
+        let csrfToken = await getCsrf();
+        let myAxios = myAxiosPrivate(router, csrfToken);
+        let res = await myAxios.get(`/users/me`).catch((e) => {
+          return e.response;
+        });
+        if (res.status === 200) {
+          sessionStorage.setItem("token", "isLoggedIn");
+          router.push("/universities");
+        } else if (res.status === 401) {
+          sessionStorage.removeItem("token");
+        }
+      } catch (error) {
+        // sessionStorage.removeItem("token");
+        // not logged in anymore, don't set token
+        console.log(error);
+      }
+    };
+    setSessionStorage();
+  }, []);
 
   useEffect(() => {
     authCheck(router.asPath);
@@ -33,7 +60,8 @@ function RouteGuard({ children }) {
     });
     const path = url.split("?")[0];
     if (
-      !localStorage.getItem("token") &&
+      !sessionStorage.getItem("token") &&
+      // !isLoggedIn &&
       !allLocalesPublicPaths.includes(path)
     ) {
       setAuthorized(false);

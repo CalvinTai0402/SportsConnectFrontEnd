@@ -15,27 +15,40 @@ export default function Header() {
   const { isLoggedIn, setIsLoggedIn } = useUserContext();
   let getCsrf = useCsrfToken();
   // === if user uses more than one tab ===
-  let updateLoggedInStatus = () => {
-    if (localStorage.getItem("token")) {
-      setIsLoggedIn(true);
-    } else {
+  let setSessionStorage = async () => {
+    try {
+      let csrfToken = await getCsrf();
+      let myAxios = myAxiosPrivate(router, csrfToken);
+      let res = await myAxios.get(`/users/me`).catch((e) => {
+        return e.response;
+      });
+      if (res.status === 200) {
+        sessionStorage.setItem("token", "isLoggedIn");
+        setIsLoggedIn(true);
+      } else if (res.status === 401) {
+        sessionStorage.removeItem("token");
+        setIsLoggedIn(false);
+      }
+    } catch (error) {
+      // not logged in anymore, don't set token
+      console.log(error);
       setIsLoggedIn(false);
     }
   };
   useEffect(() => {
-    updateLoggedInStatus();
+    setSessionStorage();
   }, []);
   // === if user uses more than one tab ===
   const router = useRouter();
   const urlPath = router.asPath;
   let handleLogout = async () => {
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
     let csrfToken = await getCsrf();
     let myAxios = myAxiosPrivate(router, csrfToken);
     let res = await myAxios.post(`/logout`).catch((e) => {
       return e.response;
     });
-    updateLoggedInStatus();
+    await setSessionStorage();
     router.push("/");
   };
   return (
@@ -92,8 +105,8 @@ export default function Header() {
                       <li>
                         <Link href="/">
                           <a
-                            onClick={() => {
-                              updateLoggedInStatus();
+                            onClick={async () => {
+                              await setSessionStorage();
                               setIsNavOpen(false);
                             }}
                             className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
@@ -106,8 +119,8 @@ export default function Header() {
                       <li>
                         <Link href="/universities">
                           <a
-                            onClick={() => {
-                              updateLoggedInStatus();
+                            onClick={async () => {
+                              await setSessionStorage();
                               setIsNavOpen(false);
                             }}
                             className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
@@ -120,8 +133,8 @@ export default function Header() {
                       <li>
                         <Link href="/steps">
                           <a
-                            onClick={() => {
-                              updateLoggedInStatus();
+                            onClick={async () => {
+                              await setSessionStorage();
                               setIsNavOpen(false);
                             }}
                             className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
@@ -134,8 +147,8 @@ export default function Header() {
                       <li>
                         <Link href="/portfolio">
                           <a
-                            onClick={() => {
-                              updateLoggedInStatus();
+                            onClick={async () => {
+                              await setSessionStorage();
                               setIsNavOpen(false);
                             }}
                             className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
@@ -149,8 +162,8 @@ export default function Header() {
                           <li>
                             <Link href="/auth/login">
                               <a
-                                onClick={() => {
-                                  updateLoggedInStatus();
+                                onClick={async () => {
+                                  await setSessionStorage();
                                   setIsNavOpen(false);
                                 }}
                                 className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
@@ -162,8 +175,8 @@ export default function Header() {
                           <li>
                             <Link href="/auth/signup">
                               <a
-                                onClick={() => {
-                                  updateLoggedInStatus();
+                                onClick={async () => {
+                                  await setSessionStorage();
                                   setIsNavOpen(false);
                                 }}
                                 className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
@@ -197,7 +210,9 @@ export default function Header() {
                   <li>
                     <Link href="/home">
                       <a
-                        onClick={updateLoggedInStatus}
+                        onClick={async () => {
+                          await setSessionStorage();
+                        }}
                         className={
                           "block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 hover:border-b hover:border-gray-800 hover:text-blue-700 " +
                           (urlPath.includes("/home")
@@ -213,7 +228,9 @@ export default function Header() {
                   <li>
                     <Link href="/universities">
                       <a
-                        onClick={updateLoggedInStatus}
+                        onClick={async () => {
+                          await setSessionStorage();
+                        }}
                         className={
                           "block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 hover:border-b hover:border-gray-800 hover:text-blue-700 " +
                           (urlPath.includes("/universities")
@@ -229,7 +246,9 @@ export default function Header() {
                   <li>
                     <Link href="/steps">
                       <a
-                        onClick={updateLoggedInStatus}
+                        onClick={async () => {
+                          await setSessionStorage();
+                        }}
                         className={
                           "block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 hover:border-b hover:border-gray-800 hover:text-blue-700 " +
                           (urlPath.includes("/steps")
@@ -245,7 +264,9 @@ export default function Header() {
                   <li>
                     <Link href="/portfolio">
                       <a
-                        onClick={updateLoggedInStatus}
+                        onClick={async () => {
+                          await setSessionStorage();
+                        }}
                         className={
                           "block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 hover:border-b hover:border-gray-800 hover:text-blue-700 " +
                           (urlPath.includes("/portfolio")
@@ -264,7 +285,9 @@ export default function Header() {
                       <li>
                         <Link href="/auth/login">
                           <a
-                            onClick={updateLoggedInStatus}
+                            onClick={async () => {
+                              await setSessionStorage();
+                            }}
                             className={
                               "block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 hover:border-b hover:border-gray-800 hover:text-blue-700 " +
                               (urlPath.includes("/auth/login")
@@ -281,7 +304,9 @@ export default function Header() {
                       <li>
                         <Link href="/auth/signup">
                           <a
-                            onClick={updateLoggedInStatus}
+                            onClick={async () => {
+                              await setSessionStorage();
+                            }}
                             className={
                               "block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 hover:border-b hover:border-gray-800 hover:text-blue-700 " +
                               (urlPath.includes("/auth/signup")

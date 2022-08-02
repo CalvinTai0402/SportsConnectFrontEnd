@@ -36,7 +36,7 @@ export default function Login() {
       });
     switch (res.status) {
       case 201:
-        localStorage.setItem("token", "isLoggedIn");
+        sessionStorage.setItem("token", "isLoggedIn");
         setIsLoggedIn(true);
         router.push("/universities");
         break;

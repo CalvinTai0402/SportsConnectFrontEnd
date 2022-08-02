@@ -84,6 +84,7 @@ export default function Accordion({ unis }) {
               t("universities:search") +
               " " +
               totalFilteredUnis +
+              " " +
               t("universities:entries") +
               " ..."
             }

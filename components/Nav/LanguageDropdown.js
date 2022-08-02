@@ -12,13 +12,13 @@ export default function LanguageDropdown() {
         <div>
           <button
             type="button"
-            className="block text-gray-700 rounded lg:bg-transparent lg:p-0 px-2 focus:outline-0"
+            className="block text-gray-700 rounded lg:bg-transparent lg:p-0 px-4 focus:outline-0"
             id="menu-button"
             aria-expanded="true"
             aria-haspopup="true"
             onClick={() => setShowLang(!showLang)}
           >
-            <GlobeAltIcon className="mt-0.5 -mr-1 h-5 w-5" />
+            <GlobeAltIcon className="mt-0.5 -mr-1 h-5 w-7" />
           </button>
         </div>
         <div
