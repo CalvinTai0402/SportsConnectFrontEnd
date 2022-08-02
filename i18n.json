@@ -1,0 +1,14 @@
+{
+  "locales": ["en-US", "zh"],
+  "defaultLocale": "en-US",
+  "pages": {
+    "*": ["header", "footer", "_404"],
+    "/contactus": ["contactus"],
+    "/home": ["home"],
+    "/portfolio": ["portfolio"],
+    "/steps": ["steps"],
+    "/universities": ["universities"],
+    "/auth/login": ["login", "signup"],
+    "/auth/signup": ["login", "signup"]
+  }
+}

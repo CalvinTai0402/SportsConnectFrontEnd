@@ -1,3 +1,4 @@
+import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
 import { classNames } from "../../utilities/classNames";
 
@@ -12,6 +13,7 @@ export default function AccordionItem({
   interested,
 }) {
   const [show, setShow] = useState(false);
+  const { t } = useTranslation();
   return (
     <div>
       <h2 id="accordion-collapse-heading-1">
@@ -50,31 +52,38 @@ export default function AccordionItem({
         <div className="p-5 font-light border border-gray-200">
           <div className="flex justify-start">
             <p className="mb-2 text-gray-500">
-              <span className="font-bold">City</span>: {city}
+              <span className="font-bold">{t("universities:city")}</span>:{" "}
+              {city}
             </p>
             <p className="mb-2 ml-2 text-gray-500">
-              <span className="font-bold">State</span>: {state}
+              <span className="font-bold">{t("universities:state")}</span>:{" "}
+              {state}
             </p>
           </div>
           <div className="flex justify-start">
             <p className="mb-2 text-gray-500">
-              <span className="font-bold">Region</span>: {region}
+              <span className="font-bold">{t("universities:region")}</span>:{" "}
+              {region}
             </p>
             <p className="mb-2 ml-2 text-gray-500">
-              <span className="font-bold">Category</span>: {category}
+              <span className="font-bold">{t("universities:category")}</span>:{" "}
+              {category}
             </p>
           </div>
           <div className="flex justify-start">
             <p className="mb-2 text-gray-500">
-              <span className="font-bold">Conference</span>: {conference}
+              <span className="font-bold">{t("universities:conference")}</span>:{" "}
+              {conference}
             </p>
             <p className="mb-2 ml-2 text-gray-500">
-              <span className="font-bold">Division</span>: {division}
+              <span className="font-bold">{t("universities:division")}</span>:{" "}
+              {division}
             </p>
           </div>
           <div className="flex justify-start">
             <p className="mb-2 text-gray-500">
-              <span className="font-bold">Interest</span>: {interested}
+              <span className="font-bold">{t("universities:interested")}</span>:{" "}
+              {interested}
             </p>
           </div>
         </div>

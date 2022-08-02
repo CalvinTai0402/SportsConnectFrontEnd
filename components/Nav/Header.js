@@ -6,8 +6,11 @@ import myAxiosPrivate from "../../axios/myAxiosPrivate";
 import { useUserContext } from "../Context/UserContext";
 import MyHead from "../Meta/MyHead";
 import Image from "next/image";
+import LanguageDropdown from "./LanguageDropdown";
+import useTranslation from "next-translate/useTranslation";
 
 export default function Header() {
+  const { t } = useTranslation();
   const [isNavOpen, setIsNavOpen] = useState(false);
   const { isLoggedIn, setIsLoggedIn } = useUserContext();
   let getCsrf = useCsrfToken();
@@ -96,7 +99,7 @@ export default function Header() {
                             className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
                             aria-current="page"
                           >
-                            Home
+                            {t("header:home")}
                           </a>
                         </Link>
                       </li>
@@ -110,7 +113,7 @@ export default function Header() {
                             className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
                             aria-current="page"
                           >
-                            Universities
+                            {t("header:universities")}
                           </a>
                         </Link>
                       </li>
@@ -124,7 +127,7 @@ export default function Header() {
                             className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
                             aria-current="page"
                           >
-                            Steps
+                            {t("header:steps")}
                           </a>
                         </Link>
                       </li>
@@ -137,7 +140,7 @@ export default function Header() {
                             }}
                             className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
                           >
-                            Portfolio
+                            {t("header:portfolio")}
                           </a>
                         </Link>
                       </li>
@@ -152,7 +155,7 @@ export default function Header() {
                                 }}
                                 className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
                               >
-                                Log in
+                                {t("header:log_in")}
                               </a>
                             </Link>
                           </li>
@@ -165,7 +168,7 @@ export default function Header() {
                                 }}
                                 className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
                               >
-                                Sign up
+                                {t("header:sign_up")}
                               </a>
                             </Link>
                           </li>
@@ -179,10 +182,13 @@ export default function Header() {
                             }}
                             className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
                           >
-                            Log out
+                            {t("header:log_out")}
                           </span>
                         </li>
                       )}
+                      <li>
+                        <LanguageDropdown />
+                      </li>
                     </ul>
                   </div>
                 </section>
@@ -200,7 +206,7 @@ export default function Header() {
                         }
                         aria-current="page"
                       >
-                        Home
+                        {t("header:home")}
                       </a>
                     </Link>
                   </li>
@@ -216,7 +222,7 @@ export default function Header() {
                         }
                         aria-current="page"
                       >
-                        Universities
+                        {t("header:universities")}
                       </a>
                     </Link>
                   </li>
@@ -232,7 +238,7 @@ export default function Header() {
                         }
                         aria-current="page"
                       >
-                        Steps
+                        {t("header:steps")}
                       </a>
                     </Link>
                   </li>
@@ -249,7 +255,7 @@ export default function Header() {
                         aria-current="page"
                       >
                         {" "}
-                        Portfolio
+                        {t("header:portfolio")}
                       </a>
                     </Link>
                   </li>
@@ -268,7 +274,7 @@ export default function Header() {
                             aria-current="page"
                           >
                             {" "}
-                            Log in
+                            {t("header:log_in")}
                           </a>
                         </Link>
                       </li>
@@ -285,7 +291,7 @@ export default function Header() {
                             aria-current="page"
                           >
                             {" "}
-                            Sign up
+                            {t("header:sign_up")}
                           </a>
                         </Link>
                       </li>
@@ -296,10 +302,14 @@ export default function Header() {
                         onClick={handleLogout}
                         className="block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 hover:border-b hover:border-gray-800 hover:text-blue-700"
                       >
-                        Log out
+                        {t("header:log_out")}
                       </span>
                     </li>
                   )}
+
+                  <li>
+                    <LanguageDropdown />
+                  </li>
                 </ul>
               </nav>
             </div>

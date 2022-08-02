@@ -4,8 +4,10 @@ import Form from "../../components/Auth/Form";
 import { useUserContext } from "../../components/Context/UserContext";
 import useCsrfToken from "../../hooks/useCsrfToken";
 import myAxiosPrivate from "../../axios/myAxiosPrivate";
+import useTranslation from "next-translate/useTranslation";
 
 export default function Login() {
+  const { t } = useTranslation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -38,10 +40,12 @@ export default function Login() {
         router.push("/universities");
         break;
       case 403:
-        setError(res.data.detail); // Invalid credentials
+        // setError(res.data.detail); // Invalid credentials
+        setError(t("login:invalid_credentials"));
         break;
       case 422:
-        setError(res.data.detail[0].msg); // value is not a valid email address
+        // setError(res.data.detail[0].msg); // value is not a valid email address
+        setError(t("login:invalid_email"));
         break;
       default:
         setError("An error occured, please refresh and try again");
@@ -51,7 +55,7 @@ export default function Login() {
   return (
     <Fragment>
       <Form
-        text="Log in"
+        text={t("login:log_in")}
         handleUsernameChange={handleUsernameChange}
         handlePasswordChange={handlePasswordChange}
         handleSubmit={handleSubmit}

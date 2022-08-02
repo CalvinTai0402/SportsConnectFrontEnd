@@ -22,8 +22,20 @@ function RouteGuard({ children }) {
   let authCheck = (url) => {
     // redirect to login page if accessing a private page and not logged in
     const publicPaths = ["/home", "/auth/login", "/auth/signup", "/"];
+    let allLocalesPublicPaths = [...publicPaths];
+    router.locales.map((locale) => {
+      if (locale !== router.defaultLocale) {
+        // default locale does not have a prefix
+        for (const path of publicPaths) {
+          allLocalesPublicPaths.push("/" + locale + path);
+        }
+      }
+    });
     const path = url.split("?")[0];
-    if (!localStorage.getItem("token") && !publicPaths.includes(path)) {
+    if (
+      !localStorage.getItem("token") &&
+      !allLocalesPublicPaths.includes(path)
+    ) {
       setAuthorized(false);
       router.push("/auth/login");
     } else {

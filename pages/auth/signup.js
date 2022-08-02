@@ -4,8 +4,10 @@ import Form from "../../components/Auth/Form";
 import { useUserContext } from "../../components/Context/UserContext";
 import myAxiosPrivate from "../../axios/myAxiosPrivate";
 import useCsrfToken from "../../hooks/useCsrfToken";
+import useTranslation from "next-translate/useTranslation";
 
 export default function Login() {
+  const { t } = useTranslation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -41,8 +43,10 @@ export default function Login() {
       case 422:
         if (res.data.detail.constructor === Array) {
           setError(res.data.detail[0].msg); // value is not a valid email address
+          setError(t("signup:invalid_email"));
         } else {
           setError(res.data.detail); // Email is used by another user
+          setError(t("signup:invalid_credentials"));
         }
         break;
       default:
@@ -53,7 +57,7 @@ export default function Login() {
   return (
     <Fragment>
       <Form
-        text="Sign up"
+        text={t("signup:sign_up")}
         handleUsernameChange={handleUsernameChange}
         handlePasswordChange={handlePasswordChange}
         handleSubmit={handleSubmit}

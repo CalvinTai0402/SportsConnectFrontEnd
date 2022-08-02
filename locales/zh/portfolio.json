@@ -1,0 +1,20 @@
+{
+  "upload_new_photo": "点击上传头像",
+  "change_profile_photo": "修改头像",
+  "upload_file": "上传文件",
+  "preferred_name": "用户名",
+  "bio": "个人资料",
+  "about": "关于...",
+  "first_name": "名",
+  "last_name": "姓",
+  "gender": "性别",
+  "contact_no": "联系电话.",
+  "current_address": "目前地址",
+  "permanent_address": "常住地址",
+  "email": "电子邮件",
+  "birthday": "生日",
+  "experience": "经验",
+  "educations": "教育",
+  "active": "激活",
+  "inactive": "未启用"
+}

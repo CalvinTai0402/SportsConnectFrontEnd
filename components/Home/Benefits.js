@@ -1,16 +1,15 @@
+import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
 export default function Benefits() {
+  const { t } = useTranslation();
   return (
     <div className="bg-white py-8 px-4 mx-auto max-w-screen-2xl sm:py-16 lg:px-6">
       <div className="max-w-screen-md mb-8 lg:mb-16">
         <h2 className="mb-4 text-4xl font-bold md:font-extrabold text-gray-900">
-          Benefits of a successful application
+          {t("home:card_4_text_0")}
         </h2>
-        <p className="text-gray-500 sm:text-xl">
-          Here are some benefits and advantages that you get upon a successful
-          application.
-        </p>
+        <p className="text-gray-500 sm:text-xl">{t("home:card_4_text_1")}</p>
       </div>
       <div className="container px-4 mx-auto">
         <div>
@@ -21,7 +20,7 @@ export default function Benefits() {
             >
               <div id="title" className="w-full py-5 border-b border-gray-800">
                 <h3 className="font-normal text-indigo-500 text-xl mt-2">
-                  Education
+                  {t("home:card_4_text_2")}
                 </h3>
               </div>
               <div id="content" className="">
@@ -41,7 +40,7 @@ export default function Benefits() {
                     />
                   </svg>
                   <p className="text-gray-500 text-sm pt-2">
-                    Get a college degree! 🥳
+                    {t("home:card_4_text_3")} 🥳
                   </p>
                 </div>
                 <div
@@ -49,9 +48,9 @@ export default function Benefits() {
                   className="leading-8 mb-10 text-lg font-light"
                 >
                   <ul>
-                    <li>Learn useful hard skills</li>
-                    <li>Get summer internships</li>
-                    <li>Become more disciplined</li>
+                    <li>{t("home:card_4_text_4")}</li>
+                    <li>{t("home:card_4_text_5")}</li>
+                    <li>{t("home:card_4_text_6")}</li>
                   </ul>
                 </div>
               </div>
@@ -62,7 +61,7 @@ export default function Benefits() {
             >
               <div id="title" className="w-full py-5 border-b border-gray-800">
                 <h3 className="font-normal text-indigo-500 text-xl mt-2">
-                  Scholarship
+                  {t("home:card_4_text_7")}
                 </h3>
               </div>
               <div id="content" className="">
@@ -82,7 +81,7 @@ export default function Benefits() {
                     />
                   </svg>
                   <p className="text-gray-500 text-sm pt-2">
-                    Stand a chance for a full scholarship! 🤩
+                    {t("home:card_4_text_8")} 🤩
                   </p>
                 </div>
                 <div
@@ -90,9 +89,9 @@ export default function Benefits() {
                   className="leading-8 mb-10 text-lg font-light"
                 >
                   <ul>
-                    <li>Free education</li>
-                    <li>Pick any major</li>
-                    <li>Get a biweekly allowance</li>
+                    <li>{t("home:card_4_text_9")}</li>
+                    <li>{t("home:card_4_text_10")}</li>
+                    <li>{t("home:card_4_text_11")}</li>
                   </ul>
                 </div>
               </div>
@@ -103,7 +102,7 @@ export default function Benefits() {
             >
               <div id="title" className="w-full py-5 border-b border-gray-800">
                 <h3 className="font-normal text-indigo-500 text-xl mt-2">
-                  Exploration
+                  {t("home:card_4_text_12")}
                 </h3>
               </div>
               <div id="content" className="">
@@ -123,7 +122,7 @@ export default function Benefits() {
                     />
                   </svg>
                   <p className="text-gray-500 text-sm pt-2">
-                    Explore another country! 🚀
+                    {t("home:card_4_text_13")} 🚀
                   </p>
                 </div>
                 <div
@@ -131,9 +130,9 @@ export default function Benefits() {
                   className="leading-8 mb-10 text-lg font-light"
                 >
                   <ul>
-                    <li>Meet new friends</li>
-                    <li>Learn and live in another culture</li>
-                    <li>Travel with your teammates</li>
+                    <li>{t("home:card_4_text_14")}</li>
+                    <li>{t("home:card_4_text_15")}</li>
+                    <li>{t("home:card_4_text_16")}</li>
                   </ul>
                 </div>
               </div>

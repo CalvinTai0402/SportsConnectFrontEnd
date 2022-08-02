@@ -7,8 +7,10 @@ import {
   ChevronDoubleRightIcon,
 } from "@heroicons/react/solid";
 import PageButton from "../Table/PageButton";
+import useTranslation from "next-translate/useTranslation";
 
 export default function Accordion({ unis }) {
+  const { t } = useTranslation();
   const [pageSize, setPageSize] = useState(5);
   const [filteredUnis, setFilteredUnis] = useState(unis.slice(0, pageSize));
   const [totalFilteredUnis, setTotalFilteredUnis] = useState(unis.length);
@@ -78,7 +80,13 @@ export default function Accordion({ unis }) {
         <div>
           <input
             type="text"
-            placeholder={"Search " + totalFilteredUnis + " entries..."}
+            placeholder={
+              t("universities:search") +
+              " " +
+              totalFilteredUnis +
+              t("universities:entries") +
+              " ..."
+            }
             value={filterValue || ""}
             className="mt-1 max-w-[180px] sm:max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             onChange={(e) => {
@@ -87,7 +95,9 @@ export default function Accordion({ unis }) {
           />
         </div>
         <div className="text-gray-700">
-          <span className="hidden sm:inline-block">Show</span>
+          <span className="hidden sm:inline-block">
+            {t("universities:show")}
+          </span>
           <select
             className="mx-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             value={pageSize}
@@ -123,7 +133,7 @@ export default function Accordion({ unis }) {
       </div>
       <div className="flex justify-between sm:hidden gap-x-2 mt-4 ">
         <span className="flex sm:hidden">
-          <span className="m-auto">Go to page: </span>
+          <span className="m-auto">{t("universities:go_to_page")}: </span>
           <input
             type="number"
             className="w-full ml-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 max-w-sm w-20 h-8"
@@ -180,19 +190,21 @@ export default function Accordion({ unis }) {
         <div className="hidden sm:flex gap-x-2 mb-4 sm:mb-0">
           <span className=" text-gray-700 w-full sm:flex">
             <span className="m-auto">
-              Showing results{" "}
-              <span className="font-medium">{pageIndex * pageSize + 1}</span> to{" "}
+              {t("universities:showing_results")}{" "}
+              <span className="font-medium">{pageIndex * pageSize + 1}</span>{" "}
+              {t("universities:to")}{" "}
               <span className="font-medium">
                 {Math.min(pageIndex * pageSize + pageSize, totalFilteredUnis)}
               </span>{" "}
-              of <span className="font-medium">{totalFilteredUnis}</span>{" "}
-              entries
+              {t("universities:of")}{" "}
+              <span className="font-medium">{totalFilteredUnis}</span>{" "}
+              {t("universities:entries")}
             </span>
           </span>
         </div>
         <div className="flex gap-x-2 ">
           <span className="">
-            Go to page:{" "}
+            {t("universities:go_to_page")}:{" "}
             <input
               type="number"
               className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 max-w-sm w-12 h-8 sm:h-10 sm:w-36"

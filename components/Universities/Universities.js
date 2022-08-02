@@ -1,3 +1,4 @@
+import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import myAxiosPrivate from "../../axios/myAxiosPrivate";
@@ -6,6 +7,7 @@ import Table from "../Table/Table";
 import CheckBox from "./CheckBox";
 
 export default function Universities({ unis }) {
+  const { t } = useTranslation();
   const [allUnis, setAllUnis] = useState(unis);
   let [allUnisWithInterest, setAllUnisWithInterest] = useState([]);
   const [allOrIntersted, setAllOrInterested] = useState("all");
@@ -83,35 +85,35 @@ export default function Universities({ unis }) {
   const columns = useMemo(
     () => [
       {
-        Header: "Name",
+        Header: t("universities:name"),
         accessor: "name",
       },
       {
-        Header: "City",
+        Header: t("universities:city"),
         accessor: "city",
       },
       {
-        Header: "State",
+        Header: t("universities:state"),
         accessor: "state",
       },
       {
-        Header: "Conference",
+        Header: t("universities:conference"),
         accessor: "conference",
       },
       {
-        Header: "Division",
+        Header: t("universities:division"),
         accessor: "division",
       },
       {
-        Header: "Region",
+        Header: t("universities:region"),
         accessor: "region",
       },
       {
-        Header: "Category",
+        Header: t("universities:category"),
         accessor: "category",
       },
       {
-        Header: "Interested",
+        Header: t("universities:interested"),
         accessor: "interested",
       },
     ],
@@ -123,27 +125,29 @@ export default function Universities({ unis }) {
         <section className="w-screen bg-gradient-to-br min-h-[68vh] p-8">
           {allOrIntersted === "all" ? (
             <Fragment>
-              <h1 className="text-center text-2xl mb-4">All universities </h1>
-              <p className="inline-flex justify-center w-full">
-                <span
-                  className="text-center text-sm mb-4 underline hover:cursor-pointer"
-                  onClick={handleAllOrIntersted}
-                >
-                  Only show interested?
-                </span>
-              </p>
-            </Fragment>
-          ) : (
-            <Fragment>
               <h1 className="text-center text-2xl mb-4">
-                Interested universities{" "}
+                {t("universities:all_universities")}
               </h1>
               <p className="inline-flex justify-center w-full">
                 <span
                   className="text-center text-sm mb-4 underline hover:cursor-pointer"
                   onClick={handleAllOrIntersted}
                 >
-                  Show all?
+                  {t("universities:only_show_interested")}
+                </span>
+              </p>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <h1 className="text-center text-2xl mb-4">
+                {t("universities:interested_universities")}{" "}
+              </h1>
+              <p className="inline-flex justify-center w-full">
+                <span
+                  className="text-center text-sm mb-4 underline hover:cursor-pointer"
+                  onClick={handleAllOrIntersted}
+                >
+                  {t("universities:show_all")}
                 </span>
               </p>
             </Fragment>

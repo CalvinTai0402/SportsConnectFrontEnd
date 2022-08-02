@@ -12,10 +12,12 @@ import useCsrfToken from "../../hooks/useCsrfToken";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/router";
+import useTranslation from "next-translate/useTranslation";
 
 Date.prototype.yyyymmdd = yyyymmdd;
 
 export default function Portfolio() {
+  const { t } = useTranslation();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [preferredName, setPreferredName] = useState("");
@@ -168,7 +170,7 @@ export default function Portfolio() {
                         className="text-sm font-medium text-gray-900 text-blue-600"
                         htmlFor="file_input"
                       >
-                        Upload photo
+                        {t("portfolio:upload_file")}
                       </label>
                       <label
                         className="mt-[2px]"
@@ -196,8 +198,8 @@ export default function Portfolio() {
                     className="text-md grid place-items-center bg-slate-200  text-blue-600"
                   >
                     {photoUrl === "None"
-                      ? "Click to upload a new profile photo"
-                      : "Change profile photo"}
+                      ? t("portfolio:upload_new_photo")
+                      : t("portfolio:change_profile_photo")}
                   </div>
                 )}
               </div>
@@ -212,7 +214,7 @@ export default function Portfolio() {
               ) : null}
               <h1 className="text-gray-900 leading-8 my-2">
                 <Input
-                  label="Preferred name"
+                  label={t("portfolio:preferred_name")}
                   name="Preferred name"
                   type="text"
                   value={preferredName}
@@ -221,7 +223,7 @@ export default function Portfolio() {
               </h1>
               <div className="leading-6 w-full h-[20vh] max-h-[10rem] md:h-full md:max-h-[12rem]">
                 <Textarea
-                  label="Bio"
+                  label={t("portfolio:bio")}
                   name="Bio"
                   type="text"
                   value={bio}
@@ -250,13 +252,13 @@ export default function Portfolio() {
                     />
                   </svg>
                 </span>
-                <span className="tracking-wide">About</span>
+                <span className="tracking-wide">{t("portfolio:about")}</span>
               </div>
               <div className="text-gray-700">
                 <div className="grid md:grid-cols-2 text-sm">
                   <div className="md:px-4 py-2">
                     <Input
-                      label="First name"
+                      label={t("portfolio:first_name")}
                       name="First name"
                       type="text"
                       value={firstName}
@@ -265,7 +267,7 @@ export default function Portfolio() {
                   </div>
                   <div className="md:px-4 py-2">
                     <Input
-                      label="Last name"
+                      label={t("portfolio:last_name")}
                       name="Last name"
                       type="text"
                       value={lastName}
@@ -275,7 +277,7 @@ export default function Portfolio() {
 
                   <div className="md:px-4 py-2">
                     <Input
-                      label="Gender"
+                      label={t("portfolio:gender")}
                       name="Gender"
                       type="text"
                       value={gender}
@@ -284,7 +286,7 @@ export default function Portfolio() {
                   </div>
                   <div className="md:px-4 py-2">
                     <Input
-                      label="Contact No."
+                      label={t("portfolio:contact_no")}
                       name="Contact No."
                       type="text"
                       value={contact}
@@ -293,7 +295,7 @@ export default function Portfolio() {
                   </div>
                   <div className="md:px-4 py-2">
                     <Input
-                      label="Current address"
+                      label={t("portfolio:current_address")}
                       name="Current address"
                       type="text"
                       value={currentAddress}
@@ -302,7 +304,7 @@ export default function Portfolio() {
                   </div>
                   <div className="md:px-4 py-2 pb-0">
                     <Input
-                      label="Permanent address"
+                      label={t("portfolio:permanent_address")}
                       name="Permanent address"
                       type="text"
                       value={permanentAddress}
@@ -311,7 +313,7 @@ export default function Portfolio() {
                   </div>
                   <div className="md:px-4 py-2">
                     <Input
-                      label="Email"
+                      label={t("portfolio:email")}
                       name="Email"
                       type="email"
                       value={email}
@@ -320,7 +322,9 @@ export default function Portfolio() {
                   </div>
 
                   <div className="md:px-4 focus:text-black-700">
-                    <div className="text-gray-500">Birthday:</div>
+                    <div className="text-gray-500">
+                      {t("portfolio:birthday")}
+                    </div>
                     <DatePicker
                       selected={birthday}
                       onChange={(date) => {

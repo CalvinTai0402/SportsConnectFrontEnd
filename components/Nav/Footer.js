@@ -1,8 +1,10 @@
+import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 export default function Footer() {
+  const { t } = useTranslation();
   return (
     <footer className="p-4 bg-gray-50 sm:p-6">
       <div className="mx-auto max-w-screen-xl">
@@ -24,34 +26,34 @@ export default function Footer() {
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-2">
             <div>
               <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">
-                About
+                {t("footer:about")}
               </h2>
               <ul className="text-gray-600">
                 <li className="mb-4">
                   <Link href="/contactus">
-                    <a className="hover:underline">Contact us</a>
+                    <a className="hover:underline">{t("footer:contact_us")}</a>
                   </Link>
                 </li>
                 <li>
                   <Link href="/team">
-                    <a className="hover:underline">Team</a>
+                    <a className="hover:underline">{t("footer:team")}</a>
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
               <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">
-                Follow us
+                {t("footer:follow_us")}
               </h2>
               <ul className="text-gray-600">
                 <li className="mb-4">
                   <a href="#" target="_blank" className="hover:underline ">
-                    Instagram
+                    {t("footer:instagram")}
                   </a>
                 </li>
                 <li>
                   <a href="#" target="_blank" className="hover:underline">
-                    Linkedin
+                    {t("footer:linkedin")}
                   </a>
                 </li>
               </ul>
@@ -61,7 +63,7 @@ export default function Footer() {
         <hr className="my-6 border-gray-200 sm:mx-auto lg:my-8" />
         <div className="sm:flex sm:items-center sm:justify-between">
           <span className="text-sm text-gray-500 sm:text-center">
-            © 2022 SportsConnect.com. All Rights Reserved.
+            © 2022 SportsConnect.com. {t("footer:all_rights_reserved")}.
           </span>
           <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
             <a

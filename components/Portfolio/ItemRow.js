@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import myAxiosPrivate from "../../axios/myAxiosPrivate";
 import useCsrfToken from "../../hooks/useCsrfToken";
 import { useRouter } from "next/router";
+import useTranslation from "next-translate/useTranslation";
 
 Date.prototype.yyyymmdd = yyyymmdd;
 
@@ -21,6 +22,7 @@ export default function ItemRow({
   removeItem,
   endpoint,
 }) {
+  const { t } = useTranslation();
   let [currentActive, setCurrentActive] = useState(active);
   let [currentDescription, setCurrentDescription] = useState(description);
   let [currentStartDate, setCurrentStartDate] = useState(
@@ -125,14 +127,14 @@ export default function ItemRow({
               className="mr-10 hover:cursor-pointer"
               onClick={() => setCurrentActive(!currentActive)}
             >
-              active
+              {t("portfolio:active")}
             </div>
           ) : (
             <div
               className="mr-8 hover:cursor-pointer"
               onClick={() => setCurrentActive(!currentActive)}
             >
-              inactive
+              {t("portfolio:inactive")}
             </div>
           )}
         </div>

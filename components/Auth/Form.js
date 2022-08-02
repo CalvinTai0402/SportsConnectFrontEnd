@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import useTranslation from "next-translate/useTranslation";
 
 export default function Form({
   text,
@@ -9,6 +10,7 @@ export default function Form({
   error,
   setError,
 }) {
+  const { t } = useTranslation();
   return (
     <div className="bg-white mx-auto">
       <div className="flex justify-center h-screen">
@@ -23,7 +25,7 @@ export default function Form({
               <h2 className="text-4xl font-bold text-white">SportsConnect</h2>
 
               <p className="max-w-xl mt-3 text-gray-300">
-                Connecting athletes to universities across the world
+                {t("login:image_description")}
               </p>
             </div>
           </div>
@@ -37,7 +39,7 @@ export default function Form({
               </h2>
 
               <p className="mt-3 text-gray-500">
-                {text} to access your account
+                {text} {t("login:subheader")}
               </p>
             </div>
 
@@ -48,14 +50,14 @@ export default function Form({
                     htmlFor="email"
                     className="block mb-2 text-sm text-gray-600"
                   >
-                    Email Address
+                    {t("login:email_address")}
                   </label>
                   <input
                     type="email"
                     name="email"
                     id="email"
                     onChange={handleUsernameChange}
-                    placeholder="example@example.com"
+                    placeholder={t("login:example_email")}
                     className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                 </div>
@@ -63,7 +65,7 @@ export default function Form({
                 <div className="mt-6">
                   <div className="flex justify-between mb-2">
                     <label htmlFor="password" className="text-sm text-gray-600">
-                      Password
+                      {t("login:password")}
                     </label>
                   </div>
 
@@ -72,7 +74,7 @@ export default function Form({
                     name="password"
                     id="password"
                     onChange={handlePasswordChange}
-                    placeholder="Your Password"
+                    placeholder={t("login:example_password")}
                     className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                 </div>
@@ -109,21 +111,21 @@ export default function Form({
                   </button>
                 </div>
               </form>
-              {text === "Log in" ? (
+              {text === "Log in" || text === "登录" ? (
                 <p className="mt-6 text-sm text-center text-gray-400">
-                  Don&#x27;t have an account yet?{" "}
+                  {t("login:description")}{" "}
                   <Link href="/auth/signup">
                     <a className="text-blue-500 focus:outline-none focus:underline hover:underline">
-                      Sign up
+                      {t("login:sign_up")}{" "}
                     </a>
                   </Link>
                 </p>
               ) : (
                 <p className="mt-6 text-sm text-center text-gray-400">
-                  Already have an account?{" "}
+                  {t("signup:description")}{" "}
                   <Link href="/auth/login">
                     <a className="text-blue-500 focus:outline-none focus:underline hover:underline">
-                      Log in
+                      {t("signup:log_in")}
                     </a>
                   </Link>
                 </p>

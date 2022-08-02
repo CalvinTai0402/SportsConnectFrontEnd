@@ -1,23 +1,18 @@
+import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
 import React from "react";
 
 export default function Description() {
+  const { t } = useTranslation();
   return (
     <section className="bg-white">
       <div className="gap-16 items-center py-8 px-4 mx-auto max-w-screen-2xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
         <div className="font-light text-gray-500 sm:text-lg">
           <h2 className="mb-4 text-4xl font-bold md:font-extrabold text-gray-900">
-            How we can help
+            {t("home:card_2_text_0")}
           </h2>
-          <p className="mb-4">
-            Don&apos;t know how to get started with your application? Frustrated
-            with the slowness of getting accepted? Worry no more! 😇
-          </p>
-          <p>
-            With SportsConnect not only will you be able to express your
-            interest to numerous universities at once, we also provide you with
-            all the necessary steps and guidance you will ever need 😊
-          </p>
+          <p className="mb-4">{t("home:card_2_text_1")} 😇</p>
+          <p>{t("home:card_2_text_2")} 😊</p>
         </div>
         <div className="grid grid-cols-2 gap-4 mt-8">
           <div className="w-full h-full">

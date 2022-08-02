@@ -7,8 +7,10 @@ import {
   ChevronDoubleRightIcon,
 } from "@heroicons/react/solid";
 import PageButton from "./PageButton";
+import useTranslation from "next-translate/useTranslation";
 
 export default function Table({ columns, data, skipPageResetRef }) {
+  const { t } = useTranslation();
   const props = useTable(
     {
       columns,
@@ -57,7 +59,7 @@ export default function Table({ columns, data, skipPageResetRef }) {
     <Fragment>
       <label className="flex gap-x-2 items-baseline justify-between">
         <div>
-          <span className="text-gray-700">Search: </span>
+          <span className="text-gray-700">{t("universities:search")}: </span>
           <input
             type="text"
             value={globalFilter || ""}
@@ -66,7 +68,7 @@ export default function Table({ columns, data, skipPageResetRef }) {
           />
         </div>
         <div className="text-gray-700">
-          Show
+          {t("universities:show")}
           <select
             className="mx-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             value={state.pageSize}
@@ -80,7 +82,7 @@ export default function Table({ columns, data, skipPageResetRef }) {
               </option>
             ))}
           </select>
-          entries
+          {t("universities:entries")}
         </div>
       </label>
       <div className="mt-2 flex flex-col">
@@ -139,19 +141,20 @@ export default function Table({ columns, data, skipPageResetRef }) {
           <div className="flex gap-x-2 mb-4 sm:mb-0">
             <span className="hidden text-gray-700 w-full sm:flex">
               <span className="m-auto">
-                Showing results{" "}
+                {t("universities:showing_results")}{" "}
                 <span className="font-medium">{pageIndex * pageSize + 1}</span>{" "}
-                to{" "}
+                {t("universities:to")}{" "}
                 <span className="font-medium">
                   {Math.min(pageIndex * pageSize + pageSize, rows.length)}
                 </span>{" "}
-                of <span className="font-medium">{rows.length}</span> entries
+                {t("universities:of")}{" "}
+                <span className="font-medium">{rows.length}</span> entries
               </span>
             </span>
           </div>
           <div className="flex gap-x-2 ">
             <span className="">
-              Go to page:{" "}
+              {t("universities:go_to_page")}:{" "}
               <input
                 autoComplete="off"
                 type="number"

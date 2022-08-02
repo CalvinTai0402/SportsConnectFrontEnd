@@ -6,7 +6,7 @@ import useCsrfToken from "../../hooks/useCsrfToken";
 import myAxiosPrivate from "../../axios/myAxiosPrivate";
 import { useRouter } from "next/router";
 
-export default function Template({ endpoint }) {
+export default function Template({ endpoint, title }) {
   const [data, setData] = useState([]);
   let getCsrf = useCsrfToken();
   const router = useRouter();
@@ -78,7 +78,8 @@ export default function Template({ endpoint }) {
             </span>
             <div>
               <span className="tracking-wide">
-                {capitalizeEndpoint(endpoint)}
+                {/* {capitalizeEndpoint(endpoint)} */}
+                {title}
               </span>
             </div>
           </div>

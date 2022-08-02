@@ -1,12 +1,14 @@
+import useTranslation from "next-translate/useTranslation";
 import React, { Fragment } from "react";
 import Modal from "../Modal/Modal";
 
 export default function Steps() {
+  const { t } = useTranslation();
   return (
     <Fragment>
       <div className="grid place-items-center m-8">
         <div className="text-gray-500 sm:text-xl mb-8">
-          <h1>The following is a general process guideline.</h1>
+          <h1>{t("steps:title")}</h1>
         </div>
         <ol className="relative border-l border-gray-200">
           <li className="mb-10 ml-6">
@@ -25,15 +27,13 @@ export default function Steps() {
               </svg>
             </span>
             <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">
-              Prepare your college tennis recruiting videos
+              {t("steps:card_0_text_0")}
             </h3>
             <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
-              Step 1
+              {t("steps:step")} 1
             </time>
             <div className="mb-4 text-base font-normal text-gray-500">
-              Record match play videos (recommended to record videos from an
-              actual tournament) and practice videos (forehand, backhand,
-              volley, serves, rallies).
+              {t("steps:card_0_text_1")}
             </div>
           </li>
           <li className="mb-10 ml-6">
@@ -52,26 +52,25 @@ export default function Steps() {
               </svg>
             </span>
             <h3 className="mb-1 text-lg font-semibold text-gray-900">
-              Submit your TOEFL result
+              {t("steps:card_1_text_0")}
             </h3>
             <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
-              Step 2
+              {t("steps:step")} 2
             </time>
             <div className="text-base font-normal text-gray-500">
-              Take the{" "}
+              {t("steps:card_1_text_1")}{" "}
               <a
                 href="https://www.ets.org/toefl"
                 target="_blank"
                 rel="noreferrer"
               >
-                <u>TOEFL</u>
+                <u>{t("steps:card_1_text_2")}</u>
               </a>{" "}
-              exam and submit your results.{" "}
+              {t("steps:card_1_text_3")}{" "}
               <Modal
-                display="What is TOEFL?"
-                title="TOEFL"
-                description="Test of English as a Foreign Language (TOEFL) is a standardized test to measure the English language ability of non-native speakers who
-                want to enroll in English-speaking universities. This test is accepted by more than 11,000 universities and other institutions in over 190 countries and territories."
+                display={t("steps:card_1_text_4")}
+                title={t("steps:card_1_text_2")}
+                description={t("steps:card_1_text_5")}
               />
             </div>
           </li>
@@ -91,30 +90,25 @@ export default function Steps() {
               </svg>
             </span>
             <h3 className="mb-1 text-lg font-semibold text-gray-900">
-              Submit your SAT result
+              {t("steps:card_2_text_0")}
             </h3>
             <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
-              Step 3
+              {t("steps:step")} 3
             </time>
             <div className="text-base font-normal text-gray-500">
-              Take the{" "}
+              {t("steps:card_2_text_1")}{" "}
               <a
                 href="https://satsuite.collegeboard.org/sat"
                 target="_blank"
                 rel="noreferrer"
               >
-                <u>SAT</u>
+                <u>{t("steps:card_2_text_2")}</u>
               </a>{" "}
-              test and submit your results.
+              {t("steps:card_2_text_3")}
               <Modal
-                display="What is SAT?"
-                title="SAT"
-                description="SAT is an entrance exam used by most colleges and universities to make admissions decisions. 
-                It is a multiple-choice, pencil-and-paper test created and administered by the College Board.
-                The purpose of SAT is to measure a high school student's readiness for college, and provide colleges a baseline 
-                to compare all applicants. College admissions officers will review standardized test scores alongside your high school GPA, 
-                the classes you took in high school, letters of recommendation from teachers or mentors, extracurricular activities, 
-                admissions interviews, and personal essays. How important SAT scores are in the college application process varies from school to school."
+                display={t("steps:card_2_text_4")}
+                title={t("steps:card_2_text_2")}
+                description={t("steps:card_2_text_5")}
               />
             </div>
           </li>
@@ -134,14 +128,13 @@ export default function Steps() {
               </svg>
             </span>
             <h3 className="mb-1 text-lg font-semibold text-gray-900">
-              Submit your high school transcript
+              {t("steps:card_3_text_0")}
             </h3>
             <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
-              Step 4
+              {t("steps:step")} 4
             </time>
             <div className="text-base font-normal text-gray-500">
-              Submit your official high school transcript with an English
-              translation.
+              {t("steps:card_3_text_1")}
             </div>
           </li>
           <li className="mb-10 ml-6">
@@ -160,14 +153,13 @@ export default function Steps() {
               </svg>
             </span>
             <h3 className="mb-1 text-lg font-semibold text-gray-900">
-              Submit your personal statement
+              {t("steps:card_4_text_0")}
             </h3>
             <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
-              Step 5
+              {t("steps:step")} 5
             </time>
             <div className="text-base font-normal text-gray-500">
-              A brief overview of who you are, your strengths and any work
-              experience and/or education you have. More on personal statements.
+              {t("steps:card_4_text_1")}
             </div>
           </li>
           <li className="mb-10 ml-6">
@@ -186,18 +178,17 @@ export default function Steps() {
               </svg>
             </span>
             <h3 className="mb-1 text-lg font-semibold text-gray-900">
-              Apple for F1 visa
+              {t("steps:card_5_text_0")}
             </h3>
             <time className="block mb-2 text-sm font-normal leading-none text-gray-400">
-              Step 6
+              {t("steps:step")} 6
             </time>
             <div className="text-base font-normal text-gray-500">
-              Upon receiving an offer and I-20 from a college, you will need to
-              apply for an F1 visa through a US embassy.
+              {t("steps:card_5_text_1")}
             </div>
             <Modal
-              display="How to get a visa?"
-              title="Visa instructions"
+              display={t("steps:card_5_text_2")}
+              title={t("steps:card_5_text_3")}
               link={
                 <>
                   <a
@@ -205,7 +196,7 @@ export default function Steps() {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Here is how you can get a student visa
+                    {t("steps:card_5_text_4")}
                   </a>
                 </>
               }
