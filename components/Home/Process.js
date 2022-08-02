@@ -5,7 +5,7 @@ import React from "react";
 export default function Process() {
   const { t } = useTranslation();
   return (
-    <section className="bg-gray-50">
+    <section className="bg-gray-50 p-6">
       <div className="py-8 px-4 mx-auto max-w-screen-2xl sm:py-16 lg:px-6">
         <div className="max-w-screen-md mb-8 lg:mb-16">
           <h2 className="mb-4 text-4xl font-bold md:font-extrabold text-gray-900">

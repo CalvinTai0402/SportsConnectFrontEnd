@@ -50,14 +50,13 @@ export default function Form({
                     htmlFor="email"
                     className="block mb-2 text-sm text-gray-600"
                   >
-                    {t("login:email_address")}
+                    {t("login:username")}
                   </label>
                   <input
-                    type="email"
-                    name="email"
-                    id="email"
+                    name="username"
+                    id="username"
                     onChange={handleUsernameChange}
-                    placeholder={t("login:example_email")}
+                    placeholder={t("login:example_username")}
                     className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                 </div>

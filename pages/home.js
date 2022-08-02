@@ -11,9 +11,9 @@ export default function Home() {
       <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
         <Hero />
         <Features />
-        <Description />
-        <Process />
         <Benefits />
+        <Process />
+        <Description />
       </div>
     </Fragment>
   );

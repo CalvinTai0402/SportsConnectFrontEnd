@@ -5,7 +5,7 @@ import React from "react";
 export default function Description() {
   const { t } = useTranslation();
   return (
-    <section className="bg-white">
+    <section className="bg-white p-6">
       <div className="gap-16 items-center py-8 px-4 mx-auto max-w-screen-2xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
         <div className="font-light text-gray-500 sm:text-lg">
           <h2 className="mb-4 text-4xl font-bold md:font-extrabold text-gray-900">

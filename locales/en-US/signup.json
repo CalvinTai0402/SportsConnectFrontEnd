@@ -1,13 +1,12 @@
 {
-	"subheader": "Sign up to access your account",
-	"email_address": "Email Address",
-    "exaple_email": "user@gmail.com",
-	"password": "Password",
-    "example_password": "Your Password",
-	"sign_up": "Sign Up",
- 	"description": "Already have an account? ",
- 	"log_in": "Log in",
-	"invalid_credentials": "Email is used by another user",
-	"invalid_email": "Value is not a valid email address",
-	"error": "An error occured, please refresh and try again"
+  "subheader": "Sign up to access your account",
+  "username": "Username",
+  "example_username": "John Doe",
+  "password": "Password",
+  "example_password": "Your Password",
+  "sign_up": "Sign Up",
+  "description": "Already have an account? ",
+  "log_in": "Log in",
+  "invalid_credentials": "Username is used by another user",
+  "error": "An error occured, please refresh and try again"
 }

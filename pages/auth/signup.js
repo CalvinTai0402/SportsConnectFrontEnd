@@ -21,14 +21,14 @@ export default function Login() {
     e.preventDefault();
     setError("");
     if (username.length === 0 || password.length === 0) {
-      setError("Enter both your email and password");
+      setError("Enter both your username and password");
       return;
     }
     let csrfToken = await getCsrf();
     let myAxios = myAxiosPrivate(router, csrfToken);
     let res = await myAxios
       .post(`/signup`, {
-        email: username,
+        username: username,
         password: password,
       })
       .catch((e) => {
@@ -41,13 +41,8 @@ export default function Login() {
         router.push("/universities");
         break;
       case 422:
-        if (res.data.detail.constructor === Array) {
-          setError(res.data.detail[0].msg); // value is not a valid email address
-          setError(t("signup:invalid_email"));
-        } else {
-          setError(res.data.detail); // Email is used by another user
-          setError(t("signup:invalid_credentials"));
-        }
+        setError(res.data.detail); // Username is used by another user
+        setError(t("signup:invalid_credentials"));
         break;
       default:
         setError("An error occured, please refresh and try again");

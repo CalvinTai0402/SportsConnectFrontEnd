@@ -18,8 +18,8 @@ Date.prototype.yyyymmdd = yyyymmdd;
 
 export default function Portfolio() {
   const { t } = useTranslation();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [name, setName] = useState("");
+  const [wechatId, setWechatId] = useState("");
   const [preferredName, setPreferredName] = useState("");
   const [bio, setBio] = useState("");
   const [gender, setGender] = useState("");
@@ -44,8 +44,8 @@ export default function Portfolio() {
         return e.response;
       });
       let currentUser = res.data;
-      setFirstName(currentUser.first_name);
-      setLastName(currentUser.last_name);
+      setName(currentUser.name);
+      setWechatId(currentUser.wechatId);
       setPreferredName(currentUser.preferred_name);
       setBio(currentUser.bio);
       setGender(currentUser.gender);
@@ -68,8 +68,9 @@ export default function Portfolio() {
     let myAxios = myAxiosPrivate(router, csrfToken);
     let res = await myAxios
       .put("/users/", {
-        first_name: firstName,
-        last_name: lastName,
+        name: name,
+        email: email,
+        wechatId: wechatId,
         preferred_name: preferredName,
         bio: bio,
         gender: gender,
@@ -110,8 +111,8 @@ export default function Portfolio() {
       handleUpdate();
     }
   }, [
-    firstName,
-    lastName,
+    name,
+    wechatId,
     preferredName,
     bio,
     gender,
@@ -258,20 +259,20 @@ export default function Portfolio() {
                 <div className="grid md:grid-cols-2 text-sm">
                   <div className="md:px-4 py-2">
                     <Input
-                      label={t("portfolio:first_name")}
-                      name="First name"
+                      label={t("portfolio:name")}
+                      name="Name"
                       type="text"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                     />
                   </div>
                   <div className="md:px-4 py-2">
                     <Input
-                      label={t("portfolio:last_name")}
-                      name="Last name"
+                      label={t("portfolio:wechat_id")}
+                      name=""
                       type="text"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
+                      value={wechatId}
+                      onChange={(e) => setWechatId(e.target.value)}
                     />
                   </div>
 
@@ -317,7 +318,7 @@ export default function Portfolio() {
                       name="Email"
                       type="email"
                       value={email}
-                      readOnly={true}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
 
