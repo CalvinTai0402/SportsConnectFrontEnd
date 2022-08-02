@@ -20,7 +20,7 @@ export default function myAxiosPrivate(router = null, csrfToken = null) {
     let res = await myAxios.post(`/logout`).catch((e) => {
       return e.response;
     });
-    router.push("/");
+    if (res.status === 200) router.push("/");
   };
 
   const onRequest = (config) => {

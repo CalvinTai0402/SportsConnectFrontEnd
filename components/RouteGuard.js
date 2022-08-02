@@ -8,68 +8,77 @@ export { RouteGuard };
 function RouteGuard({ children }) {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
-  // const [location, _] = useState(router.asPath);
+  const [loading, setLoading] = useState(true);
+  const [location, _] = useState(router.asPath);
   let getCsrf = useCsrfToken();
-  useEffect(() => {
-    // first time mount, we redirect to universities if access token in cookies is still valid
-    let setSessionStorage = async () => {
-      try {
-        let csrfToken = await getCsrf();
-        let myAxios = myAxiosPrivate(router, csrfToken);
-        let res = await myAxios.get(`/users/me`).catch((e) => {
-          return e.response;
-        });
-        if (res.status === 200) {
-          sessionStorage.setItem("token", "isLoggedIn");
-          router.push("/universities");
-        } else if (res.status === 401) {
-          sessionStorage.removeItem("token");
-        }
-      } catch (error) {
-        // sessionStorage.removeItem("token");
-        // not logged in anymore, don't set token
-        console.log(error);
+  let redirecting = true;
+  let setSessionStorage = async () => {
+    setLoading(true);
+    try {
+      let csrfToken = await getCsrf();
+      let myAxios = myAxiosPrivate(router, csrfToken);
+      let res = await myAxios.get(`/users/me`).catch((e) => {
+        return e.response;
+      });
+      if (res.status === 200) {
+        setLoading(false);
+        sessionStorage.setItem("token", "isLoggedIn");
+      } else if (res.status === 401) {
+        setLoading(false);
+        sessionStorage.removeItem("token");
       }
-    };
-    setSessionStorage();
-  }, []);
+    } catch (error) {
+      setLoading(false);
+    }
+    return true;
+  };
 
   useEffect(() => {
     authCheck(router.asPath);
-    const hideContent = () => setAuthorized(false);
+    let hideContent = () => setAuthorized(false);
+    let checkLoggedInAndRedirect = async (url) => {
+      let done = await setSessionStorage();
+      if (done) authCheck(url);
+    };
     router.events.on("routeChangeStart", hideContent);
-    router.events.on("routeChangeComplete", authCheck);
+    router.events.on("routeChangeComplete", checkLoggedInAndRedirect);
 
     return () => {
       router.events.off("routeChangeStart", hideContent);
-      router.events.off("routeChangeComplete", authCheck);
+      router.events.off("routeChangeComplete", checkLoggedInAndRedirect);
     };
   }, []);
 
-  let authCheck = (url) => {
-    // redirect to login page if accessing a private page and not logged in
-    const publicPaths = ["/home", "/auth/login", "/auth/signup", "/"];
-    let allLocalesPublicPaths = [...publicPaths];
+  let addLocalesToPaths = (paths) => {
+    let pathsWithAllLocales = [...paths];
     router.locales.map((locale) => {
+      // default locale does not have a prefix
       if (locale !== router.defaultLocale) {
-        // default locale does not have a prefix
-        for (const path of publicPaths) {
-          allLocalesPublicPaths.push("/" + locale + path);
+        for (const path of paths) {
+          pathsWithAllLocales.push("/" + locale + path);
         }
       }
     });
+    return pathsWithAllLocales;
+  };
+
+  let authCheck = (url) => {
+    const publicPaths = ["/home", "/auth/login", "/auth/signup", "/"];
+    let allLocalesPublicPaths = addLocalesToPaths(publicPaths);
     const path = url.split("?")[0];
     if (
       !sessionStorage.getItem("token") &&
-      // !isLoggedIn &&
       !allLocalesPublicPaths.includes(path)
     ) {
       setAuthorized(false);
-      router.push("/auth/login");
+      router.push("/auth/login"); // redirect to login page if accessing a private page and not logged in
+    } else if (redirecting) {
+      redirecting = false; // redirect to page accessed previously. When a location is pushed, authCheck refires and enters the "else" block.
+      router.push(location);
     } else {
-      setAuthorized(true);
+      setAuthorized(true); // show content
     }
   };
 
-  return authorized && children;
+  return loading ? null : authorized && children;
 }
