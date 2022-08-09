@@ -1,34 +1,34 @@
-import Image from "next/image";
-import React, { Fragment, useEffect, useRef, useState } from "react";
-import Input from "./Input";
-import Textarea from "./Textarea";
-import Experiences from "./Experiences";
-import Educations from "./Educations";
-import DatePicker from "react-datepicker";
-import yyyymmdd from "../../utilities/yyyymmdd";
-import { AiOutlineClose } from "react-icons/ai";
-import myAxiosPrivate from "../../axios/myAxiosPrivate";
-import useCsrfToken from "../../hooks/useCsrfToken";
+import Image from 'next/image';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
+import Input from './Input';
+import Textarea from './Textarea';
+import Experiences from './Experiences';
+import Educations from './Educations';
+import DatePicker from 'react-datepicker';
+import yyyymmdd from '../../utilities/yyyymmdd';
+import { AiOutlineClose } from 'react-icons/ai';
+import myAxiosPrivate from '../../axios/myAxiosPrivate';
+import useCsrfToken from '../../hooks/useCsrfToken';
 
-import "react-datepicker/dist/react-datepicker.css";
-import { useRouter } from "next/router";
-import useTranslation from "next-translate/useTranslation";
+import 'react-datepicker/dist/react-datepicker.css';
+import { useRouter } from 'next/router';
+import useTranslation from 'next-translate/useTranslation';
 
 Date.prototype.yyyymmdd = yyyymmdd;
 
 export default function Portfolio() {
   const { t } = useTranslation();
-  const [name, setName] = useState("");
-  const [wechatId, setWechatId] = useState("");
-  const [preferredName, setPreferredName] = useState("");
-  const [bio, setBio] = useState("");
-  const [gender, setGender] = useState("");
-  const [contact, setContact] = useState("");
-  const [currentAddress, setCurrentAddress] = useState("");
-  const [permanentAddress, setPermanentAddress] = useState("");
-  const [email, setEmail] = useState("");
-  const [birthday, setBirthday] = useState(new Date("2022-07-02T15:00:00Z"));
-  const [photoUrl, setPhotoUrl] = useState("None");
+  const [name, setName] = useState('');
+  const [wechatId, setWechatId] = useState('');
+  const [preferredName, setPreferredName] = useState('');
+  const [bio, setBio] = useState('');
+  const [gender, setGender] = useState('');
+  const [contact, setContact] = useState('');
+  const [currentAddress, setCurrentAddress] = useState('');
+  const [permanentAddress, setPermanentAddress] = useState('');
+  const [email, setEmail] = useState('');
+  const [birthday, setBirthday] = useState(new Date('2022-07-02T15:00:00Z'));
+  const [photoUrl, setPhotoUrl] = useState('None');
   const [showUploadButton, setShowUploadButton] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
@@ -40,7 +40,7 @@ export default function Portfolio() {
   useEffect(() => {
     let fetchCurrentUser = async () => {
       let myAxios = myAxiosPrivate(router);
-      let res = await myAxios.get("/users/me").catch((e) => {
+      let res = await myAxios.get('/users/me').catch((e) => {
         return e.response;
       });
       let currentUser = res.data;
@@ -54,7 +54,7 @@ export default function Portfolio() {
       setPermanentAddress(currentUser.permanent_address);
       setEmail(currentUser.email);
       if (currentUser.birthday) {
-        setBirthday(new Date(currentUser.birthday + "T15:00:00Z"));
+        setBirthday(new Date(currentUser.birthday + 'T15:00:00Z'));
       }
       if (res.data.profile_photo?.length > 0) {
         setPhotoUrl(res.data.profile_photo[0].photo_url);
@@ -67,7 +67,7 @@ export default function Portfolio() {
     let csrfToken = await getCsrf();
     let myAxios = myAxiosPrivate(router, csrfToken);
     let res = await myAxios
-      .put("/users/", {
+      .put('/users/', {
         name: name,
         email: email,
         wechatId: wechatId,
@@ -86,16 +86,16 @@ export default function Portfolio() {
 
   let updateProfilePhoto = async (e) => {
     if (!e.target.files[0].name.match(/\.(jpg|jpeg|png|gif)$/)) {
-      setError("Select a valid image file");
+      setError('Select a valid image file');
       return false;
     }
     const formData = new FormData();
-    formData.append("file", e.target.files[0], e.target.files[0].name);
+    formData.append('file', e.target.files[0], e.target.files[0].name);
     setUploading(true);
     let csrfToken = await getCsrf();
     let myAxios = myAxiosPrivate(router, csrfToken);
     let res = await myAxios
-      .post("/users/profile-photo", formData)
+      .post('/users/profile-photo', formData)
       .catch((e) => {
         return e.response;
       });
@@ -130,7 +130,7 @@ export default function Portfolio() {
           <div className="w-full md:w-3/12 sm:mx-2">
             <div className="bg-white border-t-4 border-blue-400 h-full">
               <div className="image overflow-hidden">
-                {photoUrl !== "None" ? (
+                {photoUrl !== 'None' ? (
                   <Image
                     className="h-auto w-full mx-auto"
                     src={photoUrl}
@@ -171,7 +171,7 @@ export default function Portfolio() {
                         className="text-sm font-medium text-gray-900 text-blue-600"
                         htmlFor="file_input"
                       >
-                        {t("portfolio:upload_file")}
+                        {t('portfolio:upload_file')}
                       </label>
                       <label
                         className="mt-[2px]"
@@ -194,13 +194,13 @@ export default function Portfolio() {
                   <div
                     onClick={() => {
                       setShowUploadButton(!showUploadButton);
-                      setError("");
+                      setError('');
                     }}
                     className="text-md grid place-items-center bg-slate-200  text-blue-600"
                   >
-                    {photoUrl === "None"
-                      ? t("portfolio:upload_new_photo")
-                      : t("portfolio:change_profile_photo")}
+                    {photoUrl === 'None'
+                      ? t('portfolio:upload_new_photo')
+                      : t('portfolio:change_profile_photo')}
                   </div>
                 )}
               </div>
@@ -208,14 +208,14 @@ export default function Portfolio() {
                 <span className="text-red-700 flex justify-between text-md ">
                   {error}
                   <AiOutlineClose
-                    onClick={() => setError("")}
+                    onClick={() => setError('')}
                     className="hover:cursor-pointer mt-1"
                   />
                 </span>
               ) : null}
               <h1 className="text-gray-900 leading-8 my-2">
                 <Input
-                  label={t("portfolio:preferred_name")}
+                  label={t('portfolio:preferred_name')}
                   name="Preferred name"
                   type="text"
                   value={preferredName}
@@ -224,11 +224,14 @@ export default function Portfolio() {
               </h1>
               <div className="leading-6 w-full h-[20vh] max-h-[10rem] md:h-full md:max-h-[12rem]">
                 <Textarea
-                  label={t("portfolio:bio")}
+                  label={t('portfolio:bio')}
                   name="Bio"
                   type="text"
                   value={bio}
-                  onChange={(e) => setBio(e.target.value)}
+                  onChange={(e) => {
+                    setBio(e.target.value);
+                    console.log('a');
+                  }}
                 />
               </div>
             </div>
@@ -253,13 +256,13 @@ export default function Portfolio() {
                     />
                   </svg>
                 </span>
-                <span className="tracking-wide">{t("portfolio:about")}</span>
+                <span className="tracking-wide">{t('portfolio:about')}</span>
               </div>
               <div className="text-gray-700">
                 <div className="grid md:grid-cols-2 text-sm">
                   <div className="md:px-4 py-2">
                     <Input
-                      label={t("portfolio:name")}
+                      label={t('portfolio:name')}
                       name="Name"
                       type="text"
                       value={name}
@@ -268,7 +271,7 @@ export default function Portfolio() {
                   </div>
                   <div className="md:px-4 py-2">
                     <Input
-                      label={t("portfolio:wechat_id")}
+                      label={t('portfolio:wechat_id')}
                       name=""
                       type="text"
                       value={wechatId}
@@ -278,7 +281,7 @@ export default function Portfolio() {
 
                   <div className="md:px-4 py-2">
                     <Input
-                      label={t("portfolio:gender")}
+                      label={t('portfolio:gender')}
                       name="Gender"
                       type="text"
                       value={gender}
@@ -287,7 +290,7 @@ export default function Portfolio() {
                   </div>
                   <div className="md:px-4 py-2">
                     <Input
-                      label={t("portfolio:contact_no")}
+                      label={t('portfolio:contact_no')}
                       name="Contact No."
                       type="text"
                       value={contact}
@@ -296,7 +299,7 @@ export default function Portfolio() {
                   </div>
                   <div className="md:px-4 py-2">
                     <Input
-                      label={t("portfolio:current_address")}
+                      label={t('portfolio:current_address')}
                       name="Current address"
                       type="text"
                       value={currentAddress}
@@ -305,7 +308,7 @@ export default function Portfolio() {
                   </div>
                   <div className="md:px-4 py-2 pb-0">
                     <Input
-                      label={t("portfolio:permanent_address")}
+                      label={t('portfolio:permanent_address')}
                       name="Permanent address"
                       type="text"
                       value={permanentAddress}
@@ -314,7 +317,7 @@ export default function Portfolio() {
                   </div>
                   <div className="md:px-4 py-2">
                     <Input
-                      label={t("portfolio:email")}
+                      label={t('portfolio:email')}
                       name="Email"
                       type="email"
                       value={email}
@@ -324,7 +327,7 @@ export default function Portfolio() {
 
                   <div className="md:px-4 focus:text-black-700">
                     <div className="text-gray-500">
-                      {t("portfolio:birthday")}
+                      {t('portfolio:birthday')}
                     </div>
                     <DatePicker
                       selected={birthday}
