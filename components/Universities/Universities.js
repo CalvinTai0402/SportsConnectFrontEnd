@@ -55,7 +55,6 @@ export default function Universities({ unis }) {
     skipPageResetRef.current = true;
     setAllUnis((prevAllUnis) => {
       let newAllUnis = [...prevAllUnis];
-      console.log(newAllUnis[index]);
       newAllUnis[index] = {
         ...prevAllUnis[index],
         interested: (
@@ -168,7 +167,7 @@ export default function Universities({ unis }) {
               skipPageResetRef={skipPageResetRef}
             />
           ) : (
-            <Accordion data={allUnis} />
+            <Accordion unis={allUnis} />
           )}
         </section>
       )}

@@ -36,11 +36,6 @@ export default function Accordion({ unis }) {
     setCanNextPage(pageIndex + 1 < pageCount);
   }, [totalFilteredUnis, pageSize, pageIndex]);
 
-  //   useEffect(() => {
-  //     setCanPreviousPage(pageIndex > 0);
-  //     setCanNextPage(pageIndex + 1 < pageCount);
-  //   }, [pageIndex]);
-
   let filterUni = (search, _pageSize, _pageIndex) => {
     search = search.toLowerCase();
     let newFilteredUnis;

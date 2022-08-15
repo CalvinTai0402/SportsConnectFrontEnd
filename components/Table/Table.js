@@ -1,13 +1,13 @@
-import React, { Fragment, useEffect } from "react";
-import { useTable, usePagination, useGlobalFilter } from "react-table";
+import React, { Fragment, useEffect } from 'react';
+import { useTable, usePagination, useGlobalFilter } from 'react-table';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
-} from "@heroicons/react/solid";
-import PageButton from "./PageButton";
-import useTranslation from "next-translate/useTranslation";
+} from '@heroicons/react/solid';
+import PageButton from './PageButton';
+import useTranslation from 'next-translate/useTranslation';
 
 export default function Table({ columns, data, skipPageResetRef }) {
   const { t } = useTranslation();
@@ -46,29 +46,20 @@ export default function Table({ columns, data, skipPageResetRef }) {
 
   useEffect(() => {}, [globalFilter]);
 
-  // useEffect(() => {
-  //   setCurrentTablePageIndex(pageIndex);
-  // }, [pageIndex]);
-
-  // useEffect(() => {
-  //   console.log(currentTablePageIndex);
-  //   gotoPage(currentTablePageIndex);
-  // }, [data]);
-
   return (
     <Fragment>
       <label className="flex gap-x-2 items-baseline justify-between">
         <div>
-          <span className="text-gray-700">{t("universities:search")}: </span>
+          <span className="text-gray-700">{t('universities:search')}: </span>
           <input
             type="text"
-            value={globalFilter || ""}
+            value={globalFilter || ''}
             className="mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 max-w-sm"
             onChange={(e) => setGlobalFilter(e.target.value)}
           />
         </div>
         <div className="text-gray-700">
-          {t("universities:show")}
+          {t('universities:show')}
           <select
             className="mx-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             value={state.pageSize}
@@ -82,7 +73,7 @@ export default function Table({ columns, data, skipPageResetRef }) {
               </option>
             ))}
           </select>
-          {t("universities:entries")}
+          {t('universities:entries')}
         </div>
       </label>
       <div className="mt-2 flex flex-col">
@@ -102,7 +93,7 @@ export default function Table({ columns, data, skipPageResetRef }) {
                           {...column.getHeaderProps()}
                           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          {column.render("Header")}
+                          {column.render('Header')}
                         </th>
                       ))}
                     </tr>
@@ -123,7 +114,7 @@ export default function Table({ columns, data, skipPageResetRef }) {
                               {...cell.getCellProps()}
                               className="px-6 py-4 truncate max-w-[16rem] hover:break-words hover:overflow-visible hover:text-clip hover:whitespace-normal"
                             >
-                              {cell.render("Cell")}
+                              {cell.render('Cell')}
                             </td>
                           );
                         })}
@@ -141,20 +132,20 @@ export default function Table({ columns, data, skipPageResetRef }) {
           <div className="flex gap-x-2 mb-4 sm:mb-0">
             <span className="hidden text-gray-700 w-full sm:flex">
               <span className="m-auto">
-                {t("universities:showing_results")}{" "}
-                <span className="font-medium">{pageIndex * pageSize + 1}</span>{" "}
-                {t("universities:to")}{" "}
+                {t('universities:showing_results')}{' '}
+                <span className="font-medium">{pageIndex * pageSize + 1}</span>{' '}
+                {t('universities:to')}{' '}
                 <span className="font-medium">
                   {Math.min(pageIndex * pageSize + pageSize, rows.length)}
-                </span>{" "}
-                {t("universities:of")}{" "}
+                </span>{' '}
+                {t('universities:of')}{' '}
                 <span className="font-medium">{rows.length}</span> entries
               </span>
             </span>
           </div>
           <div className="flex gap-x-2 ">
             <span className="">
-              {t("universities:go_to_page")}:{" "}
+              {t('universities:go_to_page')}:{' '}
               <input
                 autoComplete="off"
                 type="number"
@@ -166,7 +157,7 @@ export default function Table({ columns, data, skipPageResetRef }) {
                 }}
                 value={pageIndex + 1}
               />
-            </span>{" "}
+            </span>{' '}
             <nav
               className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px flex"
               aria-label="Pagination"
