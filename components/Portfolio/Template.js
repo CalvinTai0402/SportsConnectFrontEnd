@@ -4,9 +4,11 @@ import ItemRow from './ItemRow';
 import swal from 'sweetalert';
 import { createEducation, getEducations } from '../../network/lib/education';
 import { createExperience, getExperiences } from '../../network/lib/experience';
+import Spinner from '../Spinner';
 
 export default function Template({ endpoint, title }) {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     let fetchData = async () => {
       let res;
@@ -35,6 +37,7 @@ export default function Template({ endpoint, title }) {
       );
       return;
     }
+    setLoading(true);
     let dummyCreateObject = {
       description: '',
       active: false,
@@ -47,7 +50,10 @@ export default function Template({ endpoint, title }) {
     } else {
       res = await createExperience(dummyCreateObject);
     }
-    setData([...data, res.data]);
+    if (res.status) {
+      setLoading(false);
+      setData((data) => [...data, res.data]);
+    }
   };
 
   return (
@@ -79,10 +85,14 @@ export default function Template({ endpoint, title }) {
             </div>
           </div>
           <span className="float-right pt-1">
-            <AiOutlinePlusSquare
-              className="h-6 w-6 text-green-400"
-              onClick={handleCreate}
-            />
+            {loading ? (
+              <Spinner />
+            ) : (
+              <AiOutlinePlusSquare
+                className="h-6 w-6 text-green-400"
+                onClick={handleCreate}
+              />
+            )}
           </span>
         </div>
         <ul className="list-inside space-y-2">
