@@ -161,15 +161,16 @@ export default function Universities({ unis }) {
               </p>
             </Fragment>
           )}
-          {renderTable ? (
+          {/* {renderTable ? (
             <Table
               columns={columns}
               data={allUnis}
               skipPageResetRef={skipPageResetRef}
             />
           ) : (
-            <Accordion unis={allUnis} />
-          )}
+            <Accordion data={allUnis} />
+          )} */}
+          <Accordion unis={allUnis} />
         </section>
       )}
     </Fragment>

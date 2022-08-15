@@ -1,13 +1,13 @@
-import React, { Fragment, useEffect, useState } from "react";
-import AccordionItem from "./AccordionItem";
+import React, { Fragment, useEffect, useState } from 'react';
+import AccordionItem from './AccordionItem';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
-} from "@heroicons/react/solid";
-import PageButton from "../Table/PageButton";
-import useTranslation from "next-translate/useTranslation";
+} from '@heroicons/react/solid';
+import PageButton from '../Table/PageButton';
+import useTranslation from 'next-translate/useTranslation';
 
 export default function Accordion({ unis }) {
   const { t } = useTranslation();
@@ -18,7 +18,7 @@ export default function Accordion({ unis }) {
   const [pageCount, setPageCount] = useState(
     Math.floor(unis.length / pageSize) + 1
   );
-  const [filterValue, setFilterValue] = useState("");
+  const [filterValue, setFilterValue] = useState('');
   const [canPreviousPage, setCanPreviousPage] = useState(false);
   const [canNextPage, setCanNextPage] = useState(true);
 
@@ -27,7 +27,7 @@ export default function Accordion({ unis }) {
     setTotalFilteredUnis(newTotalFilteredUnis);
     setPageCount(Math.floor(totalFilteredUnis / pageSize) + 1);
     setPageIndex(0);
-  }, [filterValue, pageSize]);
+  }, [filterValue, pageSize, unis]);
 
   useEffect(() => {
     filterUni(filterValue, pageSize, pageIndex);
@@ -44,7 +44,7 @@ export default function Accordion({ unis }) {
   let filterUni = (search, _pageSize, _pageIndex) => {
     search = search.toLowerCase();
     let newFilteredUnis;
-    if (search !== "") {
+    if (search !== '') {
       newFilteredUnis = unis.filter(
         (uni) =>
           uni.name.toLowerCase().includes(search) ||
@@ -81,14 +81,14 @@ export default function Accordion({ unis }) {
           <input
             type="text"
             placeholder={
-              t("universities:search") +
-              " " +
+              t('universities:search') +
+              ' ' +
               totalFilteredUnis +
-              " " +
-              t("universities:entries") +
-              " ..."
+              ' ' +
+              t('universities:entries') +
+              ' ...'
             }
-            value={filterValue || ""}
+            value={filterValue || ''}
             className="mt-1 max-w-[180px] sm:max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             onChange={(e) => {
               setFilterValue(e.target.value);
@@ -97,7 +97,7 @@ export default function Accordion({ unis }) {
         </div>
         <div className="text-gray-700">
           <span className="hidden sm:inline-block">
-            {t("universities:show")}
+            {t('universities:show')}
           </span>
           <select
             className="mx-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -134,7 +134,7 @@ export default function Accordion({ unis }) {
       </div>
       <div className="flex justify-between sm:hidden gap-x-2 mt-4 ">
         <span className="flex sm:hidden">
-          <span className="m-auto">{t("universities:go_to_page")}: </span>
+          <span className="m-auto">{t('universities:go_to_page')}: </span>
           <input
             type="number"
             className="w-full ml-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 max-w-sm w-20 h-8"
@@ -145,7 +145,7 @@ export default function Accordion({ unis }) {
             }}
             value={pageIndex + 1}
           />
-        </span>{" "}
+        </span>{' '}
         <nav
           className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px flex sm:hidden"
           aria-label="Pagination"
@@ -191,21 +191,21 @@ export default function Accordion({ unis }) {
         <div className="hidden sm:flex gap-x-2 mb-4 sm:mb-0">
           <span className=" text-gray-700 w-full sm:flex">
             <span className="m-auto">
-              {t("universities:showing_results")}{" "}
-              <span className="font-medium">{pageIndex * pageSize + 1}</span>{" "}
-              {t("universities:to")}{" "}
+              {t('universities:showing_results')}{' '}
+              <span className="font-medium">{pageIndex * pageSize + 1}</span>{' '}
+              {t('universities:to')}{' '}
               <span className="font-medium">
                 {Math.min(pageIndex * pageSize + pageSize, totalFilteredUnis)}
-              </span>{" "}
-              {t("universities:of")}{" "}
-              <span className="font-medium">{totalFilteredUnis}</span>{" "}
-              {t("universities:entries")}
+              </span>{' '}
+              {t('universities:of')}{' '}
+              <span className="font-medium">{totalFilteredUnis}</span>{' '}
+              {t('universities:entries')}
             </span>
           </span>
         </div>
         <div className="flex gap-x-2 ">
           <span className="">
-            {t("universities:go_to_page")}:{" "}
+            {t('universities:go_to_page')}:{' '}
             <input
               type="number"
               className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 max-w-sm w-12 h-8 sm:h-10 sm:w-36"
@@ -216,7 +216,7 @@ export default function Accordion({ unis }) {
               }}
               value={pageIndex + 1}
             />
-          </span>{" "}
+          </span>{' '}
           <nav
             className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px flex"
             aria-label="Pagination"
