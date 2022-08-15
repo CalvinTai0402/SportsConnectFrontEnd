@@ -161,7 +161,7 @@ export default function Universities({ unis }) {
               </p>
             </Fragment>
           )}
-          {/* {renderTable ? (
+          {renderTable ? (
             <Table
               columns={columns}
               data={allUnis}
@@ -169,8 +169,7 @@ export default function Universities({ unis }) {
             />
           ) : (
             <Accordion data={allUnis} />
-          )} */}
-          <Accordion unis={allUnis} />
+          )}
         </section>
       )}
     </Fragment>
