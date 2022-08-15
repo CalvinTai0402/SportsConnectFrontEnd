@@ -1,7 +1,8 @@
-import { useRouter } from "next/router";
-import React, { useState, memo } from "react";
-import useCsrfToken from "../../hooks/useCsrfToken";
-import myAxiosPrivate from "../../axios/myAxiosPrivate";
+import React, { useState, memo } from 'react';
+import {
+  expressInterestInUni,
+  removeInterestInUni,
+} from '../../network/lib/users';
 
 export default memo(function CheckBox({
   checked,
@@ -10,25 +11,12 @@ export default memo(function CheckBox({
   updateTickedUni,
 }) {
   const [isChecked, setIsChecked] = useState(checked);
-  const router = useRouter();
-  let getCsrf = useCsrfToken();
   let handleOnChange = async (uniId) => {
-    let csrfToken = await getCsrf();
-    let myAxios = myAxiosPrivate(router, csrfToken);
     if (isChecked) {
-      let res = await myAxios
-        .delete(`/users/remove_interest_in/${uniId}`)
-        .catch((e) => {
-          return e.response;
-        });
+      await removeInterestInUni(uniId);
     } else {
-      let res = await myAxios
-        .post(`/users/interested_in/${uniId}`)
-        .catch((e) => {
-          return e.response;
-        });
+      await expressInterestInUni(uniId);
     }
-    setIsChecked(!isChecked);
   };
 
   return (
@@ -36,7 +24,8 @@ export default memo(function CheckBox({
       type="checkbox"
       checked={isChecked}
       onChange={() => {
-        updateTickedUni(isChecked, uniId, index, updateTickedUni);
+        setIsChecked(!isChecked);
+        updateTickedUni(isChecked, uniId, index);
         handleOnChange(uniId);
       }}
     />

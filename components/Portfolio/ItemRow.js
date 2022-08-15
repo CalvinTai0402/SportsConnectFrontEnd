@@ -1,14 +1,14 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
-import DatePicker from "react-datepicker";
-import yyyymmdd from "../../utilities/yyyymmdd";
-import { TrashIcon } from "@heroicons/react/solid";
-import { DebounceInput } from "react-debounce-input";
-
-import "react-datepicker/dist/react-datepicker.css";
-import myAxiosPrivate from "../../axios/myAxiosPrivate";
-import useCsrfToken from "../../hooks/useCsrfToken";
-import { useRouter } from "next/router";
-import useTranslation from "next-translate/useTranslation";
+import React, { Fragment, useEffect, useRef, useState } from 'react';
+import yyyymmdd from '../../utilities/yyyymmdd';
+import { TrashIcon } from '@heroicons/react/solid';
+import { DebounceInput } from 'react-debounce-input';
+import useTranslation from 'next-translate/useTranslation';
+import { deleteEducation, updateEducation } from '../../network/lib/education';
+import {
+  deleteExperience,
+  updateExperience,
+} from '../../network/lib/experience';
+import YearMonthDayPicker from '../DatePicker/YearMonthDayPicker';
 
 Date.prototype.yyyymmdd = yyyymmdd;
 
@@ -25,19 +25,16 @@ export default function ItemRow({
   const { t } = useTranslation();
   let [currentActive, setCurrentActive] = useState(active);
   let [currentDescription, setCurrentDescription] = useState(description);
-  let [currentStartDate, setCurrentStartDate] = useState(
-    new Date(startDate + "T15:00:00Z")
-  );
-  let [currentEndDate, setCurrentEndDate] = useState(currentStartDate);
+  let [currentStartDate, setCurrentStartDate] = useState(startDate);
+  let [currentEndDate, setCurrentEndDate] = useState(endDate);
   const firstRun = useRef(true);
-  const router = useRouter();
-  let getCsrf = useCsrfToken();
-  let handleDelete = async (_id) => {
-    let csrfToken = await getCsrf();
-    let myAxios = myAxiosPrivate(router, csrfToken);
-    let res = await myAxios.delete(`${endpoint}${_id}`).catch((e) => {
-      return e.response;
-    });
+
+  let handleDelete = async () => {
+    if (endpoint === '/educations') {
+      await deleteEducation(id);
+    } else {
+      await deleteExperience(id);
+    }
   };
 
   let handleUpdate = async () => {
@@ -50,25 +47,18 @@ export default function ItemRow({
     if (currentEndDate !== undefined) {
       updateObject.end_date = currentEndDate.yyyymmdd();
     }
-    let csrfToken = await getCsrf();
-    let myAxios = myAxiosPrivate(router, csrfToken);
-    let res = await myAxios.put(`${endpoint}${id}`, updateObject).catch((e) => {
-      return e.response;
-    });
+    if (endpoint === '/educations') {
+      await updateEducation(id, updateObject);
+    } else {
+      await updateExperience(id, updateObject);
+    }
   };
 
   useEffect(() => {
-    if (!currentActive) {
-      setCurrentEndDate(new Date(endDate + "T15:00:00Z"));
-    }
-  }, []);
-
-  useEffect(() => {
+    // we do not want to update on mount
     if (firstRun.current) {
-      // we do not want to update on mount
       firstRun.current = false;
     } else {
-      // only auto send put requests
       handleUpdate();
     }
   }, [currentDescription, currentActive, currentStartDate, currentEndDate]);
@@ -91,14 +81,14 @@ export default function ItemRow({
               className="h-5 w-5 hover:cursor-pointer text-red-500"
               onClick={() => {
                 removeItem(index);
-                handleDelete(id);
+                handleDelete();
               }}
             />
           </span>
         </div>
         <div className="text-gray-500 text-xs flex justify-between">
           <div className="flex">
-            <DatePicker
+            <YearMonthDayPicker
               selected={currentStartDate}
               onChange={(date) => {
                 setCurrentStartDate(date);
@@ -106,12 +96,12 @@ export default function ItemRow({
               className="border-0 p-0 max-w-[4rem] text-xs border-gray-200 m-0 
                           hover:cursor-pointer focus:outline-none focus:ring-0 focus:border-black"
               wrapperClassName="max-w-[4.2rem] mr-1"
-            />{" "}
-            to{" "}
+            />{' '}
+            to{' '}
             {currentActive ? (
               <span className="ml-2">present</span>
             ) : (
-              <DatePicker
+              <YearMonthDayPicker
                 selected={currentEndDate}
                 onChange={(date) => {
                   setCurrentEndDate(date);
@@ -127,14 +117,14 @@ export default function ItemRow({
               className="mr-10 hover:cursor-pointer"
               onClick={() => setCurrentActive(!currentActive)}
             >
-              {t("portfolio:active")}
+              {t('portfolio:active')}
             </div>
           ) : (
             <div
               className="mr-8 hover:cursor-pointer"
               onClick={() => setCurrentActive(!currentActive)}
             >
-              {t("portfolio:inactive")}
+              {t('portfolio:inactive')}
             </div>
           )}
         </div>

@@ -4,111 +4,160 @@ import Input from './Input';
 import Textarea from './Textarea';
 import Experiences from './Experiences';
 import Educations from './Educations';
-import DatePicker from 'react-datepicker';
 import yyyymmdd from '../../utilities/yyyymmdd';
 import { AiOutlineClose } from 'react-icons/ai';
-import myAxiosPrivate from '../../axios/myAxiosPrivate';
-import useCsrfToken from '../../hooks/useCsrfToken';
 
-import 'react-datepicker/dist/react-datepicker.css';
-import { useRouter } from 'next/router';
 import useTranslation from 'next-translate/useTranslation';
+import {
+  getCurrentUser,
+  updateUser,
+  uploadProfilePhoto,
+} from '../../network/lib/users';
+import YearMonthDayPicker from '../DatePicker/YearMonthDayPicker';
 
 Date.prototype.yyyymmdd = yyyymmdd;
 
 export default function Portfolio() {
   const { t } = useTranslation();
-  const [name, setName] = useState('');
-  const [wechatId, setWechatId] = useState('');
-  const [preferredName, setPreferredName] = useState('');
-  const [bio, setBio] = useState('');
-  const [gender, setGender] = useState('');
-  const [contact, setContact] = useState('');
-  const [currentAddress, setCurrentAddress] = useState('');
-  const [permanentAddress, setPermanentAddress] = useState('');
-  const [email, setEmail] = useState('');
-  const [birthday, setBirthday] = useState(new Date('2022-07-02T15:00:00Z'));
+  const [name, setName] = useState(null); // have to use nulls for the logic of firstRuns because fetchCurrentUser() updates with String
+  const [wechatId, setWechatId] = useState(null);
+  const [preferredName, setPreferredName] = useState(null);
+  const [bio, setBio] = useState(null);
+  const [gender, setGender] = useState(null);
+  const [contact, setContact] = useState(null);
+  const [currentAddress, setCurrentAddress] = useState(null);
+  const [permanentAddress, setPermanentAddress] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [birthday, setBirthday] = useState(null);
   const [photoUrl, setPhotoUrl] = useState('None');
   const [showUploadButton, setShowUploadButton] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
+  let allMounted = useRef(false);
 
-  const firstRun = useRef(true);
-  let getCsrf = useCsrfToken();
-  const router = useRouter();
+  const firstRuns = {
+    // we do not want to handleUpdate() on first Mount
+    name: useRef(false),
+    wechatId: useRef(false),
+    preferredName: useRef(false),
+    bio: useRef(false),
+    gender: useRef(false),
+    contact: useRef(false),
+    currentAddress: useRef(false),
+    permanentAddress: useRef(false),
+    email: useRef(false),
+    birthday: useRef(false),
+  };
+
+  const secondRuns = {
+    // we also do not want to handleUpdate() on fetchCurrentUser()
+    name: useRef(false),
+    wechatId: useRef(false),
+    preferredName: useRef(false),
+    bio: useRef(false),
+    gender: useRef(false),
+    contact: useRef(false),
+    currentAddress: useRef(false),
+    permanentAddress: useRef(false),
+    email: useRef(false),
+    birthday: useRef(false),
+  };
+
+  useEffect(() => {
+    if (!firstRuns.name.current) firstRuns.name.current = true;
+    else if (!secondRuns.name.current) secondRuns.name.current = true;
+  }, [name]); // we need both firstRuns and secondRuns because the component first updates and then fetchCurrentUser()
+
+  useEffect(() => {
+    if (!firstRuns.wechatId.current) firstRuns.wechatId.current = true;
+    else if (!secondRuns.wechatId.current) secondRuns.wechatId.current = true;
+  }, [wechatId]);
+
+  useEffect(() => {
+    if (!firstRuns.preferredName.current)
+      firstRuns.preferredName.current = true;
+    else if (!secondRuns.preferredName.current)
+      secondRuns.preferredName.current = true;
+  }, [preferredName]);
+
+  useEffect(() => {
+    if (!firstRuns.bio.current) firstRuns.bio.current = true;
+    else if (!secondRuns.bio.current) secondRuns.bio.current = true;
+  }, [bio]);
+
+  useEffect(() => {
+    if (!firstRuns.gender.current) firstRuns.gender.current = true;
+    else if (!secondRuns.gender.current) secondRuns.gender.current = true;
+  }, [gender]);
+
+  useEffect(() => {
+    if (!firstRuns.contact.current) firstRuns.contact.current = true;
+    else if (!secondRuns.contact.current) secondRuns.contact.current = true;
+  }, [contact]);
+
+  useEffect(() => {
+    if (!firstRuns.currentAddress.current)
+      firstRuns.currentAddress.current = true;
+    else if (!secondRuns.currentAddress.current)
+      secondRuns.currentAddress.current = true;
+  }, [currentAddress]);
+
+  useEffect(() => {
+    if (!firstRuns.permanentAddress.current)
+      firstRuns.permanentAddress.current = true;
+    else if (!secondRuns.permanentAddress.current)
+      secondRuns.permanentAddress.current = true;
+  }, [permanentAddress]);
+
+  useEffect(() => {
+    if (!firstRuns.email.current) firstRuns.email.current = true;
+    else if (!secondRuns.email.current) secondRuns.email.current = true;
+  }, [email]);
+
+  useEffect(() => {
+    if (!firstRuns.birthday.current) firstRuns.birthday.current = true;
+    else if (!secondRuns.birthday.current) secondRuns.birthday.current = true;
+  }, [birthday]);
 
   useEffect(() => {
     let fetchCurrentUser = async () => {
-      let myAxios = myAxiosPrivate(router);
-      let res = await myAxios.get('/users/me').catch((e) => {
-        return e.response;
-      });
-      let currentUser = res.data;
-      setName(currentUser.name);
-      setWechatId(currentUser.wechatId);
-      setPreferredName(currentUser.preferred_name);
-      setBio(currentUser.bio);
-      setGender(currentUser.gender);
-      setContact(currentUser.contact_number);
-      setCurrentAddress(currentUser.current_address);
-      setPermanentAddress(currentUser.permanent_address);
-      setEmail(currentUser.email);
-      if (currentUser.birthday) {
-        setBirthday(new Date(currentUser.birthday + 'T15:00:00Z'));
-      }
-      if (res.data.profile_photo?.length > 0) {
-        setPhotoUrl(res.data.profile_photo[0].photo_url);
+      let res = await getCurrentUser();
+      if (res.status === 200) {
+        let currentUser = res.data;
+        if (currentUser.birthday) {
+          setBirthday(new Date(currentUser.birthday + 'T15:00:00Z'));
+        } else {
+          setBirthday(new Date('2022-07-02T15:00:00Z'));
+        }
+        if (res.data.profile_photo?.length > 0) {
+          setPhotoUrl(res.data.profile_photo[0].photo_url);
+        }
+        setName(currentUser.name);
+        setWechatId(currentUser.wechatId);
+        setPreferredName(currentUser.preferred_name);
+        setBio(currentUser.bio);
+        setGender(currentUser.gender);
+        setContact(currentUser.contact_number);
+        setCurrentAddress(currentUser.current_address);
+        setPermanentAddress(currentUser.permanent_address);
+        setEmail(currentUser.email);
       }
     };
     fetchCurrentUser();
   }, []);
 
-  let handleUpdate = async () => {
-    let csrfToken = await getCsrf();
-    let myAxios = myAxiosPrivate(router, csrfToken);
-    let res = await myAxios
-      .put('/users/', {
-        name: name,
-        email: email,
-        wechatId: wechatId,
-        preferred_name: preferredName,
-        bio: bio,
-        gender: gender,
-        contact_number: contact,
-        current_address: currentAddress,
-        permanent_address: permanentAddress,
-        birthday: birthday.yyyymmdd(),
-      })
-      .catch((e) => {
-        return e.response;
-      });
-  };
-
-  let updateProfilePhoto = async (e) => {
-    if (!e.target.files[0].name.match(/\.(jpg|jpeg|png|gif)$/)) {
-      setError('Select a valid image file');
-      return false;
-    }
-    const formData = new FormData();
-    formData.append('file', e.target.files[0], e.target.files[0].name);
-    setUploading(true);
-    let csrfToken = await getCsrf();
-    let myAxios = myAxiosPrivate(router, csrfToken);
-    let res = await myAxios
-      .post('/users/profile-photo', formData)
-      .catch((e) => {
-        return e.response;
-      });
-    setUploading(false);
-    setPhotoUrl(res.data);
-  };
-
   useEffect(() => {
-    if (firstRun.current) {
-      // we do not want to update on mount
-      firstRun.current = false;
-    } else {
+    if (allMounted.current) {
       handleUpdate();
+    } else {
+      let currentlyAllMounted = true;
+      for (var key of Object.keys(firstRuns)) {
+        if (!firstRuns[key].current || !secondRuns[key].current) {
+          currentlyAllMounted = false;
+          break;
+        }
+      }
+      if (currentlyAllMounted) allMounted.current = true;
     }
   }, [
     name,
@@ -122,6 +171,39 @@ export default function Portfolio() {
     email,
     birthday,
   ]);
+
+  let handleUpdate = async () => {
+    await updateUser({
+      name: name,
+      email: email,
+      wechatId: wechatId,
+      preferred_name: preferredName,
+      bio: bio,
+      gender: gender,
+      contact_number: contact,
+      current_address: currentAddress,
+      permanent_address: permanentAddress,
+      birthday: birthday.yyyymmdd(),
+    });
+  };
+
+  let updateProfilePhoto = async (e) => {
+    if (!e.target.files[0].name.match(/\.(jpg|jpeg|png|gif)$/)) {
+      setError('Select a valid image file');
+      return false;
+    }
+    if (e.target.files[0].size > 5000000) {
+      // file size greater than 5mb
+      setError('File size must be < 5 Mb');
+      return false;
+    }
+    const formData = new FormData();
+    formData.append('file', e.target.files[0], e.target.files[0].name);
+    setUploading(true);
+    let res = await uploadProfilePhoto(formData);
+    setUploading(false);
+    setPhotoUrl(res.data);
+  };
 
   return (
     <Fragment>
@@ -141,7 +223,7 @@ export default function Portfolio() {
                 ) : (
                   <Image
                     className="h-auto w-full mx-auto"
-                    src="https://sportsconnect-profilepics.s3.amazonaws.com/default-photo.jpg"
+                    src="https://sportsconnect-profilephotos.s3.amazonaws.com/default-photo.jpg"
                     alt=""
                     width={600}
                     height={600}
@@ -228,10 +310,7 @@ export default function Portfolio() {
                   name="Bio"
                   type="text"
                   value={bio}
-                  onChange={(e) => {
-                    setBio(e.target.value);
-                    console.log('a');
-                  }}
+                  onChange={(e) => setBio(e.target.value)}
                 />
               </div>
             </div>
@@ -329,7 +408,7 @@ export default function Portfolio() {
                     <div className="text-gray-500">
                       {t('portfolio:birthday')}
                     </div>
-                    <DatePicker
+                    <YearMonthDayPicker
                       selected={birthday}
                       onChange={(date) => {
                         setBirthday(date);

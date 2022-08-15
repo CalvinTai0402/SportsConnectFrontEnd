@@ -1,21 +1,20 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { AiOutlinePlusSquare } from "react-icons/ai";
-import ItemRow from "./ItemRow";
-import swal from "sweetalert";
-import useCsrfToken from "../../hooks/useCsrfToken";
-import myAxiosPrivate from "../../axios/myAxiosPrivate";
-import { useRouter } from "next/router";
+import React, { Fragment, useEffect, useState } from 'react';
+import { AiOutlinePlusSquare } from 'react-icons/ai';
+import ItemRow from './ItemRow';
+import swal from 'sweetalert';
+import { createEducation, getEducations } from '../../network/lib/education';
+import { createExperience, getExperiences } from '../../network/lib/experience';
 
 export default function Template({ endpoint, title }) {
   const [data, setData] = useState([]);
-  let getCsrf = useCsrfToken();
-  const router = useRouter();
   useEffect(() => {
     let fetchData = async () => {
-      let myAxios = myAxiosPrivate(router);
-      let res = await myAxios.get(endpoint).catch((e) => {
-        return e.response;
-      });
+      let res;
+      if (endpoint === '/educations') {
+        res = await getEducations();
+      } else {
+        res = await getExperiences();
+      }
       setData(res.data);
     };
     fetchData();
@@ -28,30 +27,26 @@ export default function Template({ endpoint, title }) {
     setData(newData);
   };
 
-  let capitalizeEndpoint = (string) => {
-    return string.charAt(1).toUpperCase() + string.slice(2, -1);
-  };
-
   let handleCreate = async () => {
     if (data.length >= 5) {
       swal(
-        "Optimize your portfolio",
-        "Please only include the 5 most recent items for a good reading experience. Pick the ones you are proud of!"
+        'Optimize your portfolio',
+        'Please only include the 5 most recent items for a good reading experience. Pick the ones you are proud of!'
       );
       return;
     }
-    let csrfToken = await getCsrf();
-    let myAxios = myAxiosPrivate(router, csrfToken);
-    let res = await myAxios
-      .post(endpoint, {
-        description: "",
-        active: false,
-        start_date: "2022-07-16",
-        end_date: "2022-07-16",
-      })
-      .catch((e) => {
-        return e.response;
-      });
+    let dummyCreateObject = {
+      description: '',
+      active: false,
+      start_date: '2022-07-16',
+      end_date: '2022-07-16',
+    };
+    let res;
+    if (endpoint === '/educations') {
+      res = await createEducation(dummyCreateObject);
+    } else {
+      res = await createExperience(dummyCreateObject);
+    }
     setData([...data, res.data]);
   };
 
@@ -92,6 +87,11 @@ export default function Template({ endpoint, title }) {
         </div>
         <ul className="list-inside space-y-2">
           {data.map((datum, index) => {
+            let startDate = new Date(datum.start_date + 'T15:00:00Z');
+            let endDate = new Date(datum.start_date + 'T15:00:00Z');
+            if (!datum.active) {
+              endDate = new Date(datum.end_date + 'T15:00:00Z');
+            }
             return (
               <ItemRow
                 key={datum.id}
@@ -99,8 +99,8 @@ export default function Template({ endpoint, title }) {
                 removeItem={removeDatum}
                 id={datum.id}
                 description={datum.description}
-                startDate={datum.start_date}
-                endDate={datum.end_date}
+                startDate={startDate}
+                endDate={endDate}
                 active={datum.active}
                 endpoint={endpoint}
               />

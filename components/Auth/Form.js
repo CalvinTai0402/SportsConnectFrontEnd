@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import useTranslation from 'next-translate/useTranslation';
 import Image from 'next/image';
+import Spinner from '../Spinner';
 
 export default function Form({
   text,
@@ -9,6 +10,7 @@ export default function Form({
   handlePasswordChange,
   handleSubmit,
   error,
+  loading,
   setError,
 }) {
   const { t } = useTranslation();
@@ -20,9 +22,8 @@ export default function Form({
             src="/computer.jpg"
             className="object-center object-cover pointer-events-none"
             alt="Page not found"
-            width={800}
-            height={500}
             layout="fill"
+            priority={true}
           />
           <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40 relative z-1">
             <div>
@@ -110,7 +111,7 @@ export default function Form({
                     type="submit"
                     className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
                   >
-                    {text}
+                    {loading ? <Spinner /> : text}
                   </button>
                 </div>
               </form>
@@ -119,7 +120,7 @@ export default function Form({
                   {t('login:description')}{' '}
                   <Link href="/auth/signup">
                     <a className="text-blue-500 focus:outline-none focus:underline hover:underline">
-                      {t('login:sign_up')}{' '}
+                      {t('login:sign_up')}
                     </a>
                   </Link>
                 </p>

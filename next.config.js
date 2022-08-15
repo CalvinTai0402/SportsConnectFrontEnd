@@ -1,13 +1,13 @@
 /** @type {import('next').NextConfig} */
-const nextTranslate = require("next-translate");
+const nextTranslate = require('next-translate');
 
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
   images: {
     domains: [
-      "demos.creative-tim.com",
-      "sportsconnect-profilepics.s3.amazonaws.com",
+      'demos.creative-tim.com',
+      'sportsconnect-profilephotos.s3.amazonaws.com',
     ],
   },
   ...nextTranslate(),

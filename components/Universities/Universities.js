@@ -1,34 +1,41 @@
-import useTranslation from "next-translate/useTranslation";
-import { useRouter } from "next/router";
-import React, { Fragment, useEffect, useMemo, useRef, useState } from "react";
-import myAxiosPrivate from "../../axios/myAxiosPrivate";
-import Accordion from "../Accordion/Accordion";
-import Table from "../Table/Table";
-import CheckBox from "./CheckBox";
+import useTranslation from 'next-translate/useTranslation';
+import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  getInterestedUniversities,
+  getUniversities,
+} from '../../network/lib/universities';
+import Accordion from '../Accordion/Accordion';
+import Table from '../Table/Table';
+import CheckBox from './CheckBox';
+import Spinner from '../Spinner';
 
 export default function Universities({ unis }) {
   const { t } = useTranslation();
   const [allUnis, setAllUnis] = useState(unis);
-  let [allUnisWithInterest, setAllUnisWithInterest] = useState([]);
-  const [allOrIntersted, setAllOrInterested] = useState("all");
+  const [loading, setLoading] = useState(false);
+  const [renderTable, setRenderTable] = useState(window.innerWidth > 1210);
+  const [allOrIntersted, setAllOrInterested] = useState('all');
   const skipPageResetRef = useRef();
-  const router = useRouter();
 
+  // Note that in this useEffect we do not setLoading because we have getStaticProps
   useEffect(() => {
     let fetchAllUnis = async (limit) => {
-      let myAxios = myAxiosPrivate(router);
-      let res = await myAxios
-        .get(`/universities/?limit=${limit}`)
-        .catch((e) => {
-          return e.response;
-        });
-      setAllUnis(res.data);
+      let res = await getUniversities(limit);
+      setAllUnis(transformUnis(res.data));
     };
     fetchAllUnis(-1);
+    window.addEventListener('resize', greaterThan1210px);
+    return () => {
+      window.removeEventListener('resize', greaterThan1210px);
+    };
   }, []);
 
-  useEffect(() => {
-    let newAllUnisWithInterest = allUnis.map((uni, index) => {
+  let greaterThan1210px = () => {
+    setRenderTable(window.innerWidth > 1210);
+  };
+
+  let transformUnis = (unis) => {
+    let transformedUnis = unis.map((uni, index) => {
       return {
         ...uni,
         interested: (
@@ -41,15 +48,16 @@ export default function Universities({ unis }) {
         ),
       };
     });
-    setAllUnisWithInterest(newAllUnisWithInterest);
-  }, [allUnis]);
+    return transformedUnis;
+  };
 
-  let updateTickedUni = (isChecked, uniId, index, updateTickedUni) => {
+  let updateTickedUni = (isChecked, uniId, index) => {
     skipPageResetRef.current = true;
-    setAllUnisWithInterest((prevAllUnisWithInterest) => {
-      let newAllUnisWithInterest = [...prevAllUnisWithInterest];
-      newAllUnisWithInterest[index] = {
-        ...prevAllUnisWithInterest[index],
+    setAllUnis((prevAllUnis) => {
+      let newAllUnis = [...prevAllUnis];
+      console.log(newAllUnis[index]);
+      newAllUnis[index] = {
+        ...prevAllUnis[index],
         interested: (
           <CheckBox
             checked={!isChecked}
@@ -59,132 +67,109 @@ export default function Universities({ unis }) {
           />
         ),
       };
-      return newAllUnisWithInterest;
+      return newAllUnis;
     });
   };
 
   let handleAllOrIntersted = async () => {
-    let myAxios = myAxiosPrivate(router);
     let res;
-    if (allOrIntersted === "all") {
-      setAllOrInterested("interested");
-      res = await myAxios
-        .get(`/universities/interested_only?limit=${-1}`)
-        .catch((e) => {
-          return e.response;
-        });
+    setLoading(true);
+    if (allOrIntersted === 'all') {
+      setAllOrInterested('interested');
+      res = await getInterestedUniversities(-1);
     } else {
-      setAllOrInterested("all");
-      res = await myAxios.get(`/universities/?limit=${-1}`).catch((e) => {
-        return e.response;
-      });
+      setAllOrInterested('all');
+      res = await getUniversities(-1);
     }
-    setAllUnis(res.data);
+    if (res.status === 200) {
+      setLoading(false);
+      setAllUnis(transformUnis(res.data));
+    }
   };
 
   const columns = useMemo(
     () => [
       {
-        Header: t("universities:name"),
-        accessor: "name",
+        Header: t('universities:name'),
+        accessor: 'name',
       },
       {
-        Header: t("universities:city"),
-        accessor: "city",
+        Header: t('universities:city'),
+        accessor: 'city',
       },
       {
-        Header: t("universities:state"),
-        accessor: "state",
+        Header: t('universities:state'),
+        accessor: 'state',
       },
       {
-        Header: t("universities:conference"),
-        accessor: "conference",
+        Header: t('universities:conference'),
+        accessor: 'conference',
       },
       {
-        Header: t("universities:division"),
-        accessor: "division",
+        Header: t('universities:division'),
+        accessor: 'division',
       },
       {
-        Header: t("universities:region"),
-        accessor: "region",
+        Header: t('universities:region'),
+        accessor: 'region',
       },
       {
-        Header: t("universities:category"),
-        accessor: "category",
+        Header: t('universities:category'),
+        accessor: 'category',
       },
       {
-        Header: t("universities:interested"),
-        accessor: "interested",
+        Header: t('universities:interested'),
+        accessor: 'interested',
       },
     ],
     []
   );
   return (
     <Fragment>
-      {allUnisWithInterest.length === allUnis.length ? ( // only render tickboxes when all checkboxes are fully constructed
+      {loading ? (
+        <div className="flex h-screen w-screen">
+          <Spinner size={12} />
+        </div>
+      ) : (
         <section className="w-screen bg-gradient-to-br min-h-[68vh] p-8">
-          {allOrIntersted === "all" ? (
+          {allOrIntersted === 'all' ? (
             <Fragment>
               <h1 className="text-center text-2xl mb-4">
-                {t("universities:all_universities")}
+                {t('universities:all_universities')}
               </h1>
               <p className="inline-flex justify-center w-full">
                 <span
                   className="text-center text-sm mb-4 underline hover:cursor-pointer"
                   onClick={handleAllOrIntersted}
                 >
-                  {t("universities:only_show_interested")}
+                  {t('universities:only_show_interested')}
                 </span>
               </p>
             </Fragment>
           ) : (
             <Fragment>
               <h1 className="text-center text-2xl mb-4">
-                {t("universities:interested_universities")}{" "}
+                {t('universities:interested_universities')}{' '}
               </h1>
               <p className="inline-flex justify-center w-full">
                 <span
                   className="text-center text-sm mb-4 underline hover:cursor-pointer"
                   onClick={handleAllOrIntersted}
                 >
-                  {t("universities:show_all")}
+                  {t('universities:show_all')}
                 </span>
               </p>
             </Fragment>
           )}
-          <div className="hidden 1210:block">
+          {renderTable ? (
             <Table
               columns={columns}
-              data={allUnisWithInterest}
+              data={allUnis}
               skipPageResetRef={skipPageResetRef}
             />
-          </div>
-          <div key={allUnisWithInterest.length} className="1210:hidden">
-            <Accordion unis={allUnisWithInterest} />
-          </div>
-        </section>
-      ) : (
-        <section className="w-screen h-screen bg-gradient-to-br p-8">
-          <div className="flex items-center justify-center">
-            <div role="status">
-              <svg
-                aria-hidden="true"
-                className="mr-2 w-8 h-8 text-gray-200 animate-spin fill-blue-600"
-                viewBox="0 0 100 101"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                  fill="currentColor"
-                />
-                <path
-                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                  fill="currentFill"
-                />
-              </svg>
-            </div>
-          </div>
+          ) : (
+            <Accordion unis={allUnis} />
+          )}
         </section>
       )}
     </Fragment>
