@@ -33,8 +33,8 @@ export function RouteGuard({ children }) {
     authCheck(router.asPath);
     let hideContent = () => setAuthorized(false);
     let checkLoggedInAndRedirect = async (url) => {
-      let done = await setSessionStorage(url);
-      if (done) authCheck(url);
+      await setSessionStorage(url); // await is necessary because setSessionStorage alters sessionStorage which authCheck depends on
+      authCheck(url);
     };
     router.events.on('routeChangeStart', hideContent);
     router.events.on('routeChangeComplete', checkLoggedInAndRedirect);

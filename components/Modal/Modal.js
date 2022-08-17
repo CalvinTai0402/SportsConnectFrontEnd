@@ -1,7 +1,13 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState } from 'react';
 
-export default function Modal({ display, title, description, link }) {
-  const [showModal, setShowModal] = useState(false);
+export default function Modal({
+  display,
+  title,
+  description,
+  link,
+  initialShow = false,
+}) {
+  const [showModal, setShowModal] = useState(initialShow);
   return (
     <Fragment>
       <button

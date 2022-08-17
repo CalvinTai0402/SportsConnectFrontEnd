@@ -2,7 +2,7 @@
   "locales": ["en-US", "zh"],
   "defaultLocale": "en-US",
   "pages": {
-    "*": ["header", "footer", "_404"],
+    "*": ["header", "footer", "_404", "offline"],
     "/contactus": ["contactus"],
     "/home": ["home"],
     "/portfolio": ["portfolio"],

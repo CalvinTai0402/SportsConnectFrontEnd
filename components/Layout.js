@@ -1,5 +1,5 @@
-import Footer from "./Nav/Footer";
-import Header from "./Nav/Header";
+import Footer from './Nav/Footer';
+import Header from './Nav/Header';
 
 export default function Layout({ children }) {
   return (
@@ -7,8 +7,6 @@ export default function Layout({ children }) {
       <Header />
       {children}
       <Footer />
-      {/* <div className="w-full bottom-0">
-      </div> */}
     </>
   );
 }
