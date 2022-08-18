@@ -16,5 +16,9 @@
   "experience": "Experience",
   "educations": "Educations",
   "active": "active",
-  "inactive": "inactive"
+  "inactive": "inactive",
+  "crop_image": "Crop your image",
+  "preview": "Preview",
+  "upload": "Upload",
+  "cancel": "Cancel"
 }

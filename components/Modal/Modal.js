@@ -10,13 +10,15 @@ export default function Modal({
   const [showModal, setShowModal] = useState(initialShow);
   return (
     <Fragment>
-      <button
-        className="text-blue-800"
-        type="button"
-        onClick={() => setShowModal(true)}
-      >
-        {display}
-      </button>
+      {display && (
+        <button
+          className="text-blue-800"
+          type="button"
+          onClick={() => setShowModal(true)}
+        >
+          {display}
+        </button>
+      )}
       {showModal ? (
         <>
           <div
@@ -60,7 +62,6 @@ export default function Modal({
               </div>
             </div>
           </div>
-          {/* <div className="opacity-25 fixed inset-0 z-40 bg-black"></div> */}
         </>
       ) : null}
     </Fragment>

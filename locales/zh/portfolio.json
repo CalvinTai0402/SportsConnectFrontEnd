@@ -16,5 +16,9 @@
   "experience": "经验",
   "educations": "教育",
   "active": "激活",
-  "inactive": "未启用"
+  "inactive": "未启用",
+  "crop_image": "剪裁图像",
+  "preview": "预览",
+  "upload": "上传",
+  "cancel": "取消"
 }

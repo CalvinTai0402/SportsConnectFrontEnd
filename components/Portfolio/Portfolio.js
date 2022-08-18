@@ -14,6 +14,8 @@ import {
   uploadProfilePhoto,
 } from '../../network/lib/users';
 import YearMonthDayPicker from '../DatePicker/YearMonthDayPicker';
+import Modal from '../Modal/Modal';
+import CropImage from '../CropImage/CropImage';
 
 Date.prototype.yyyymmdd = yyyymmdd;
 
@@ -30,9 +32,10 @@ export default function Portfolio() {
   const [email, setEmail] = useState(null);
   const [birthday, setBirthday] = useState(null);
   const [photoUrl, setPhotoUrl] = useState('None');
-  const [showUploadButton, setShowUploadButton] = useState(false);
+  // const [showUploadButton, setShowUploadButton] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
+  // const [cropShow, setCropShow] = useState(false);
   let allMounted = useRef(false);
 
   const firstRuns = {
@@ -187,24 +190,6 @@ export default function Portfolio() {
     });
   };
 
-  let updateProfilePhoto = async (e) => {
-    if (!e.target.files[0].name.match(/\.(jpg|jpeg|png|gif)$/)) {
-      setError('Select a valid image file');
-      return false;
-    }
-    if (e.target.files[0].size > 5000000) {
-      // file size greater than 5mb
-      setError('File size must be < 5 Mb');
-      return false;
-    }
-    const formData = new FormData();
-    formData.append('file', e.target.files[0], e.target.files[0].name);
-    setUploading(true);
-    let res = await uploadProfilePhoto(formData);
-    setUploading(false);
-    setPhotoUrl(res.data);
-  };
-
   return (
     <Fragment>
       <div className="container mx-auto my-5 p-5 min-h-[80vh]">
@@ -246,47 +231,71 @@ export default function Portfolio() {
                       fill="currentFill"
                     />
                   </svg>
-                ) : showUploadButton ? (
-                  <span>
-                    <span className="flex justify-between">
-                      <label
-                        className="text-sm font-medium text-gray-900 text-blue-600"
-                        htmlFor="file_input"
-                      >
-                        {t('portfolio:upload_file')}
-                      </label>
-                      <label
-                        className="mt-[2px]"
-                        onClick={() => setShowUploadButton(false)}
-                      >
-                        <AiOutlineClose />
-                      </label>
-                    </span>
-                    <input
-                      className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
-                      id="file_input"
-                      type="file"
-                      onChange={(e) => {
-                        setShowUploadButton(false);
-                        updateProfilePhoto(e);
-                      }}
-                    ></input>
-                  </span>
                 ) : (
+                  // showUploadButton ? (
+                  //   <span>
+                  //     <span className="flex justify-between">
+                  //       <label
+                  //         className="text-sm font-medium text-gray-900 text-blue-600"
+                  //         htmlFor="file_input"
+                  //       >
+                  //         {t('portfolio:upload_file')}
+                  //       </label>
+                  //       <label
+                  //         className="mt-[2px]"
+                  //         onClick={() => setShowUploadButton(false)}
+                  //       >
+                  //         <AiOutlineClose />
+                  //       </label>
+                  //     </span>
+                  //     <input
+                  //       className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
+                  //       id="file_input"
+                  //       type="file"
+                  //       onChange={(e) => {
+                  //         setShowUploadButton(false);
+                  //         setCropShow(true);
+                  //       }}
+                  //     ></input>
+                  //   </span>
+                  // ) : (
+                  //   <div
+                  //     onClick={() => {
+                  //       setShowUploadButton(!showUploadButton);
+                  //       setError('');
+                  //     }}
+                  //     className="text-md grid place-items-center bg-slate-200  text-blue-600"
+                  //   >
+                  //     {photoUrl === 'None'
+                  //       ? t('portfolio:upload_new_photo')
+                  //       : t('portfolio:change_profile_photo')}
+                  //   </div>
+                  // )
                   <div
-                    onClick={() => {
-                      setShowUploadButton(!showUploadButton);
-                      setError('');
-                    }}
+                    // onClick={() => {
+                    //   setCropShow(true);
+                    // }}
                     className="text-md grid place-items-center bg-slate-200  text-blue-600"
                   >
-                    {photoUrl === 'None'
-                      ? t('portfolio:upload_new_photo')
-                      : t('portfolio:change_profile_photo')}
+                    {photoUrl === 'None' ? (
+                      <CropImage
+                        display={t('portfolio:upload_new_photo')}
+                        setUploading={setUploading}
+                        setPhotoUrl={setPhotoUrl}
+                        uploadProfilePhoto={uploadProfilePhoto}
+                      />
+                    ) : (
+                      <CropImage
+                        display={t('portfolio:change_profile_photo')}
+                        setUploading={setUploading}
+                        setPhotoUrl={setPhotoUrl}
+                        uploadProfilePhoto={uploadProfilePhoto}
+                      />
+                    )}
                   </div>
                 )}
               </div>
-              {error ? (
+              {/* {error ? (
                 <span className="text-red-700 flex justify-between text-md ">
                   {error}
                   <AiOutlineClose
@@ -294,7 +303,7 @@ export default function Portfolio() {
                     className="hover:cursor-pointer mt-1"
                   />
                 </span>
-              ) : null}
+              ) : null} */}
               <h1 className="text-gray-900 leading-8 my-2">
                 <Input
                   label={t('portfolio:preferred_name')}
