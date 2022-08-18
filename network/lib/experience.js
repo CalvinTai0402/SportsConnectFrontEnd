@@ -14,13 +14,15 @@ export async function createExperience(createObject) {
   }
 }
 
-export async function getExperiences() {
+export async function getExperiences(controller) {
   try {
     let csrfToken = await getCsrfToken();
     let myAxios = myAxiosPrivate(csrfToken);
-    let res = await myAxios.get(`/experiences`).catch((e) => {
-      return e.response;
-    });
+    let res = await myAxios
+      .get(`/experiences`, { signal: controller.signal })
+      .catch((e) => {
+        return e.response;
+      });
     return res;
   } catch (error) {
     console.log(error);

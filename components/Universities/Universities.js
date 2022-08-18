@@ -16,17 +16,19 @@ export default function Universities({ unis }) {
   const [renderTable, setRenderTable] = useState(window.innerWidth > 1210);
   const [allOrIntersted, setAllOrInterested] = useState('all');
   const skipPageResetRef = useRef();
+  const abortControllerRef = useRef(new AbortController());
 
   // Note that in this useEffect we do not setLoading because we have getStaticProps
   useEffect(() => {
     let fetchAllUnis = async (limit) => {
-      let res = await getUniversities(limit);
-      setAllUnis(transformUnis(res.data));
+      let res = await getUniversities(limit, abortControllerRef.current);
+      if (res?.status === 200) setAllUnis(transformUnis(res.data));
     };
     fetchAllUnis(-1);
     window.addEventListener('resize', greaterThan1210px);
     return () => {
       window.removeEventListener('resize', greaterThan1210px);
+      abortControllerRef.current.abort();
     };
   }, []);
 
@@ -75,12 +77,12 @@ export default function Universities({ unis }) {
     setLoading(true);
     if (allOrIntersted === 'all') {
       setAllOrInterested('interested');
-      res = await getInterestedUniversities(-1);
+      res = await getInterestedUniversities(-1, abortControllerRef.current);
     } else {
       setAllOrInterested('all');
-      res = await getUniversities(-1);
+      res = await getUniversities(-1, abortControllerRef.current);
     }
-    if (res.status === 200) {
+    if (res?.status === 200) {
       setLoading(false);
       setAllUnis(transformUnis(res.data));
     }

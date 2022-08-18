@@ -14,13 +14,15 @@ export async function createEducation(createObject) {
   }
 }
 
-export async function getEducations() {
+export async function getEducations(controller) {
   try {
     let csrfToken = await getCsrfToken();
     let myAxios = myAxiosPrivate(csrfToken);
-    let res = await myAxios.get(`/educations`).catch((e) => {
-      return e.response;
-    });
+    let res = await myAxios
+      .get(`/educations`, { signal: controller.signal })
+      .catch((e) => {
+        return e.response;
+      });
     return res;
   } catch (error) {
     console.log(error);

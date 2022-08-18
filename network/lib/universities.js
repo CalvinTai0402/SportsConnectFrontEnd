@@ -14,23 +14,27 @@ export async function getPublicUniversities(limit) {
   }
 }
 
-export async function getUniversities(limit) {
+export async function getUniversities(limit, controller) {
   try {
     let myAxios = myAxiosPrivate();
-    let res = await myAxios.get(`/universities?limit=${limit}`).catch((e) => {
-      return e.response;
-    });
+    let res = await myAxios
+      .get(`/universities?limit=${limit}`, { signal: controller.signal })
+      .catch((e) => {
+        return e.response;
+      });
     return res;
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function getInterestedUniversities(limit) {
+export async function getInterestedUniversities(limit, controller) {
   try {
     let myAxios = myAxiosPrivate();
     let res = await myAxios
-      .get(`/universities/interested_only?limit=${limit}`)
+      .get(`/universities/interested_only?limit=${limit}`, {
+        signal: controller.signal,
+      })
       .catch((e) => {
         return e.response;
       });

@@ -30,6 +30,7 @@ export default function Portfolio() {
   const [birthday, setBirthday] = useState(null);
   const [photoUrl, setPhotoUrl] = useState('None');
   const [uploading, setUploading] = useState(false);
+  const abortControllerRef = useRef(new AbortController());
   let allMounted = useRef(false);
 
   const firstRuns = {
@@ -118,8 +119,8 @@ export default function Portfolio() {
 
   useEffect(() => {
     let fetchCurrentUser = async () => {
-      let res = await getCurrentUser();
-      if (res.status === 200) {
+      let res = await getCurrentUser(abortControllerRef.current);
+      if (res?.status === 200) {
         let currentUser = res.data;
         if (currentUser.birthday) {
           setBirthday(new Date(currentUser.birthday + 'T15:00:00Z'));
@@ -141,6 +142,9 @@ export default function Portfolio() {
       }
     };
     fetchCurrentUser();
+    return () => {
+      abortControllerRef.current.abort();
+    };
   }, []);
 
   useEffect(() => {

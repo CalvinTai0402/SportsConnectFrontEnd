@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { getCurrentUser } from '../network/lib/users';
 import Spinner from './Spinner';
@@ -8,6 +8,8 @@ export function RouteGuard({ children }) {
   const [authorized, setAuthorized] = useState(false);
   const [loading, setLoading] = useState(false);
   const [location, _] = useState(router.asPath);
+  const abortControllerRef = useRef(new AbortController());
+
   const publicPaths = ['/home', '/auth/login', '/auth/signup', '/', '/steps'];
   let redirecting = true;
   let setSessionStorage = async (url) => {
@@ -15,11 +17,11 @@ export function RouteGuard({ children }) {
     if (publicPaths.includes(url)) return true;
     setLoading(true);
     try {
-      let res = await getCurrentUser();
-      if (res.status === 200) {
+      let res = await getCurrentUser(abortControllerRef.current);
+      if (res?.status === 200) {
         setLoading(false);
         sessionStorage.setItem('token', 'isLoggedIn');
-      } else if (res.status === 401) {
+      } else if (res?.status === 401) {
         setLoading(false);
         sessionStorage.removeItem('token');
       }
@@ -42,6 +44,7 @@ export function RouteGuard({ children }) {
     return () => {
       router.events.off('routeChangeStart', hideContent);
       router.events.off('routeChangeComplete', checkLoggedInAndRedirect);
+      abortControllerRef.current.abort();
     };
   }, []);
 

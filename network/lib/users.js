@@ -1,13 +1,15 @@
 import myAxiosPrivate from '../myAxiosPrivate';
 import { getCsrfToken } from './auth';
 
-export async function getCurrentUser() {
+export async function getCurrentUser(controller) {
   try {
     let csrfToken = await getCsrfToken();
     let myAxios = myAxiosPrivate(csrfToken);
-    let res = await myAxios.get(`/users/me`).catch((e) => {
-      return e.response;
-    });
+    let res = await myAxios
+      .get(`/users/me`, { signal: controller.signal })
+      .catch((e) => {
+        return e.response;
+      });
     return res;
   } catch (error) {
     console.log(error);

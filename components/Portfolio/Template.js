@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { AiOutlinePlusSquare } from 'react-icons/ai';
 import ItemRow from './ItemRow';
 import swal from 'sweetalert';
@@ -9,17 +9,21 @@ import Spinner from '../Spinner';
 export default function Template({ endpoint, title }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const abortControllerRef = useRef(new AbortController());
   useEffect(() => {
     let fetchData = async () => {
       let res;
       if (endpoint === '/educations') {
-        res = await getEducations();
+        res = await getEducations(abortControllerRef.current);
       } else {
-        res = await getExperiences();
+        res = await getExperiences(abortControllerRef.current);
       }
-      setData(res.data);
+      setData(res?.data);
     };
     fetchData();
+    return () => {
+      abortControllerRef.current.abort();
+    };
   }, []);
 
   let removeDatum = async (index) => {
