@@ -156,9 +156,9 @@ export default function CropImage({
                     </h3>
                   </div>
                   <div className="relative p-6 flex-auto">
-                    <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                    <span className="my-4 text-slate-500 text-lg leading-relaxed">
                       {description}
-                    </p>
+                    </span>
                   </div>
                   <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                     <button

@@ -5,8 +5,6 @@ import Textarea from './Textarea';
 import Experiences from './Experiences';
 import Educations from './Educations';
 import yyyymmdd from '../../utilities/yyyymmdd';
-import { AiOutlineClose } from 'react-icons/ai';
-
 import useTranslation from 'next-translate/useTranslation';
 import {
   getCurrentUser,
@@ -14,7 +12,6 @@ import {
   uploadProfilePhoto,
 } from '../../network/lib/users';
 import YearMonthDayPicker from '../DatePicker/YearMonthDayPicker';
-import Modal from '../Modal/Modal';
 import CropImage from '../CropImage/CropImage';
 
 Date.prototype.yyyymmdd = yyyymmdd;
@@ -32,10 +29,7 @@ export default function Portfolio() {
   const [email, setEmail] = useState(null);
   const [birthday, setBirthday] = useState(null);
   const [photoUrl, setPhotoUrl] = useState('None');
-  // const [showUploadButton, setShowUploadButton] = useState(false);
   const [uploading, setUploading] = useState(false);
-  // const [error, setError] = useState(null);
-  // const [cropShow, setCropShow] = useState(false);
   let allMounted = useRef(false);
 
   const firstRuns = {
@@ -214,7 +208,7 @@ export default function Portfolio() {
                     height={600}
                   />
                 )}
-                {uploading ? (
+                {uploading && (
                   <svg
                     aria-hidden="true"
                     className="w-8 h-8 text-gray-200 animate-spin fill-blue-600 h-auto w-full mx-auto"
@@ -231,79 +225,25 @@ export default function Portfolio() {
                       fill="currentFill"
                     />
                   </svg>
-                ) : (
-                  // showUploadButton ? (
-                  //   <span>
-                  //     <span className="flex justify-between">
-                  //       <label
-                  //         className="text-sm font-medium text-gray-900 text-blue-600"
-                  //         htmlFor="file_input"
-                  //       >
-                  //         {t('portfolio:upload_file')}
-                  //       </label>
-                  //       <label
-                  //         className="mt-[2px]"
-                  //         onClick={() => setShowUploadButton(false)}
-                  //       >
-                  //         <AiOutlineClose />
-                  //       </label>
-                  //     </span>
-                  //     <input
-                  //       className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
-                  //       id="file_input"
-                  //       type="file"
-                  //       onChange={(e) => {
-                  //         setShowUploadButton(false);
-                  //         setCropShow(true);
-                  //       }}
-                  //     ></input>
-                  //   </span>
-                  // ) : (
-                  //   <div
-                  //     onClick={() => {
-                  //       setShowUploadButton(!showUploadButton);
-                  //       setError('');
-                  //     }}
-                  //     className="text-md grid place-items-center bg-slate-200  text-blue-600"
-                  //   >
-                  //     {photoUrl === 'None'
-                  //       ? t('portfolio:upload_new_photo')
-                  //       : t('portfolio:change_profile_photo')}
-                  //   </div>
-                  // )
-                  <div
-                    // onClick={() => {
-                    //   setCropShow(true);
-                    // }}
-                    className="text-md grid place-items-center bg-slate-200  text-blue-600"
-                  >
-                    {photoUrl === 'None' ? (
-                      <CropImage
-                        display={t('portfolio:upload_new_photo')}
-                        setUploading={setUploading}
-                        setPhotoUrl={setPhotoUrl}
-                        uploadProfilePhoto={uploadProfilePhoto}
-                      />
-                    ) : (
-                      <CropImage
-                        display={t('portfolio:change_profile_photo')}
-                        setUploading={setUploading}
-                        setPhotoUrl={setPhotoUrl}
-                        uploadProfilePhoto={uploadProfilePhoto}
-                      />
-                    )}
-                  </div>
                 )}
+                <div className="text-md grid place-items-center bg-slate-200  text-blue-600">
+                  {photoUrl === 'None' ? (
+                    <CropImage
+                      display={t('portfolio:upload_new_photo')}
+                      setUploading={setUploading}
+                      setPhotoUrl={setPhotoUrl}
+                      uploadProfilePhoto={uploadProfilePhoto}
+                    />
+                  ) : (
+                    <CropImage
+                      display={t('portfolio:change_profile_photo')}
+                      setUploading={setUploading}
+                      setPhotoUrl={setPhotoUrl}
+                      uploadProfilePhoto={uploadProfilePhoto}
+                    />
+                  )}
+                </div>
               </div>
-              {/* {error ? (
-                <span className="text-red-700 flex justify-between text-md ">
-                  {error}
-                  <AiOutlineClose
-                    onClick={() => setError('')}
-                    className="hover:cursor-pointer mt-1"
-                  />
-                </span>
-              ) : null} */}
               <h1 className="text-gray-900 leading-8 my-2">
                 <Input
                   label={t('portfolio:preferred_name')}
