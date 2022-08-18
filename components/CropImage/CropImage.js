@@ -150,38 +150,36 @@ export default function CropImage({
                 }}
               >
                 <div className="fborder-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                  <div className="flex justify-center p-5 border-b border-solid border-slate-200 rounded-t">
-                    <h3 className="text-3xl font-semibold">
-                      {t('portfolio:crop_image')}
-                    </h3>
-                  </div>
                   <div className="relative p-6 flex-auto">
                     <span className="my-4 text-slate-500 text-lg leading-relaxed">
                       {description}
                     </span>
                   </div>
-                  <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                    <button
-                      className="bg-emerald-500 mr-3 text-white active:bg-emerald-600 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={() => {
-                        reset();
-                        setShowModal(false);
-                      }}
-                    >
-                      {t('portfolio:cancel')}
-                    </button>
-                    <button
-                      className="bg-blue-500 text-white active:bg-blue-600 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={() => {
-                        sendProfilePhoto();
-                        setShowModal(false);
-                      }}
-                      disabled={!completedCrop && !imgSrc}
-                    >
-                      {t('portfolio:upload')}
-                    </button>
+                  <div className="flex items-center justify-between p-3 border-t border-solid border-slate-200 rounded-b text-xs sm:text-base">
+                    <div className="p-3 mr-1">{t('portfolio:crop_image')}</div>
+                    <div>
+                      <button
+                        className="bg-emerald-500 mr-4 text-white active:bg-emerald-600 font-bold text-xs sm:text-sm px-4 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={() => {
+                          reset();
+                          setShowModal(false);
+                        }}
+                      >
+                        {t('portfolio:cancel')}
+                      </button>
+                      <button
+                        className="bg-blue-500 text-white active:bg-blue-600 font-bold text-xs sm:text-sm px-4 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={() => {
+                          sendProfilePhoto();
+                          setShowModal(false);
+                        }}
+                        disabled={!completedCrop && !imgSrc}
+                      >
+                        {t('portfolio:upload')}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
