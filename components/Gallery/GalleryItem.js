@@ -4,7 +4,7 @@ import DetailModal from './DetailModal';
 
 export default function GalleryItem({ datum, updateTickedUni }) {
   let display = datum && (
-    <div className="flex flex-wrap">
+    <div className="flex flex-wrap w-[95%]">
       <div className="w-full p-1 md:p-2 shadow-xl rounded-lg">
         <Image
           width={500}

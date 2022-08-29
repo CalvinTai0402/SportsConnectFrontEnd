@@ -43,7 +43,7 @@ const Content = ({ uni, onClose, updateTickedUni }) => {
         </span>
       </div>
       <div className="text-sm md:text-lg absolute top-0 bottom-0 left-0 right-0 h-full z-[3]">
-        <div className="px-4 py-10 text-[#f5deb3]">
+        <div className="px-4 py-6 lg:py-10 text-[#f5deb3] w-[70%]">
           <h1 className="text-[#fff] font-[45px] font-bold mb-6">
             {uni.name.substring(uni.name.indexOf(')') + 2)}
           </h1>
