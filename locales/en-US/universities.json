@@ -4,6 +4,7 @@
   "only_show_interested": "Only show interested?",
   "show_all": "Show all?",
   "search": "Search",
+  "uni_or_city_name": "uni or city name",
   "show": "Show",
   "entries": "entries",
   "showing_results": "Showing results",
@@ -17,5 +18,7 @@
   "division": "Division",
   "region": "Region",
   "category": "Category",
-  "interested": "Interested"
+  "interested": "Interested",
+  "men": "Men",
+  "women": "Women"
 }

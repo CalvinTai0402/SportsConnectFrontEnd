@@ -135,7 +135,7 @@ export default function CropImage({
       {showModal ? (
         <>
           <div
-            className="modal-backdrop"
+            className="fixed top-0 bottom-0 left-0 right-0 bg-[#00000066] flex justify-center items-center z-[200]"
             onClick={() => {
               setShowModal(false);
               reset();

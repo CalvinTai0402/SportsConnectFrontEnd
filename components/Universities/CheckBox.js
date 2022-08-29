@@ -19,13 +19,16 @@ export default memo(function CheckBox({
     }
   };
 
+  let bounce = !isChecked ? ' animate-bounce' : '';
+
   return (
     <input
       type="checkbox"
+      className={'w-4 h-4 md:h-6 md:w-6 lg:w-7 lg:h-7' + bounce}
       checked={isChecked}
       onChange={() => {
         setIsChecked(!isChecked);
-        updateTickedUni(isChecked, uniId, index);
+        updateTickedUni(isChecked, index);
         handleOnChange(uniId);
       }}
     />

@@ -23,7 +23,13 @@ export default function HeaderNavSmall({
         <span className="block h-0.5 w-8 animate-pulse bg-gray-600"></span>
       </div>
 
-      <div className={isNavOpen ? 'showMenuNav' : 'hideMenuNav'}>
+      <div
+        className={
+          isNavOpen
+            ? 'absolute w-full h-screen top-0 left-0 bg-white z-10 flex flex-col justify-evenly items-center'
+            : 'hidden'
+        }
+      >
         <div
           className="absolute top-0 right-0 px-8 py-8"
           onClick={() => setIsNavOpen(false)}

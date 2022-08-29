@@ -4,6 +4,7 @@
   "only_show_interested": "只显示感兴趣的学校？",
   "show_all": "显示所有",
   "search": "搜索",
+  "uni_or_city_name": "大学或城市名字",
   "show": "显示",
   "entries": "个选项",
   "showing_results": "显示所有结果",
@@ -17,5 +18,7 @@
   "division": "等级",
   "region": "区域",
   "category": "类别",
-  "interested": "感兴趣的"
+  "interested": "感兴趣",
+  "men": "男",
+  "women": "女"
 }

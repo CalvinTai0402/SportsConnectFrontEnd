@@ -22,7 +22,7 @@ export default function Modal({
       {showModal ? (
         <>
           <div
-            className="modal-backdrop"
+            className="fixed top-0 bottom-0 left-0 right-0 bg-[#00000066] flex justify-center items-center z-[200]"
             onClick={() => {
               setShowModal(false);
             }}
@@ -45,9 +45,11 @@ export default function Modal({
                     <p className="my-4 text-slate-500 text-lg leading-relaxed">
                       {description}
                     </p>
-                    <p className="my-4 text-blue-500 text-lg leading-relaxed underline">
-                      {link ? link : null}
-                    </p>
+                    {link && (
+                      <p className="my-4 text-blue-500 text-lg leading-relaxed underline">
+                        link
+                      </p>
+                    )}
                   </div>
                   <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                     <button
