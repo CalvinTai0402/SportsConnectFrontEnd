@@ -240,7 +240,7 @@ export default function UniversitiesGallery() {
             selected={selectedConference}
             setSelected={setSelectedConference}
             options={conferenceOptions}
-            isSearchable={true}
+            isSearchable={false}
             label={t('universities:conference')}
             className="ml-4 z-[10]"
             titleClassName="ml-4"

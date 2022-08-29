@@ -38,7 +38,7 @@ const Content = ({ uni, onClose, updateTickedUni }) => {
           />
         </div>
         {/* w-[20%] h-[25%] sm:w-[16%] sm:h-[30%] lg:w-[14%] lg:h-[30%] xl:w-[10%] xl:h-[30%] */}
-        <span className="absolute bottom-0 right-0 sm:left-0 w-24 h-24 z-[2] m-4">
+        <span className="absolute bottom-0 right-0 sm:left-0 w-12 h-12 md:w-24 md:h-24 z-[2] m-4">
           <Image src={uni.logo} alt="University logo" layout="fill" />
         </span>
       </div>
@@ -83,12 +83,12 @@ const Content = ({ uni, onClose, updateTickedUni }) => {
             {checkBox}
           </div>
         </div>
-        <button
-          className="text-gray-200 w-4 h-4 md:w-6 md:h-6 top-2 right-2 md:top-4 md:right-4 absolute border-none outline-none bg-transparent"
+        <span
+          className="text-gray-200 w-4 h-6 md:w-6 md:h-8 top-2 right-2 md:top-4 md:right-4 absolute border-none outline-none bg-transparent"
           onClick={onClose}
         >
           <IconCross />
-        </button>
+        </span>
       </div>
     </>
   );

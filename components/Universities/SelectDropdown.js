@@ -20,7 +20,6 @@ export default function SelectDropdown({
         name="category"
         options={options}
         onChange={setSelected}
-        classNamePrefix="test"
       />
     </>
   );

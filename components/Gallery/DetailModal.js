@@ -1,14 +1,37 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import Content from './Content';
 
 export default function DetailModal({ display, uni, updateTickedUni }) {
   const [showModal, setShowModal] = useState(false);
+  // workaround for react-select z-index weird issue
+  const displayRef = useRef(null);
+  const executeScroll = () => {
+    displayRef.current.scrollIntoView();
+  };
+  const firstMount = useRef(true);
+
+  useEffect(() => {
+    if (firstMount.current) {
+      firstMount.current = false;
+      return;
+    }
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+    } else if (!showModal && !firstMount.current) {
+      document.body.style.overflow = 'unset';
+    }
+  }, [showModal]);
+  // workaround for react-select z-index weird issue
   return (
     <Fragment>
       {display && (
         <span
           className="w-1/3 hover:cursor-pointer"
-          onClick={() => setShowModal(true)}
+          onClick={() => {
+            executeScroll();
+            setShowModal(true);
+          }}
+          ref={displayRef}
         >
           {display}
         </span>
