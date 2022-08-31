@@ -32,7 +32,7 @@ export default function Header() {
     <Fragment>
       <MyHead />
       <header className="sticky top-0 z-50">
-        <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 bg-blue-50">
+        <nav className="border-gray-200 px-4 lg:px-6 py-2.5 bg-blue-50">
           <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <Home />
             <div>

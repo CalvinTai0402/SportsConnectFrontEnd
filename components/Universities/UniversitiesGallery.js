@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { getUniversities } from '../../network/lib/universities';
+import {
+  getInterestedUniversities,
+  getUniversities,
+} from '../../network/lib/universities';
 import useTranslation from 'next-translate/useTranslation';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Spinner from '../Spinner';
@@ -16,7 +19,7 @@ import {
 } from './data';
 import SelectDropdown from './SelectDropdown';
 
-export default function UniversitiesGallery() {
+export default function UniversitiesGallery({ mine }) {
   const [allUnis, setAllUnis] = useState([]);
   const [searchIndex, setSearchIndex] = useState(24);
   const [hasMore, setHasMore] = useState(true);
@@ -37,7 +40,15 @@ export default function UniversitiesGallery() {
   useEffect(() => {
     let fetchAllUnis = async (limit) => {
       setLoading(true);
-      let res = await getUniversities(limit, abortControllerRef.current);
+      let res;
+      if (mine) {
+        res = await getInterestedUniversities(
+          limit,
+          abortControllerRef.current
+        );
+      } else {
+        res = await getUniversities(limit, abortControllerRef.current);
+      }
       if (res?.status === 200) {
         setAllUnis(res.data);
       }
@@ -50,15 +61,12 @@ export default function UniversitiesGallery() {
   }, []);
 
   useEffect(() => {
-    if (!loading && searchIndex > searchedUnis.length) setHasMore(false);
-  }, [searchIndex]);
-
-  useEffect(() => {
-    if (searchIndex !== 24) setSearchIndex(24); // to force rerender
-    else {
-      setSearchIndex(18);
-    }
+    // if (searchIndex !== 24) setSearchIndex(24); // to force rerender
+    // else {
+    //   setSearchIndex(18);
+    // }
     setHasMore(true);
+    setSearchIndex(24);
   }, [
     search,
     selectedCategory,
@@ -68,6 +76,14 @@ export default function UniversitiesGallery() {
     selectedState,
   ]);
 
+  useEffect(() => {
+    console.log(loading, searchIndex, searchedUnis.length);
+    if (searchIndex > searchedUnis.length) setHasMore(false);
+    else {
+      setHasMore(true);
+    }
+  }, [searchIndex, searchedUnis]);
+
   function transformUnis(unis) {
     let transformedUnis = {};
     unis.map((uni, index) => {
@@ -75,7 +91,9 @@ export default function UniversitiesGallery() {
         ...uni,
         index: index,
         backgroundImage: `/backgrounds/${uni.name}.jpg`,
-        logo: `/resizedLogos/${uni.name}.png`,
+        blurredBackgroundImage: `/blurredBackgrounds/${uni.name}.jpg`,
+        logo: `/logos/${uni.name}.png`,
+        blurredLogo: `/blurredLogos/${uni.name}.png`,
       };
       if (uni.name in transformedUnis) {
         uniObj.name =
@@ -145,6 +163,21 @@ export default function UniversitiesGallery() {
           uni.name.toLowerCase().includes(search) ||
           uni.city.toLowerCase().includes(search)
       );
+    }
+    if (mine) {
+      let i = 0;
+      while (i < filteredUnis.length) {
+        if (
+          (!filteredUnis[i].interested && !filteredUnis[i].prev) ||
+          (!filteredUnis[i].interested &&
+            filteredUnis[i].prev &&
+            !filteredUnis[i].prev.interested)
+        ) {
+          filteredUnis.splice(i, 1);
+        } else {
+          i++;
+        }
+      }
     }
     return filteredUnis;
   }

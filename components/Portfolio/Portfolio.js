@@ -215,7 +215,7 @@ export default function Portfolio() {
                 {uploading && (
                   <svg
                     aria-hidden="true"
-                    className="w-8 h-8 text-gray-200 animate-spin fill-blue-600 h-auto w-full mx-auto"
+                    className="w-8 h-8 text-gray-200 animate-spin fill-blue-600 mb-2 mx-auto"
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"

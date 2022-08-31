@@ -2,6 +2,7 @@ import useTranslation from 'next-translate/useTranslation';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { Fragment } from 'react';
+import UniversityDropdown from '../Universities/UniversityDropdown';
 import LanguageDropdown from './LanguageDropdown';
 
 export default function HeaderNavLarge({
@@ -32,20 +33,7 @@ export default function HeaderNavLarge({
         </Link>
       </li>
       <li>
-        <Link href="/universities">
-          <a
-            onClick={() => updateLoggedInStatus(setIsLoggedIn)}
-            className={
-              'block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:p-0 hover:border-b hover:border-gray-800 hover:text-blue-700 ' +
-              (urlPath.includes('/universities')
-                ? 'border-b border-gray-800 text-blue-700'
-                : '')
-            }
-            aria-current="page"
-          >
-            {t('header:universities')}
-          </a>
-        </Link>
+        <UniversityDropdown />
       </li>
       <li>
         <Link href="/steps">

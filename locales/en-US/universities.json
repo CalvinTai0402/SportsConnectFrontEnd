@@ -18,7 +18,8 @@
   "division": "Division",
   "region": "Region",
   "category": "Category",
-  "interested": "Interested",
+  "add_to_interested": "Add to my unis",
+  "remove_from_interested": "Remove from my unis",
   "men": "Men",
   "women": "Women"
 }

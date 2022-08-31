@@ -8,20 +8,25 @@ const Content = ({ uni, onClose, updateTickedUni }) => {
   const { t } = useTranslation();
   const checkBox = (
     <CheckBox
-      checked={uni.interested}
+      interested={uni.interested}
       uniId={uni.id}
       index={uni.index}
       updateTickedUni={updateTickedUni}
+      category={uni.category}
+      prev={uni.prev}
+      isPrev={false}
     />
   );
   if (uni.prev) {
     // var for more scope
     var prevCheckBox = (
       <CheckBox
-        checked={uni.prev.interested}
+        interested={uni.prev.interested}
         uniId={uni.prev.id}
         index={uni.prev.index}
         updateTickedUni={updateTickedUni}
+        category={uni.prev.category}
+        isPrev={true}
       />
     );
   }
@@ -35,15 +40,23 @@ const Content = ({ uni, onClose, updateTickedUni }) => {
             className="bg-repeat-round rounded-r-xl"
             alt="University image"
             layout="fill"
+            blurDataURL={uni.blurredBackgroundImage}
+            placeholder="blur"
           />
         </div>
         {/* w-[20%] h-[25%] sm:w-[16%] sm:h-[30%] lg:w-[14%] lg:h-[30%] xl:w-[10%] xl:h-[30%] */}
-        <span className="absolute bottom-0 right-0 sm:left-0 w-12 h-12 md:w-24 md:h-24 z-[2] m-4">
-          <Image src={uni.logo} alt="University logo" layout="fill" />
+        <span className="absolute bottom-0 right-0 sm:left-0 w-12 h-12 sm:w-24 sm:h-24 z-[2] m-4">
+          <Image
+            src={uni.logo}
+            alt="University logo"
+            layout="fill"
+            blurDataURL={uni.blurredLogo}
+            placeholder="blur"
+          />
         </span>
       </div>
       <div className="text-sm md:text-lg absolute top-0 bottom-0 left-0 right-0 h-full z-[3]">
-        <div className="px-4 py-6 lg:py-10 text-[#f5deb3] w-[70%]">
+        <div className="px-4 py-4 lg:py-10 text-[#f5deb3] w-[70%]">
           <h1 className="text-[#fff] font-[45px] font-bold mb-6">
             {uni.name.substring(uni.name.indexOf(')') + 2)}
           </h1>
@@ -68,18 +81,11 @@ const Content = ({ uni, onClose, updateTickedUni }) => {
             {uni.state}
           </div>
           {uni.prev && (
-            <div className="text-[#d4d3d3] font-[18px] mt-2 max-w-xs sm:max-w-sm md:max-w-md">
-              <span className="text-white mr-2">
-                {t('universities:interested')}: ({uni.prev.category})
-              </span>
+            <div className="text-[#d4d3d3] font-[18px] mt-4 max-w-xs sm:max-w-sm md:max-w-md">
               {prevCheckBox && prevCheckBox}
             </div>
           )}
-          <div className="text-[#d4d3d3] font-[18px] mt-2 max-w-xs sm:max-w-sm md:max-w-md">
-            <span className="text-white mr-2">
-              {t('universities:interested')}:{' '}
-              {uni.prev && (uni.prev.category === 'Men' ? '(Women)' : '(Men)')}
-            </span>
+          <div className="text-[#d4d3d3] font-[18px] mt-4 max-w-xs sm:max-w-sm md:max-w-md">
             {checkBox}
           </div>
         </div>

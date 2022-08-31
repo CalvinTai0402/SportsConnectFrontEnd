@@ -18,7 +18,8 @@
   "division": "等级",
   "region": "区域",
   "category": "类别",
-  "interested": "感兴趣",
+  "add_to_interested": "添加到我感兴趣的大学",
+  "remove_from_interested": "从列表中移除",
   "men": "男",
   "women": "女"
 }

@@ -12,6 +12,8 @@ export default function GalleryItem({ datum, updateTickedUni }) {
           alt="university image"
           className="block object-cover object-center rounded-lg"
           src={datum.backgroundImage}
+          blurDataURL={datum.blurredBackgroundImage}
+          placeholder="blur"
         />
         <span className="flex text-[10px] sm:text-sm">
           <span className="mx-auto italic">{datum.name}</span>

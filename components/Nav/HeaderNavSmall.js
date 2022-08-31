@@ -2,6 +2,7 @@ import useTranslation from 'next-translate/useTranslation';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { Fragment, useState } from 'react';
+import UniversityDropdown from '../Universities/UniversityDropdown';
 import LanguageDropdown from './LanguageDropdown';
 
 export default function HeaderNavSmall({
@@ -12,6 +13,8 @@ export default function HeaderNavSmall({
 }) {
   const { t } = useTranslation();
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const router = useRouter();
+  const urlPath = router.asPath;
   return (
     <section className="MOBILE-MENU flex lg:hidden">
       <div
@@ -49,13 +52,18 @@ export default function HeaderNavSmall({
         </div>
         <ul className="flex flex-col items-center justify-between min-h-[250px]">
           <li>
-            <Link href="/">
+            <Link href="/home">
               <a
                 onClick={() => {
                   updateLoggedInStatus(setIsLoggedIn);
                   setIsNavOpen(false);
                 }}
-                className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
+                className={
+                  'border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200' +
+                  (urlPath.includes('home')
+                    ? 'border-blue-800 text-blue-700'
+                    : '')
+                }
                 aria-current="page"
               >
                 {t('header:home')}
@@ -63,18 +71,7 @@ export default function HeaderNavSmall({
             </Link>
           </li>
           <li>
-            <Link href="/universities">
-              <a
-                onClick={() => {
-                  updateLoggedInStatus(setIsLoggedIn);
-                  setIsNavOpen(false);
-                }}
-                className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
-                aria-current="page"
-              >
-                {t('header:universities')}
-              </a>
-            </Link>
+            <UniversityDropdown navSmall={true} />
           </li>
           <li>
             <Link href="/steps">
@@ -83,7 +80,12 @@ export default function HeaderNavSmall({
                   updateLoggedInStatus(setIsLoggedIn);
                   setIsNavOpen(false);
                 }}
-                className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
+                className={
+                  'border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200' +
+                  (urlPath.includes('steps')
+                    ? 'border-blue-800 text-blue-700'
+                    : '')
+                }
                 aria-current="page"
               >
                 {t('header:steps')}
@@ -97,7 +99,12 @@ export default function HeaderNavSmall({
                   updateLoggedInStatus(setIsLoggedIn);
                   setIsNavOpen(false);
                 }}
-                className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
+                className={
+                  'border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200' +
+                  (urlPath.includes('portfolio')
+                    ? 'border-blue-800 text-blue-700'
+                    : '')
+                }
               >
                 {t('header:portfolio')}
               </a>
@@ -112,7 +119,12 @@ export default function HeaderNavSmall({
                       updateLoggedInStatus(setIsLoggedIn);
                       setIsNavOpen(false);
                     }}
-                    className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
+                    className={
+                      'border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200' +
+                      (urlPath.includes('login')
+                        ? 'border-blue-800 text-blue-700'
+                        : '')
+                    }
                   >
                     {t('header:log_in')}
                   </a>
@@ -125,7 +137,12 @@ export default function HeaderNavSmall({
                       updateLoggedInStatus(setIsLoggedIn);
                       setIsNavOpen(false);
                     }}
-                    className="border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200"
+                    className={
+                      'border-b border-gray-400 text-xl my-12 uppercase hover:bg-gray-200' +
+                      (urlPath.includes('signup')
+                        ? 'border-blue-800 text-blue-700'
+                        : '')
+                    }
                   >
                     {t('header:sign_up')}
                   </a>
