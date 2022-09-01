@@ -61,10 +61,6 @@ export default function UniversitiesGallery({ mine }) {
   }, []);
 
   useEffect(() => {
-    // if (searchIndex !== 24) setSearchIndex(24); // to force rerender
-    // else {
-    //   setSearchIndex(18);
-    // }
     setHasMore(true);
     setSearchIndex(24);
   }, [
@@ -77,9 +73,9 @@ export default function UniversitiesGallery({ mine }) {
   ]);
 
   useEffect(() => {
-    console.log(loading, searchIndex, searchedUnis.length);
-    if (searchIndex > searchedUnis.length) setHasMore(false);
-    else {
+    if (searchIndex > searchedUnis.length) {
+      setHasMore(false);
+    } else {
       setHasMore(true);
     }
   }, [searchIndex, searchedUnis]);
@@ -178,6 +174,7 @@ export default function UniversitiesGallery({ mine }) {
           i++;
         }
       }
+      if (filteredUnis.length === 0) document.body.style.overflow = 'unset';
     }
     return filteredUnis;
   }

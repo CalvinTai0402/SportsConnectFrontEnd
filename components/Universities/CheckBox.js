@@ -47,7 +47,7 @@ export default memo(function CheckBox({
 
   return (
     <span
-      className={'p-1 rounded' + bodyClassNames}
+      className={'p-1 rounded ' + bodyClassNames}
       onClick={() => {
         setIsInterested(!isInterested);
         updateTickedUni(isInterested, index);

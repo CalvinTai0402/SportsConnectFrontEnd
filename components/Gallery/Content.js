@@ -57,9 +57,28 @@ const Content = ({ uni, onClose, updateTickedUni }) => {
       </div>
       <div className="text-sm md:text-lg absolute top-0 bottom-0 left-0 right-0 h-full z-[3]">
         <div className="px-4 py-4 lg:py-10 text-[#f5deb3] w-[70%]">
-          <h1 className="text-[#fff] font-[45px] font-bold mb-6">
-            {uni.name.substring(uni.name.indexOf(')') + 2)}
-          </h1>
+          <a href={uni.link} target="_blank" rel="noreferrer">
+            <div className="flex text-[#fff] hover:text-blue-500">
+              <h1 className="font-[45px] font-bold mb-6">
+                {uni.name.substring(uni.name.indexOf(')') + 2)}
+              </h1>
+              <svg
+                className="w-6 h-6 pt-1"
+                data-darkreader-inline-stroke=""
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                ></path>
+              </svg>
+            </div>
+          </a>
           <div className="text-[#d4d3d3] font-[18px] mt-2 max-w-xs sm:max-w-sm md:max-w-md">
             <span className="text-white">{t('universities:category')}:</span>{' '}
             {uni.category}

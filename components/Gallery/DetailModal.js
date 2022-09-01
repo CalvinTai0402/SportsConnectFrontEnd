@@ -23,10 +23,7 @@ export default function DetailModal({ display, uni, updateTickedUni }) {
       {display && (
         <span
           className="w-1/3 hover:cursor-pointer"
-          onClick={() => {
-            console.log('sofaaaaaaaaaaa');
-            setShowModal(true);
-          }}
+          onClick={() => setShowModal(true)}
         >
           {display}
         </span>
