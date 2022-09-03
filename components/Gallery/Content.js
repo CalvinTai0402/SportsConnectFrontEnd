@@ -58,12 +58,12 @@ const Content = ({ uni, onClose, updateTickedUni }) => {
       <div className="text-sm md:text-lg absolute top-0 bottom-0 left-0 right-0 h-full z-[3]">
         <div className="px-4 py-4 lg:py-10 text-[#f5deb3] w-[70%]">
           <a href={uni.link} target="_blank" rel="noreferrer">
-            <div className="flex text-[#fff] hover:text-blue-500">
-              <h1 className="font-[45px] font-bold mb-6">
+            <div className="flex text-[#fff] hover:text-blue-500 mb-6">
+              <h1 className="font-[45px] font-bold ">
                 {uni.name.substring(uni.name.indexOf(')') + 2)}
               </h1>
               <svg
-                className="w-6 h-6 pt-1"
+                className="w-4 h-4 md:w-6 md:h-6 my-auto ml-1"
                 data-darkreader-inline-stroke=""
                 fill="none"
                 stroke="currentColor"
