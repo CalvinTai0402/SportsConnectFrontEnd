@@ -20,5 +20,11 @@
   "crop_image": "Crop your image",
   "preview": "Preview",
   "upload": "Upload",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "make_private": "Make your profile private",
+  "make_public": "Publish your profile",
+  "make_private_description": "Click the eye to unpublish your profile, or copy your profile link",
+  "make_public_description": "Click the eye to publish your profile",
+  "copy": "Copy",
+  "copied": "Copied!"
 }

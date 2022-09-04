@@ -1,6 +1,5 @@
-import Image from "next/image";
-import React, { Fragment } from "react";
-import Portfolio from "../components/Portfolio/Portfolio";
+import React, { Fragment } from 'react';
+import Portfolio from '../../components/Portfolio/Portfolio';
 
 export default function portfolio() {
   return (

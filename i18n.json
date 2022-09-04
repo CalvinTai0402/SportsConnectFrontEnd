@@ -6,6 +6,7 @@
     "/contactus": ["contactus"],
     "/home": ["home"],
     "/portfolio": ["portfolio"],
+    "/portfolio/public/[id]": ["portfolio"],
     "/steps": ["steps"],
     "/universities": ["universities"],
     "/myuniversities": ["universities"],

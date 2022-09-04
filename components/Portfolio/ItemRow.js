@@ -21,6 +21,7 @@ export default function ItemRow({
   index,
   removeItem,
   endpoint,
+  isDisabled,
 }) {
   const { t } = useTranslation();
   let [currentActive, setCurrentActive] = useState(active);
@@ -68,6 +69,7 @@ export default function ItemRow({
       <li>
         <div className="flex justify-between text-blue-600">
           <DebounceInput
+            disabled={isDisabled}
             debounceTimeout={1000}
             label="description"
             type="text"
@@ -76,19 +78,22 @@ export default function ItemRow({
             onChange={(e) => setCurrentDescription(e.target.value)}
             className="pt-3 pb-2  w-full px-0 mt-0 border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
           />
-          <span className="pt-4 pb-2 mr-4 border-0 focus:outline-none focus:ring-0 focus:border-black border-gray-200">
-            <TrashIcon
-              className="h-5 w-5 hover:cursor-pointer text-red-500"
-              onClick={() => {
-                removeItem(index);
-                handleDelete();
-              }}
-            />
-          </span>
+          {!isDisabled && (
+            <span className="pt-4 pb-2 mr-4 border-0 focus:outline-none focus:ring-0 focus:border-black border-gray-200">
+              <TrashIcon
+                className="h-5 w-5 hover:cursor-pointer text-red-500"
+                onClick={() => {
+                  removeItem(index);
+                  handleDelete();
+                }}
+              />
+            </span>
+          )}
         </div>
         <div className="text-gray-500 text-xs flex justify-between">
           <div className="flex">
             <YearMonthDayPicker
+              isDisabled={isDisabled}
               selected={currentStartDate}
               onChange={(date) => {
                 setCurrentStartDate(date);
@@ -102,6 +107,7 @@ export default function ItemRow({
               <span className="ml-2">present</span>
             ) : (
               <YearMonthDayPicker
+                isDisabled={isDisabled}
                 selected={currentEndDate}
                 onChange={(date) => {
                   setCurrentEndDate(date);
@@ -115,14 +121,20 @@ export default function ItemRow({
           {currentActive ? (
             <div
               className="mr-10 hover:cursor-pointer"
-              onClick={() => setCurrentActive(!currentActive)}
+              onClick={() => {
+                if (isDisabled) return;
+                setCurrentActive(!currentActive);
+              }}
             >
               {t('portfolio:active')}
             </div>
           ) : (
             <div
               className="mr-8 hover:cursor-pointer"
-              onClick={() => setCurrentActive(!currentActive)}
+              onClick={() => {
+                if (isDisabled) return;
+                setCurrentActive(!currentActive);
+              }}
             >
               {t('portfolio:inactive')}
             </div>

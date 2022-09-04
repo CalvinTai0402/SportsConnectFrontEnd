@@ -43,6 +43,18 @@ textarea:focus ~ label {
 }
 /* End "For portfolio input" */
 
+input:disabled {
+  color: black;
+  --webkit-text-fill-color: black;
+  opacity: 1;
+}
+
+textarea:disabled {
+  color: black;
+  --webkit-text-fill-color: black;
+  opacity: 1;
+}
+
 /* Start "For slider" */
 /* .slider .item:hover .show_details_button {
   opacity: 1;

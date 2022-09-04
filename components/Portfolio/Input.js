@@ -1,10 +1,17 @@
-import React from "react";
-import { DebounceInput } from "react-debounce-input";
+import React from 'react';
+import { DebounceInput } from 'react-debounce-input';
 
-export default function Input({ label, name, type = "text", ...rest }) {
+export default function Input({
+  label,
+  name,
+  isDisabled,
+  type = 'text',
+  ...rest
+}) {
   return (
     <div className="relative z-0 w-full mb-8">
       <DebounceInput
+        disabled={isDisabled ? isDisabled : false}
         debounceTimeout={1000}
         {...rest}
         id={name}

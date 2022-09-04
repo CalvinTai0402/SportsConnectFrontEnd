@@ -20,5 +20,11 @@
   "crop_image": "剪裁图像",
   "preview": "预览",
   "upload": "上传",
-  "cancel": "取消"
+  "cancel": "取消",
+  "make_private": "将您的资料设为私密",
+  "make_public": "公开您的个人资料",
+  "make_private_description": "单击眼睛图标以把您的资料设为私密,或拷贝您的个人资料链接",
+  "make_public_description": "单击眼睛图标以把您的资料公开",
+  "copy": "拷贝",
+  "copied": "已拷贝!"
 }

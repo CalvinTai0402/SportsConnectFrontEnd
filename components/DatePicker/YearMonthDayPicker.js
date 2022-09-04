@@ -7,6 +7,7 @@ export default function YearMonthDayPicker({
   onChange,
   className,
   wrapperClassName,
+  isDisabled,
 }) {
   let range = (from, to) => {
     let size = to - from + 1;
@@ -29,6 +30,7 @@ export default function YearMonthDayPicker({
   ];
   return (
     <ReactDatePicker
+      disabled={isDisabled}
       selected={selected}
       onChange={onChange}
       className={className}

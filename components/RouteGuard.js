@@ -7,14 +7,12 @@ export function RouteGuard({ children }) {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [location, _] = useState(router.asPath);
   const abortControllerRef = useRef(new AbortController());
 
-  const publicPaths = ['/home', '/auth/login', '/auth/signup', '/', '/steps'];
-  let redirecting = true;
+  const privatePaths = ['/universities', '/myuniversities', '/portfolio'];
   let setSessionStorage = async (url) => {
-    // no need to check isLoggedIn or not if it's a public page
-    if (publicPaths.includes(url)) return true;
+    // no need to check isLoggedIn or not if it's not a private page
+    if (!privatePaths.includes(url)) return;
     setLoading(true);
     try {
       let res = await getCurrentUser(abortControllerRef.current);
@@ -28,16 +26,16 @@ export function RouteGuard({ children }) {
     } catch (error) {
       setLoading(false);
     }
-    return true;
+    return;
   };
 
   useEffect(() => {
-    authCheck(router.asPath);
     let hideContent = () => setAuthorized(false);
     let checkLoggedInAndRedirect = async (url) => {
       await setSessionStorage(url); // await is necessary because setSessionStorage alters sessionStorage which authCheck depends on
       authCheck(url);
     };
+    checkLoggedInAndRedirect(router.asPath);
     router.events.on('routeChangeStart', hideContent);
     router.events.on('routeChangeComplete', checkLoggedInAndRedirect);
 
@@ -62,17 +60,14 @@ export function RouteGuard({ children }) {
   };
 
   let authCheck = (url) => {
-    let allLocalesPublicPaths = addLocalesToPaths(publicPaths);
+    let allLocalesPrivatePaths = addLocalesToPaths(privatePaths);
     const path = url.split('?')[0];
     if (
       !sessionStorage.getItem('token') &&
-      !allLocalesPublicPaths.includes(path)
+      allLocalesPrivatePaths.includes(path)
     ) {
       setAuthorized(false);
       router.push('/auth/login'); // redirect to login page if accessing a private page and not logged in
-    } else if (redirecting) {
-      redirecting = false; // redirect to page accessed previously. When a location is pushed, authCheck refires and enters the "else" block.
-      router.push(location);
     } else {
       setAuthorized(true); // show content
     }

@@ -69,3 +69,18 @@ export async function removeInterestInUni(uniId) {
     console.log(error);
   }
 }
+
+export async function getUser(controller, userId) {
+  try {
+    let csrfToken = await getCsrfToken();
+    let myAxios = myAxiosPrivate(csrfToken);
+    let res = await myAxios
+      .get(`/users/public/${userId}`, { signal: controller.signal })
+      .catch((e) => {
+        return e.response;
+      });
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+}

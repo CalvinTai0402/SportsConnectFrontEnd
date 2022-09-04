@@ -56,3 +56,18 @@ export async function deleteExperience(id) {
     console.log(error);
   }
 }
+
+export async function getExperiencesForUser(controller, userId) {
+  try {
+    let csrfToken = await getCsrfToken();
+    let myAxios = myAxiosPrivate(csrfToken);
+    let res = await myAxios
+      .get(`/experiences/user/${userId}`, { signal: controller.signal })
+      .catch((e) => {
+        return e.response;
+      });
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+}

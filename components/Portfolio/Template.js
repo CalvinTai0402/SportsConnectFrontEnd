@@ -2,23 +2,42 @@ import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { AiOutlinePlusSquare } from 'react-icons/ai';
 import ItemRow from './ItemRow';
 import swal from 'sweetalert';
-import { createEducation, getEducations } from '../../network/lib/education';
-import { createExperience, getExperiences } from '../../network/lib/experience';
+import {
+  createEducation,
+  getEducations,
+  getEducationsForUser,
+} from '../../network/lib/education';
+import {
+  createExperience,
+  getExperiences,
+  getExperiencesForUser,
+} from '../../network/lib/experience';
 import Spinner from '../Spinner';
+import { useRouter } from 'next/router';
 
-export default function Template({ endpoint, title }) {
+export default function Template({ endpoint, title, isDisabled }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const abortControllerRef = useRef(new AbortController());
+  const router = useRouter();
+  const userId = router.query.id;
   useEffect(() => {
     let fetchData = async () => {
       let res;
       if (endpoint === '/educations') {
-        res = await getEducations(abortControllerRef.current);
+        if (!userId) res = await getEducations(abortControllerRef.current);
+        else
+          res = await getEducationsForUser(abortControllerRef.current, userId);
       } else {
-        res = await getExperiences(abortControllerRef.current);
+        if (!userId) res = await getExperiences(abortControllerRef.current);
+        else
+          res = await getExperiencesForUser(abortControllerRef.current, userId);
       }
-      setData(res?.data);
+      if (res?.status == 200) {
+        setData(res?.data);
+      } else if (res?.status == 404 || res?.status == 422) {
+        router.push('/usernotfound');
+      }
     };
     fetchData();
     return () => {
@@ -92,10 +111,12 @@ export default function Template({ endpoint, title }) {
             {loading ? (
               <Spinner />
             ) : (
-              <AiOutlinePlusSquare
-                className="h-6 w-6 text-green-400"
-                onClick={handleCreate}
-              />
+              !isDisabled && (
+                <AiOutlinePlusSquare
+                  className="h-6 w-6 text-green-400"
+                  onClick={handleCreate}
+                />
+              )
             )}
           </span>
         </div>
@@ -117,6 +138,7 @@ export default function Template({ endpoint, title }) {
                 endDate={endDate}
                 active={datum.active}
                 endpoint={endpoint}
+                isDisabled={isDisabled}
               />
             );
           })}
