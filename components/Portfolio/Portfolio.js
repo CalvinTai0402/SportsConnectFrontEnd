@@ -392,7 +392,7 @@ export default function Portfolio() {
           <div className="w-full md:w-9/12 sm:mx-2 ">
             <div className="bg-white pb-3 shadow-sm rounded-sm">
               <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
-                <span clas="text-blue-500">
+                <span className="text-blue-500">
                   <svg
                     className="h-5"
                     xmlns="http://www.w3.org/2000/svg"

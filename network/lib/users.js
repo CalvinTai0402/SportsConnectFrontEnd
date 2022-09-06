@@ -3,8 +3,7 @@ import { getCsrfToken } from './auth';
 
 export async function getCurrentUser(controller) {
   try {
-    let csrfToken = await getCsrfToken();
-    let myAxios = myAxiosPrivate(csrfToken);
+    let myAxios = myAxiosPrivate();
     let res = await myAxios
       .get(`/users/me`, { signal: controller.signal })
       .catch((e) => {
