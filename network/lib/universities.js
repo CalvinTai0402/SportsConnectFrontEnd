@@ -2,7 +2,7 @@ import myAxiosPrivate from '../myAxiosPrivate';
 
 export async function getPublicUniversities(limit) {
   try {
-    let myAxios = myAxiosPrivate();
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios
       .get(`/universities/public?limit=${limit}`)
       .catch((e) => {
@@ -16,7 +16,7 @@ export async function getPublicUniversities(limit) {
 
 export async function getUniversities(limit, controller) {
   try {
-    let myAxios = myAxiosPrivate();
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios
       .get(`/universities?limit=${limit}`, { signal: controller.signal })
       .catch((e) => {
@@ -30,7 +30,7 @@ export async function getUniversities(limit, controller) {
 
 export async function getInterestedUniversities(limit, controller) {
   try {
-    let myAxios = myAxiosPrivate();
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios
       .get(`/universities/interested_only?limit=${limit}`, {
         signal: controller.signal,

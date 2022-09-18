@@ -21,7 +21,7 @@ export default function Form({
           <Image
             src="/computer.jpg"
             className="object-center object-cover pointer-events-none"
-            alt="Page not found"
+            alt="Computer image"
             layout="fill"
             priority={true}
           />
@@ -35,7 +35,20 @@ export default function Form({
             </div>
           </div>
         </div>
+        {/* <div
+          className="hidden bg-cover lg:block lg:w-2/3"
+          style={{ backgroundImage: 'url(/computer.jpg)' }}
+        >
+          <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
+            <div>
+              <h2 className="text-4xl font-bold text-white">SportsConnect</h2>
 
+              <div className="max-w-xl mt-3 text-gray-300">
+                {t('login:image_description')}
+              </div>
+            </div>
+          </div>
+        </div> */}
         <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
           <div className="flex-1">
             <div className="text-center">

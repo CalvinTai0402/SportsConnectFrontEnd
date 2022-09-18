@@ -1,6 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import Image from 'next/image';
 import React from 'react';
+import ProgressiveImg from '../ProgressiveImage';
 import CheckBox from '../Universities/CheckBox';
 import IconCross from './../Icons/IconCross';
 
@@ -35,6 +36,12 @@ const Content = ({ uni, onClose, updateTickedUni }) => {
       <div>
         <div className="rounded-l-xl absolute top-0 bottom-0 left-0 bg-slate-900 w-[30%] z-[2] before:absolute before:z-10 before:bg-gradient-to-r from-slate-900 to-transparent before:top-0 before:bottom-0 before:left-full before:w-60" />
         <div className="absolute top-0 bottom-0 right-0 w-[70%] bg-repeat-round z-[1] rounded-r-xl">
+          {/* <ProgressiveImg
+            src={uni.backgroundImage}
+            placeholderSrc={uni.blurredBackgroundImage}
+            className="bg-repeat-round rounded-r-xl h-full w-full"
+            alt="University image"
+          /> */}
           <Image
             src={uni.backgroundImage}
             className="bg-repeat-round rounded-r-xl"
@@ -46,6 +53,12 @@ const Content = ({ uni, onClose, updateTickedUni }) => {
         </div>
         {/* w-[20%] h-[25%] sm:w-[16%] sm:h-[30%] lg:w-[14%] lg:h-[30%] xl:w-[10%] xl:h-[30%] */}
         <span className="absolute bottom-0 right-0 sm:left-0 w-12 h-12 sm:w-24 sm:h-24 z-[2] m-4">
+          {/* <ProgressiveImg
+            placeholderSrc={uni.blurredLogo}
+            src={uni.logo}
+            className="h-full w-full"
+            alt="University image"
+          /> */}
           <Image
             src={uni.logo}
             alt="University logo"

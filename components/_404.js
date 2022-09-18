@@ -27,13 +27,8 @@ export default function _404({ description }) {
           </Link>
         </div>
         <div className="w-full lg:flex lg:justify-end lg:w-1/2 mx-5 my-12">
-          <Image
-            src="/404.png"
-            className=""
-            alt="Page not found"
-            width={800}
-            height={500}
-          />
+          <Image src="/404.png" alt="Page not found" width={800} height={500} />
+          {/* <img src="/404.png" alt="Page not found" width="800" height="500" /> */}
         </div>
       </div>
     </div>

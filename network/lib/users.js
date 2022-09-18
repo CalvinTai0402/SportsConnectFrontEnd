@@ -3,7 +3,7 @@ import { getCsrfToken } from './auth';
 
 export async function getCurrentUser(controller) {
   try {
-    let myAxios = myAxiosPrivate();
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios
       .get(`/users/me`, { signal: controller.signal })
       .catch((e) => {
@@ -17,8 +17,7 @@ export async function getCurrentUser(controller) {
 
 export async function updateUser(updateObject) {
   try {
-    let csrfToken = await getCsrfToken();
-    let myAxios = myAxiosPrivate(csrfToken);
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios.put(`/users`, updateObject).catch((e) => {
       return e.response;
     });
@@ -30,8 +29,7 @@ export async function updateUser(updateObject) {
 
 export async function uploadProfilePhoto(formData) {
   try {
-    let csrfToken = await getCsrfToken();
-    let myAxios = myAxiosPrivate(csrfToken);
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios
       .post('/users/profile_photo', formData)
       .catch((e) => {
@@ -45,8 +43,7 @@ export async function uploadProfilePhoto(formData) {
 
 export async function expressInterestInUni(uniId) {
   try {
-    let csrfToken = await getCsrfToken();
-    let myAxios = myAxiosPrivate(csrfToken);
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios.post(`/users/interest/${uniId}`).catch((e) => {
       return e.response;
     });
@@ -58,8 +55,7 @@ export async function expressInterestInUni(uniId) {
 
 export async function removeInterestInUni(uniId) {
   try {
-    let csrfToken = await getCsrfToken();
-    let myAxios = myAxiosPrivate(csrfToken);
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios.delete(`/users/interest/${uniId}`).catch((e) => {
       return e.response;
     });
@@ -71,8 +67,7 @@ export async function removeInterestInUni(uniId) {
 
 export async function getUser(controller, userId) {
   try {
-    let csrfToken = await getCsrfToken();
-    let myAxios = myAxiosPrivate(csrfToken);
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios
       .get(`/users/public/${userId}`, { signal: controller.signal })
       .catch((e) => {

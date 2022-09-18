@@ -1,10 +1,8 @@
 import myAxiosPrivate from '../myAxiosPrivate';
-import { getCsrfToken } from './auth';
 
 export async function createEducation(createObject) {
   try {
-    let csrfToken = await getCsrfToken();
-    let myAxios = myAxiosPrivate(csrfToken);
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios.post(`/educations`, createObject).catch((e) => {
       return e.response;
     });
@@ -16,8 +14,7 @@ export async function createEducation(createObject) {
 
 export async function getEducations(controller) {
   try {
-    let csrfToken = await getCsrfToken();
-    let myAxios = myAxiosPrivate(csrfToken);
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios
       .get(`/educations`, { signal: controller.signal })
       .catch((e) => {
@@ -31,8 +28,7 @@ export async function getEducations(controller) {
 
 export async function updateEducation(id, updateObject) {
   try {
-    let csrfToken = await getCsrfToken();
-    let myAxios = myAxiosPrivate(csrfToken);
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios
       .put(`/educations/${id}`, updateObject)
       .catch((e) => {
@@ -46,8 +42,7 @@ export async function updateEducation(id, updateObject) {
 
 export async function deleteEducation(id) {
   try {
-    let csrfToken = await getCsrfToken();
-    let myAxios = myAxiosPrivate(csrfToken);
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios.delete(`/educations/${id}`).catch((e) => {
       return e.response;
     });
@@ -59,8 +54,7 @@ export async function deleteEducation(id) {
 
 export async function getEducationsForUser(controller, userId) {
   try {
-    let csrfToken = await getCsrfToken();
-    let myAxios = myAxiosPrivate(csrfToken);
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios
       .get(`/educations/user/${userId}`, { signal: controller.signal })
       .catch((e) => {

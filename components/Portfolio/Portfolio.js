@@ -223,6 +223,13 @@ export default function Portfolio() {
             <div className="bg-white border-t-4 border-blue-400 h-full">
               <div className="image overflow-hidden">
                 {photoUrl !== 'None' ? (
+                  // <img
+                  //   className="h-auto w-full mx-auto"
+                  //   alt="profile photo"
+                  //   src={photoUrl}
+                  //   width="600"
+                  //   height="600"
+                  // />
                   <Image
                     className="h-auto w-full mx-auto"
                     src={photoUrl}
@@ -233,11 +240,18 @@ export default function Portfolio() {
                 ) : (
                   <Image
                     className="h-auto w-full mx-auto"
-                    src="https://sportsconnect-profilephotos.s3.amazonaws.com/default-photo.jpg"
+                    src="default-photo.jpg"
                     alt=""
                     width={600}
                     height={600}
                   />
+                  // <img
+                  //   className="h-auto w-full mx-auto"
+                  //   alt="profile photo"
+                  //   src="default-photo.jpg"
+                  //   width="600"
+                  //   height="600"
+                  // />
                 )}
                 {!isDisabled &&
                   (uploading ? (

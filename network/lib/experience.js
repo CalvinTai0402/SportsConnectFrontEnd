@@ -1,10 +1,8 @@
 import myAxiosPrivate from '../myAxiosPrivate';
-import { getCsrfToken } from './auth';
 
 export async function createExperience(createObject) {
   try {
-    let csrfToken = await getCsrfToken();
-    let myAxios = myAxiosPrivate(csrfToken);
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios.post(`/experiences`, createObject).catch((e) => {
       return e.response;
     });
@@ -16,8 +14,7 @@ export async function createExperience(createObject) {
 
 export async function getExperiences(controller) {
   try {
-    let csrfToken = await getCsrfToken();
-    let myAxios = myAxiosPrivate(csrfToken);
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios
       .get(`/experiences`, { signal: controller.signal })
       .catch((e) => {
@@ -31,8 +28,7 @@ export async function getExperiences(controller) {
 
 export async function updateExperience(id, updateObject) {
   try {
-    let csrfToken = await getCsrfToken();
-    let myAxios = myAxiosPrivate(csrfToken);
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios
       .put(`/experiences/${id}`, updateObject)
       .catch((e) => {
@@ -46,8 +42,7 @@ export async function updateExperience(id, updateObject) {
 
 export async function deleteExperience(id) {
   try {
-    let csrfToken = await getCsrfToken();
-    let myAxios = myAxiosPrivate(csrfToken);
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios.delete(`/experiences/${id}`).catch((e) => {
       return e.response;
     });
@@ -59,8 +54,7 @@ export async function deleteExperience(id) {
 
 export async function getExperiencesForUser(controller, userId) {
   try {
-    let csrfToken = await getCsrfToken();
-    let myAxios = myAxiosPrivate(csrfToken);
+    let myAxios = await myAxiosPrivate();
     let res = await myAxios
       .get(`/experiences/user/${userId}`, { signal: controller.signal })
       .catch((e) => {

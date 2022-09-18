@@ -10,6 +10,11 @@ const nextConfig = {
       'sportsconnect-profilephotos.s3.amazonaws.com',
     ],
   },
+  experimental: {
+    images: {
+      unoptimized: true,
+    },
+  },
   ...nextTranslate(),
 };
 

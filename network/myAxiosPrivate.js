@@ -1,14 +1,26 @@
 import axios from 'axios';
 import { logout } from './lib/auth';
 
-export default function myAxiosPrivate(csrfToken = null) {
-  let headersObj = { 'x-csrf-token': '' };
-  if (csrfToken !== null) {
-    headersObj = { 'x-csrf-token': csrfToken };
+const getCsrfToken = async () => {
+  try {
+    let res = await axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/auth/csrf_token`, {
+        withCredentials: true,
+      })
+      .catch((e) => {
+        return e.response;
+      });
+    return res.data.csrf_token;
+  } catch (error) {
+    console.log(error);
   }
+};
+
+export default async function myAxiosPrivate() {
+  const csrfToken = await getCsrfToken();
   const myAxios = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
-    headers: headersObj,
+    headers: { 'x-csrf-token': csrfToken },
     withCredentials: true,
   });
 
